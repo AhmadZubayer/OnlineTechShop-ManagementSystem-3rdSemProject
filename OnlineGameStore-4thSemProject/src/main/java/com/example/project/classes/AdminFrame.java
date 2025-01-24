@@ -340,14 +340,14 @@ public class AdminFrame implements ActionListener {
 
         pnlPayments = new JPanel();
         pnlPayments.setLayout(null);
-        pnlPayments.setBackground(Color.decode("#95adad"));
+        pnlPayments.setBackground(Color.decode("#1d2a35"));
         pnlPayments.setBounds(250, 130, 1050, 800);
         pnlPayments.setVisible(false);
         adminFrm.add(pnlPayments);
 
         pnlCustomerAcc = new JPanel();
-        pnlCustomerAcc.setLayout(null);
-        pnlCustomerAcc.setBackground(Color.decode("#596666"));
+        pnlCustomerAcc.setLayout(new BorderLayout());
+        pnlCustomerAcc.setBackground(Color.decode("#1d2a35"));
         pnlCustomerAcc.setBounds(250, 130, 1050, 800);
         pnlCustomerAcc.setVisible(false);
         adminFrm.add(pnlCustomerAcc);
@@ -622,15 +622,18 @@ public class AdminFrame implements ActionListener {
 
 
 
-
+        addTables();
         btnBack.addActionListener(this);
-
-
         adminFrm.setVisible(true);
+
+
     }
 
     public static void main(String[] args) {
-        new AdminFrame();
+        SwingUtilities.invokeLater(() -> {
+            new AdminFrame();
+
+        });
     }
 
     @Override
@@ -755,6 +758,7 @@ public class AdminFrame implements ActionListener {
             btnOthers1.setForeground(Color.decode("#FFF8F0"));
             btnOthers2.setBackground(Color.decode("#2C3E50"));
             btnOthers2.setForeground(Color.decode("#FFF8F0"));
+            addTables();
         } else if (e.getSource() == btnOthers1) {
             pnlButtonsSales.setVisible(true);
             pnlOrders.setVisible(false);
@@ -1185,6 +1189,15 @@ public class AdminFrame implements ActionListener {
         } else if (e.getSource() == btnViewHome) {
             new HomePage();
         }
+    }
+
+    private void addTables() {
+        AdminTableViews adminTableViews = new AdminTableViews();
+        JScrollPane customerTableScrollPane = adminTableViews.viewCustomerTable();
+        pnlCustomerAcc.removeAll(); // Clear existing components to avoid duplication
+        pnlCustomerAcc.add(customerTableScrollPane, BorderLayout.CENTER);
+        pnlCustomerAcc.revalidate(); // Revalidate to refresh layout
+        pnlCustomerAcc.repaint(); // Repaint to update UI
     }
 
 }
