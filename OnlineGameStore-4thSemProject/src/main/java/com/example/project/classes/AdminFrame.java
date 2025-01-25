@@ -18,7 +18,7 @@ public class AdminFrame implements ActionListener {
     public JButton btnSales, btnCustomerAcc, btnOrders, btnPayments, btnOthers1, btnOthers2, btnOthers3, btnOthers4;
     //public JButton btnEmp;
     //public JButton btnOthers;
-    public JButton btnCPU, btnGPU, btnMemory, btnStorage, btnMotherboard, btnCase, btnCooler;
+    public JButton btnAll, btnCPU, btnGPU, btnMemory, btnStorage, btnMotherboard, btnCase, btnCooler, btnConsoles, btnAccessories, btnGames;
 
     Color hoverTextColor = Color.decode("#9763F6");
     Color originalColor = Color.decode("#2C3E50");
@@ -219,116 +219,38 @@ public class AdminFrame implements ActionListener {
 
 
         btnOrders = new JButton("ORDERS");
-        btnOrders.setFont(new Font("Roboto", Font.BOLD, 17));
-        btnOrders.setForeground(Color.WHITE);
-        btnOrders.setBackground(originalColor);
-        btnOrders.setContentAreaFilled(true);
-        btnOrders.setBorder(BorderFactory.createEmptyBorder());
         btnOrders.setBounds(0, 0, 225, 35);
-        btnOrders.addActionListener(this);
-        btnOrders.addMouseListener(new MouseAdapter() {
-            public void mouseEntered(MouseEvent e) {
-                btnOrders.setForeground(hoverTextColor);
-                btnOrders.setBorder(BorderFactory.createLineBorder(hoverTextColor, 4));
-            }
-
-            public void mouseExited(MouseEvent e) {
-                btnOrders.setForeground(Color.WHITE);
-                btnOrders.setBorder(BorderFactory.createEmptyBorder());
-            }
-        });
-        pnlButtonsSales.add(btnOrders);
-
-
 
         btnPayments = new JButton("PAYMENTS");
-        btnPayments.setFont(new Font("Roboto", Font.BOLD, 17));
-        btnPayments.setForeground(Color.WHITE);
-        btnPayments.setBackground(originalColor);
-        btnPayments.setContentAreaFilled(true);
-        btnPayments.setBorder(BorderFactory.createEmptyBorder());
         btnPayments.setBounds(0, 50, 225, 35);
-        btnPayments.addActionListener(this);
-        btnPayments.addMouseListener(new MouseAdapter() {
-            public void mouseEntered(MouseEvent e) {
-                btnPayments.setForeground(hoverTextColor);
-                btnPayments.setBorder(BorderFactory.createLineBorder(hoverTextColor, 4));
-            }
-
-            public void mouseExited(MouseEvent e) {
-                btnPayments.setForeground(Color.WHITE);
-                btnPayments.setBorder(BorderFactory.createEmptyBorder());
-            }
-        });
-        pnlButtonsSales.add(btnPayments);
-
-
 
         btnCustomerAcc = new JButton("CUSTOMERS");
-        btnCustomerAcc.setFont(new Font("Roboto", Font.BOLD, 17));
-        btnCustomerAcc.setForeground(Color.WHITE);
-        btnCustomerAcc.setBackground(originalColor);
-        btnCustomerAcc.setContentAreaFilled(true);
-        btnCustomerAcc.setBorder(BorderFactory.createEmptyBorder());
         btnCustomerAcc.setBounds(0, 100, 225, 35);
-        btnCustomerAcc.addActionListener(this);
-        btnCustomerAcc.addMouseListener(new MouseAdapter() {
-            public void mouseEntered(MouseEvent e) {
-                btnCustomerAcc.setForeground(hoverTextColor);
-                btnCustomerAcc.setBorder(BorderFactory.createLineBorder(hoverTextColor, 4));
-            }
-
-            public void mouseExited(MouseEvent e) {
-                btnCustomerAcc.setForeground(Color.WHITE);
-                btnCustomerAcc.setBorder(BorderFactory.createEmptyBorder());
-            }
-        });
-        pnlButtonsSales.add(btnCustomerAcc);
-
-
-
 
         btnOthers1 = new JButton("OTHERS");
-        btnOthers1.setFont(new Font("Roboto", Font.BOLD, 17));
-        btnOthers1.setForeground(Color.WHITE); // Initial text color
-        btnOthers1.setBackground(originalColor);
-        btnOthers1.setContentAreaFilled(true);
-        btnOthers1.setBorder(BorderFactory.createEmptyBorder());
         btnOthers1.setBounds(0, 150, 225, 35);
-        btnOthers1.addActionListener(this);
-        btnOthers1.addMouseListener(new MouseAdapter() {
-            public void mouseEntered(MouseEvent e) {
-                btnOthers1.setForeground(hoverTextColor); // Change text color to #9763F6
-                btnOthers1.setBorder(BorderFactory.createLineBorder(hoverTextColor, 4));
-            }
-
-            public void mouseExited(MouseEvent e) {
-                btnOthers1.setForeground(Color.WHITE);
-                btnOthers1.setBorder(BorderFactory.createEmptyBorder());
-            }
-        });
-        pnlButtonsSales.add(btnOthers1);
 
         btnOthers2 = new JButton("OTHERS");
-        btnOthers2.setFont(new Font("Roboto", Font.BOLD, 17));
-        btnOthers2.setForeground(Color.WHITE);
-        btnOthers2.setBackground(originalColor);
-        btnOthers2.setContentAreaFilled(true);
-        btnOthers2.setBorder(BorderFactory.createEmptyBorder());
         btnOthers2.setBounds(0, 200, 225, 35);
-        btnOthers2.addActionListener(this);
-        btnOthers2.addMouseListener(new MouseAdapter() {
-            public void mouseEntered(MouseEvent e) {
-                btnOthers2.setForeground(hoverTextColor);
-                btnOthers2.setBorder(BorderFactory.createLineBorder(hoverTextColor, 4));
-            }
 
-            public void mouseExited(MouseEvent e) {
-                btnOthers2.setForeground(Color.WHITE);
-                btnOthers2.setBorder(BorderFactory.createEmptyBorder());
-            }
-        });
-        pnlButtonsSales.add(btnOthers2);
+        leftBtnDesigns(btnOrders);
+        leftBtnDesigns(btnPayments);
+        leftBtnDesigns(btnCustomerAcc);
+        leftBtnDesigns(btnOthers1);
+        leftBtnDesigns(btnOthers2);
+
+        btnOrders.addActionListener(this);
+        btnPayments.addActionListener(this);
+        btnCustomerAcc.addActionListener(this);
+        btnOthers.addActionListener(this);
+        btnOthers1.addActionListener(this);
+
+        pnlButtonsSales.add(btnOrders);
+        pnlButtonsSales.add(btnPayments);
+        pnlButtonsSales.add(btnCustomerAcc);
+        pnlButtonsSales.add(btnOthers1);
+        btnOthers2.addActionListener(this);
+        //pnlButtonsSales.add(btnOthers2);
 
 
         pnlOrders = new JPanel();
@@ -371,158 +293,85 @@ public class AdminFrame implements ActionListener {
         pnlButtons = new JPanel();
         pnlButtons.setLayout(null);
         pnlButtons.setBackground(Color.decode("#1d2a35"));
-        pnlButtons.setBounds(10, 350, 230, 500);
+        pnlButtons.setBounds(10, 350, 230, 600);
         adminFrm.add(pnlButtons);
         pnlButtons.setVisible(false);
 
 
+        btnAll = new JButton("ALL");
+        btnAll.setBounds(0, 0, 225, 35);
+
         btnCPU = new JButton("PROCESSOR");
-        btnCPU.setFont(new Font("Roboto", Font.BOLD, 17));
-        btnCPU.setForeground(Color.WHITE);
-        btnCPU.setBackground(originalColor);
-        btnCPU.setContentAreaFilled(true);
-        btnCPU.setBorder(BorderFactory.createEmptyBorder());
-        btnCPU.setBounds(0, 0, 225, 35);
-        btnCPU.addActionListener(this);
-        btnCPU.addMouseListener(new MouseAdapter() {
-            public void mouseEntered(MouseEvent e) {
-                btnCPU.setForeground(hoverTextColor);
-                btnCPU.setBorder(BorderFactory.createLineBorder(hoverTextColor, 4));
-            }
-
-            public void mouseExited(MouseEvent e) {
-                btnCPU.setForeground(Color.WHITE);
-                btnCPU.setBorder(BorderFactory.createEmptyBorder());
-            }
-        });
-        pnlButtons.add(btnCPU);
-
+        btnCPU.setBounds(0, 50, 225, 35);
 
         btnGPU = new JButton("GRAPHICS");
-        btnGPU.setFont(new Font("Roboto", Font.BOLD, 17));
-        btnGPU.setForeground(Color.WHITE);
-        btnGPU.setBackground(originalColor);
-        btnGPU.setContentAreaFilled(true);
-        btnGPU.setBorder(BorderFactory.createEmptyBorder());
-        btnGPU.setBounds(0, 50, 225, 35);
-        btnGPU.addActionListener(this);
-        btnGPU.addMouseListener(new MouseAdapter() {
-            public void mouseEntered(MouseEvent e) {
-                btnGPU.setForeground(hoverTextColor);
-                btnGPU.setBorder(BorderFactory.createLineBorder(hoverTextColor, 4));
-            }
-            public void mouseExited(MouseEvent e) {
-                btnGPU.setForeground(Color.WHITE);
-                btnGPU.setBorder(BorderFactory.createEmptyBorder());
-            }
-        });
-        pnlButtons.add(btnGPU);
+        btnGPU.setBounds(0, 100, 225, 35);
 
-// btnMemory
         btnMemory = new JButton("MEMORY");
-        btnMemory.setFont(new Font("Roboto", Font.BOLD, 17));
-        btnMemory.setForeground(Color.WHITE);
-        btnMemory.setBackground(originalColor);
-        btnMemory.setContentAreaFilled(true);
-        btnMemory.setBorder(BorderFactory.createEmptyBorder());
-        btnMemory.setBounds(0, 100, 225, 35);
-        btnMemory.addActionListener(this);
-        btnMemory.addMouseListener(new MouseAdapter() {
-            public void mouseEntered(MouseEvent e) {
-                btnMemory.setForeground(hoverTextColor);
-                btnMemory.setBorder(BorderFactory.createLineBorder(hoverTextColor, 4));
-            }
-            public void mouseExited(MouseEvent e) {
-                btnMemory.setForeground(Color.WHITE);
-                btnMemory.setBorder(BorderFactory.createEmptyBorder());
-            }
-        });
-        pnlButtons.add(btnMemory);
+        btnMemory.setBounds(0, 150, 225, 35);
 
-// btnStorage
         btnStorage = new JButton("STORAGE");
-        btnStorage.setFont(new Font("Roboto", Font.BOLD, 17));
-        btnStorage.setForeground(Color.WHITE);
-        btnStorage.setBackground(originalColor);
-        btnStorage.setContentAreaFilled(true);
-        btnStorage.setBorder(BorderFactory.createEmptyBorder());
-        btnStorage.setBounds(0, 150, 225, 35);
-        btnStorage.addActionListener(this);
-        btnStorage.addMouseListener(new MouseAdapter() {
-            public void mouseEntered(MouseEvent e) {
-                btnStorage.setForeground(hoverTextColor);
-                btnStorage.setBorder(BorderFactory.createLineBorder(hoverTextColor, 4));
-            }
-            public void mouseExited(MouseEvent e) {
-                btnStorage.setForeground(Color.WHITE);
-                btnStorage.setBorder(BorderFactory.createEmptyBorder());
-            }
-        });
-        pnlButtons.add(btnStorage);
+        btnStorage.setBounds(0, 200, 225, 35);
 
-// btnMotherboard
         btnMotherboard = new JButton("MOTHERBOARD");
-        btnMotherboard.setFont(new Font("Roboto", Font.BOLD, 17));
-        btnMotherboard.setForeground(Color.WHITE);
-        btnMotherboard.setBackground(originalColor);
-        btnMotherboard.setContentAreaFilled(true);
-        btnMotherboard.setBorder(BorderFactory.createEmptyBorder());
-        btnMotherboard.setBounds(0, 200, 225, 35);
-        btnMotherboard.addActionListener(this);
-        btnMotherboard.addMouseListener(new MouseAdapter() {
-            public void mouseEntered(MouseEvent e) {
-                btnMotherboard.setForeground(hoverTextColor);
-                btnMotherboard.setBorder(BorderFactory.createLineBorder(hoverTextColor, 4));
-            }
-            public void mouseExited(MouseEvent e) {
-                btnMotherboard.setForeground(Color.WHITE);
-                btnMotherboard.setBorder(BorderFactory.createEmptyBorder());
-            }
-        });
-        pnlButtons.add(btnMotherboard);
+        btnMotherboard.setBounds(0, 250, 225, 35);
 
-
-// btnCooler
         btnCooler = new JButton("COOLER");
-        btnCooler.setFont(new Font("Roboto", Font.BOLD, 17));
-        btnCooler.setForeground(Color.WHITE);
-        btnCooler.setBackground(originalColor);
-        btnCooler.setContentAreaFilled(true);
-        btnCooler.setBorder(BorderFactory.createEmptyBorder());
         btnCooler.setBounds(0, 300, 225, 35);
-        btnCooler.addActionListener(this);
-        btnCooler.addMouseListener(new MouseAdapter() {
-            public void mouseEntered(MouseEvent e) {
-                btnCooler.setForeground(hoverTextColor);
-                btnCooler.setBorder(BorderFactory.createLineBorder(hoverTextColor, 4));
-            }
-            public void mouseExited(MouseEvent e) {
-                btnCooler.setForeground(Color.WHITE);
-                btnCooler.setBorder(BorderFactory.createEmptyBorder());
-            }
-        });
-        pnlButtons.add(btnCooler);
 
-        // btnCase
+        btnPowerSupply = new JButton("POWER SUPPLY");
+        btnPowerSupply.setBounds(0, 350, 225, 35);
+
         btnCase = new JButton("CASE");
-        btnCase.setFont(new Font("Roboto", Font.BOLD, 17));
-        btnCase.setForeground(Color.WHITE);
-        btnCase.setBackground(originalColor);
-        btnCase.setContentAreaFilled(true);
-        btnCase.setBorder(BorderFactory.createEmptyBorder());
-        btnCase.setBounds(0, 250, 225, 35);
+        btnCase.setBounds(0, 400, 225, 35);
+
+        btnConsoles = new JButton("CONSOLES");
+        btnConsoles.setBounds(0, 450, 225, 35);
+
+        btnAccessories = new JButton("ACCESSORIES");
+        btnAccessories.setBounds(0, 500, 225, 35);
+
+        btnGames = new JButton("GAMES");
+        btnGames.setBounds(0, 550, 225, 35);
+
+        leftBtnDesigns(btnAll);
+        leftBtnDesigns(btnCPU);
+        leftBtnDesigns(btnGPU);
+        leftBtnDesigns(btnMemory);
+        leftBtnDesigns(btnStorage);
+        leftBtnDesigns(btnMotherboard);
+        leftBtnDesigns(btnCooler);
+        leftBtnDesigns(btnPowerSupply);
+        leftBtnDesigns(btnCase);
+        leftBtnDesigns(btnConsoles);
+        leftBtnDesigns(btnAccessories);
+        leftBtnDesigns(btnGames);
+
+        btnAll.addActionListener(this);
+        btnCPU.addActionListener(this);
+        btnGPU.addActionListener(this);
+        btnMemory.addActionListener(this);
+        btnStorage.addActionListener(this);
+        btnMotherboard.addActionListener(this);
+        btnCooler.addActionListener(this);
+        btnPowerSupply.addActionListener(this);
         btnCase.addActionListener(this);
-        btnCase.addMouseListener(new MouseAdapter() {
-            public void mouseEntered(MouseEvent e) {
-                btnCase.setForeground(hoverTextColor);
-                btnCase.setBorder(BorderFactory.createLineBorder(hoverTextColor, 4));
-            }
-            public void mouseExited(MouseEvent e) {
-                btnCase.setForeground(Color.WHITE);
-                btnCase.setBorder(BorderFactory.createEmptyBorder());
-            }
-        });
+        btnConsoles.addActionListener(this);
+        btnAccessories.addActionListener(this);
+        btnGames.addActionListener(this);
+
+        pnlButtons.add(btnAll);
+        pnlButtons.add(btnCPU);
+        pnlButtons.add(btnGPU);
+        pnlButtons.add(btnMemory);
+        pnlButtons.add(btnStorage);
+        pnlButtons.add(btnMotherboard);
+        pnlButtons.add(btnCooler);
+        pnlButtons.add(btnPowerSupply);
         pnlButtons.add(btnCase);
+        pnlButtons.add(btnConsoles);
+        pnlButtons.add(btnAccessories);
+        pnlButtons.add(btnGames);
 
         pnlCPU = new JPanel();
         pnlCPU.setLayout(null);
@@ -638,6 +487,13 @@ public class AdminFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        JButton[] allLeftBtns = {
+                btnAll, btnCPU, btnGPU, btnMemory, btnStorage,
+                btnMotherboard, btnCooler, btnCase, btnPowerSupply,
+                btnConsoles, btnAccessories, btnGames
+        };
+
+
         if(e.getSource() == btnSales) {
             pnlButtonsSales.setVisible(true);
             pnlOrders.setVisible(true);
@@ -857,6 +713,8 @@ public class AdminFrame implements ActionListener {
             btnCase.setForeground(Color.decode("#FFF8F0"));
             btnPowerSupply.setBackground(Color.decode("#2C3E50"));
             btnPowerSupply.setForeground(Color.decode("#FFF8F0"));
+        } else if (e.getSource() == btnAll) {
+            pressedBtn(btnAll, allLeftBtns);
         } else if (e.getSource() == btnCPU) {
             pnlButtonsSales.setVisible(false);
             pnlOrders.setVisible(false);
@@ -875,22 +733,7 @@ public class AdminFrame implements ActionListener {
             pnlCase.setVisible(false);
             pnlEmp.setVisible(false);
             pnlOthersTab.setVisible(false);
-            btnCPU.setForeground(Color.decode("#FFF8F0"));
-            btnCPU.setBackground(Color.decode("#04aa6d"));
-            btnGPU.setBackground(Color.decode("#2C3E50"));
-            btnGPU.setForeground(Color.decode("#FFF8F0"));
-            btnMemory.setBackground(Color.decode("#2C3E50"));
-            btnMemory.setForeground(Color.decode("#FFF8F0"));
-            btnStorage.setBackground(Color.decode("#2C3E50"));
-            btnStorage.setForeground(Color.decode("#FFF8F0"));
-            btnMotherboard.setBackground(Color.decode("#2C3E50"));
-            btnMotherboard.setForeground(Color.decode("#FFF8F0"));
-            btnCooler.setBackground(Color.decode("#2C3E50"));
-            btnCooler.setForeground(Color.decode("#FFF8F0"));
-            btnCase.setBackground(Color.decode("#2C3E50"));
-            btnCase.setForeground(Color.decode("#FFF8F0"));
-            btnPowerSupply.setBackground(Color.decode("#2C3E50"));
-            btnPowerSupply.setForeground(Color.decode("#FFF8F0"));
+            pressedBtn(btnCPU, allLeftBtns);
         } else if (e.getSource() == btnGPU) {
             pnlButtonsSales.setVisible(false);
             pnlOrders.setVisible(false);
@@ -909,22 +752,7 @@ public class AdminFrame implements ActionListener {
             pnlCase.setVisible(false);
             pnlEmp.setVisible(false);
             pnlOthersTab.setVisible(false);
-            btnGPU.setForeground(Color.decode("#FFF8F0"));
-            btnGPU.setBackground(Color.decode("#04aa6d"));
-            btnCPU.setBackground(Color.decode("#2C3E50"));
-            btnCPU.setForeground(Color.decode("#FFF8F0"));
-            btnMemory.setBackground(Color.decode("#2C3E50"));
-            btnMemory.setForeground(Color.decode("#FFF8F0"));
-            btnStorage.setBackground(Color.decode("#2C3E50"));
-            btnStorage.setForeground(Color.decode("#FFF8F0"));
-            btnMotherboard.setBackground(Color.decode("#2C3E50"));
-            btnMotherboard.setForeground(Color.decode("#FFF8F0"));
-            btnCooler.setBackground(Color.decode("#2C3E50"));
-            btnCooler.setForeground(Color.decode("#FFF8F0"));
-            btnCase.setBackground(Color.decode("#2C3E50"));
-            btnCase.setForeground(Color.decode("#FFF8F0"));
-            btnPowerSupply.setBackground(Color.decode("#2C3E50"));
-            btnPowerSupply.setForeground(Color.decode("#FFF8F0"));
+            pressedBtn(btnGPU, allLeftBtns);
         } else if (e.getSource() == btnMemory) {
             pnlButtonsSales.setVisible(false);
             pnlOrders.setVisible(false);
@@ -943,22 +771,7 @@ public class AdminFrame implements ActionListener {
             pnlCase.setVisible(false);
             pnlEmp.setVisible(false);
             pnlOthersTab.setVisible(false);
-            btnMemory.setForeground(Color.decode("#FFF8F0"));
-            btnMemory.setBackground(Color.decode("#04aa6d"));
-            btnGPU.setBackground(Color.decode("#2C3E50"));
-            btnGPU.setForeground(Color.decode("#FFF8F0"));
-            btnCPU.setBackground(Color.decode("#2C3E50"));
-            btnCPU.setForeground(Color.decode("#FFF8F0"));
-            btnStorage.setBackground(Color.decode("#2C3E50"));
-            btnStorage.setForeground(Color.decode("#FFF8F0"));
-            btnMotherboard.setBackground(Color.decode("#2C3E50"));
-            btnMotherboard.setForeground(Color.decode("#FFF8F0"));
-            btnCooler.setBackground(Color.decode("#2C3E50"));
-            btnCooler.setForeground(Color.decode("#FFF8F0"));
-            btnCase.setBackground(Color.decode("#2C3E50"));
-            btnCase.setForeground(Color.decode("#FFF8F0"));
-            btnPowerSupply.setBackground(Color.decode("#2C3E50"));
-            btnPowerSupply.setForeground(Color.decode("#FFF8F0"));
+            pressedBtn(btnMemory, allLeftBtns);
         } else if (e.getSource() == btnStorage) {
             pnlButtonsSales.setVisible(false);
             pnlOrders.setVisible(false);
@@ -977,22 +790,7 @@ public class AdminFrame implements ActionListener {
             pnlCase.setVisible(false);
             pnlEmp.setVisible(false);
             pnlOthersTab.setVisible(false);
-            btnStorage.setForeground(Color.decode("#FFF8F0"));
-            btnStorage.setBackground(Color.decode("#04aa6d"));
-            btnGPU.setBackground(Color.decode("#2C3E50"));
-            btnGPU.setForeground(Color.decode("#FFF8F0"));
-            btnMemory.setBackground(Color.decode("#2C3E50"));
-            btnMemory.setForeground(Color.decode("#FFF8F0"));
-            btnCPU.setBackground(Color.decode("#2C3E50"));
-            btnCPU.setForeground(Color.decode("#FFF8F0"));
-            btnMotherboard.setBackground(Color.decode("#2C3E50"));
-            btnMotherboard.setForeground(Color.decode("#FFF8F0"));
-            btnCooler.setBackground(Color.decode("#2C3E50"));
-            btnCooler.setForeground(Color.decode("#FFF8F0"));
-            btnCase.setBackground(Color.decode("#2C3E50"));
-            btnCase.setForeground(Color.decode("#FFF8F0"));
-            btnPowerSupply.setBackground(Color.decode("#2C3E50"));
-            btnPowerSupply.setForeground(Color.decode("#FFF8F0"));
+            pressedBtn(btnStorage, allLeftBtns);
         } else if (e.getSource() == btnMotherboard) {
             pnlButtonsSales.setVisible(false);
             pnlOrders.setVisible(false);
@@ -1011,22 +809,7 @@ public class AdminFrame implements ActionListener {
             pnlCase.setVisible(false);
             pnlEmp.setVisible(false);
             pnlOthersTab.setVisible(false);
-            btnMotherboard.setForeground(Color.decode("#FFF8F0"));
-            btnMotherboard.setBackground(Color.decode("#04aa6d"));
-            btnGPU.setBackground(Color.decode("#2C3E50"));
-            btnGPU.setForeground(Color.decode("#FFF8F0"));
-            btnMemory.setBackground(Color.decode("#2C3E50"));
-            btnMemory.setForeground(Color.decode("#FFF8F0"));
-            btnStorage.setBackground(Color.decode("#2C3E50"));
-            btnStorage.setForeground(Color.decode("#FFF8F0"));
-            btnCPU.setBackground(Color.decode("#2C3E50"));
-            btnCPU.setForeground(Color.decode("#FFF8F0"));
-            btnCooler.setBackground(Color.decode("#2C3E50"));
-            btnCooler.setForeground(Color.decode("#FFF8F0"));
-            btnCase.setBackground(Color.decode("#2C3E50"));
-            btnCase.setForeground(Color.decode("#FFF8F0"));
-            btnPowerSupply.setBackground(Color.decode("#2C3E50"));
-            btnPowerSupply.setForeground(Color.decode("#FFF8F0"));
+            pressedBtn(btnMotherboard, allLeftBtns);
         } else if (e.getSource() == btnCooler) {
             pnlButtonsSales.setVisible(false);
             pnlOrders.setVisible(false);
@@ -1045,23 +828,8 @@ public class AdminFrame implements ActionListener {
             pnlCase.setVisible(false);
             pnlEmp.setVisible(false);
             pnlOthersTab.setVisible(false);
+            pressedBtn(btnCooler, allLeftBtns);
 
-            btnCooler.setForeground(Color.decode("#FFF8F0"));
-            btnCooler.setBackground(Color.decode("#04aa6d"));
-            btnCPU.setBackground(Color.decode("#2C3E50"));
-            btnCPU.setForeground(Color.decode("#FFF8F0"));
-            btnGPU.setBackground(Color.decode("#2C3E50"));
-            btnGPU.setForeground(Color.decode("#FFF8F0"));
-            btnMemory.setBackground(Color.decode("#2C3E50"));
-            btnMemory.setForeground(Color.decode("#FFF8F0"));
-            btnStorage.setBackground(Color.decode("#2C3E50"));
-            btnStorage.setForeground(Color.decode("#FFF8F0"));
-            btnMotherboard.setBackground(Color.decode("#2C3E50"));
-            btnMotherboard.setForeground(Color.decode("#FFF8F0"));
-            btnCase.setBackground(Color.decode("#2C3E50"));
-            btnCase.setForeground(Color.decode("#FFF8F0"));
-            btnPowerSupply.setBackground(Color.decode("#2C3E50"));
-            btnPowerSupply.setForeground(Color.decode("#FFF8F0"));
         } else if (e.getSource() == btnCase) {
             pnlButtonsSales.setVisible(false);
             pnlOrders.setVisible(false);
@@ -1081,22 +849,7 @@ public class AdminFrame implements ActionListener {
             pnlEmp.setVisible(false);
             pnlOthersTab.setVisible(false);
 
-            btnCase.setForeground(Color.decode("#FFF8F0"));
-            btnCase.setBackground(Color.decode("#04aa6d"));
-            btnCPU.setBackground(Color.decode("#2C3E50"));
-            btnCPU.setForeground(Color.decode("#FFF8F0"));
-            btnGPU.setBackground(Color.decode("#2C3E50"));
-            btnGPU.setForeground(Color.decode("#FFF8F0"));
-            btnMemory.setBackground(Color.decode("#2C3E50"));
-            btnMemory.setForeground(Color.decode("#FFF8F0"));
-            btnStorage.setBackground(Color.decode("#2C3E50"));
-            btnStorage.setForeground(Color.decode("#FFF8F0"));
-            btnMotherboard.setBackground(Color.decode("#2C3E50"));
-            btnMotherboard.setForeground(Color.decode("#FFF8F0"));
-            btnCooler.setBackground(Color.decode("#2C3E50"));
-            btnCooler.setForeground(Color.decode("#FFF8F0"));
-            btnPowerSupply.setBackground(Color.decode("#2C3E50"));
-            btnPowerSupply.setForeground(Color.decode("#FFF8F0"));
+            pressedBtn(btnCase, allLeftBtns);
         } else if (e.getSource() == btnPowerSupply) {
             pnlButtonsSales.setVisible(false);
             pnlOrders.setVisible(false);
@@ -1115,23 +868,14 @@ public class AdminFrame implements ActionListener {
             pnlCase.setVisible(false);
             pnlEmp.setVisible(false);
             pnlOthersTab.setVisible(false);
-            btnPowerSupply.setForeground(Color.decode("#FFF8F0"));
-            btnPowerSupply.setBackground(Color.decode("#04aa6d"));
-            btnCPU.setForeground(Color.decode("#2C3E50"));
-            btnCPU.setBackground(Color.decode("#FFF8F0"));
-            btnGPU.setForeground(Color.decode("#2C3E50"));
-            btnGPU.setBackground(Color.decode("#FFF8F0"));
-            btnMemory.setForeground(Color.decode("#2C3E50"));
-            btnMemory.setBackground(Color.decode("#FFF8F0"));
-            btnStorage.setForeground(Color.decode("#2C3E50"));
-            btnStorage.setBackground(Color.decode("#FFF8F0"));
-            btnMotherboard.setForeground(Color.decode("#2C3E50"));
-            btnMotherboard.setBackground(Color.decode("#FFF8F0"));
-            btnCooler.setForeground(Color.decode("#2C3E50"));
-            btnCooler.setBackground(Color.decode("#FFF8F0"));
-            btnCase.setForeground(Color.decode("#2C3E50"));
-            btnCase.setBackground(Color.decode("#FFF8F0"));
-        }  else if (e.getSource() == btnEmp) {
+            pressedBtn(btnPowerSupply, allLeftBtns);
+        } else if (e.getSource() == btnConsoles) {
+            pressedBtn(btnConsoles, allLeftBtns);
+        } else if (e.getSource() == btnAccessories) {
+            pressedBtn(btnAccessories, allLeftBtns);
+        } else if (e.getSource() == btnGames) {
+            pressedBtn(btnGames, allLeftBtns);
+        } else if (e.getSource() == btnEmp) {
             pnlButtonsSales.setVisible(false);
             pnlOrders.setVisible(false);
             pnlPayments.setVisible(false);
@@ -1191,14 +935,60 @@ public class AdminFrame implements ActionListener {
         }
     }
 
+    public static void pressedBtn(JButton selectedButton, JButton[] allButtons) {
+        // Set selected button's background color and font style
+        selectedButton.setBackground(Color.decode("#04aa6d"));
+        selectedButton.setForeground(Color.WHITE);
+        selectedButton.setFont(new Font("Roboto", Font.BOLD, 17));
+
+        for (JButton btn : allButtons) {
+            if (btn != selectedButton) {
+                // Reset background color and style for other buttons
+                btn.setBackground(Color.decode("#2C3E50"));
+                btn.setForeground(Color.WHITE);
+            }
+        }
+    }
+
+
+    private void leftBtnDesigns(JButton btnLeft) {
+        // Set only the initial button styles (no background color change here)
+        btnLeft.setFont(new Font("Roboto", Font.BOLD, 17));
+        btnLeft.setForeground(Color.WHITE);
+        btnLeft.setBackground(Color.decode("#2C3E50"));
+        btnLeft.setContentAreaFilled(true);
+        btnLeft.setBorder(BorderFactory.createEmptyBorder());
+        btnLeft.addMouseListener(new MouseAdapter() {
+            public void mouseEntered(MouseEvent e) {
+                btnLeft.setForeground(hoverTextColor);
+                btnLeft.setBorder(BorderFactory.createLineBorder(hoverTextColor, 4));
+            }
+
+            public void mouseExited(MouseEvent e) {
+                btnLeft.setForeground(Color.WHITE);
+                btnLeft.setBorder(BorderFactory.createEmptyBorder());
+            }
+        });
+    }
+
+
+    /*private void pnlTables() {
+        JPanel pnlTables = new JPanel();
+        pnlTables.setLayout(null);
+        pnlTables.setBackground(Color.decode("#95adad"));
+        pnlTables.setBounds(250, 130, 1050, 800);
+    }*/
+
     private void addTables() {
         AdminTableViews adminTableViews = new AdminTableViews();
         JScrollPane customerTableScrollPane = adminTableViews.viewCustomerTable();
-        pnlCustomerAcc.removeAll(); // Clear existing components to avoid duplication
+        pnlCustomerAcc.removeAll();
         pnlCustomerAcc.add(customerTableScrollPane, BorderLayout.CENTER);
-        pnlCustomerAcc.revalidate(); // Revalidate to refresh layout
-        pnlCustomerAcc.repaint(); // Repaint to update UI
+        pnlCustomerAcc.revalidate();
+        pnlCustomerAcc.repaint();
     }
+
+
 
 }
 
