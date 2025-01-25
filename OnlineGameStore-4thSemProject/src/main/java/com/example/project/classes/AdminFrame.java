@@ -9,19 +9,15 @@ import java.awt.event.MouseEvent;
 
 public class AdminFrame implements ActionListener {
     public JFrame adminFrm;
-    public JPanel pnl1, pnlAccount, pnlTabs,pnlOthersTab, pnlTools;
-    public JLabel lbl1, lblAccDetails, lblNAME, lblUserAddress, lblADDRESS, lblUserPhone, lblPHONE, lblUserName, lblCART, lblCartBar, lblUserBar, lblTotalPrice;
-    public JButton btnViewHome, btnUser, btnBack, btnEditDetails,btnPowerSupply, btnInventory, btnEmp, btnOthers,  btnBackCart;
+    public JPanel pnl1,pnlTabs,pnlOthersTab, pnlTools;
+    public JLabel lblUserBar;
+    public JButton btnUser,btnPowerSupply, btnInventory, btnEmp, btnOthers;
     public JPanel  pnlDBTable, pnlButtons ;
     public JPanel pnlButtonsSales, pnlEmp;
-    //public JButton btnInventory;
-    public JButton btnSales, btnCustomerAcc, btnOrders, btnPayments, btnOthers1, btnOthers2, btnOthers3, btnOthers4;
-    //public JButton btnEmp;
-    //public JButton btnOthers;
+    public JButton btnSales, btnCustomerAcc, btnOrders, btnPayments, btnOthers1, btnOthers2;
     public JButton btnAll, btnCPU, btnGPU, btnMemory, btnStorage, btnMotherboard, btnCase, btnCooler, btnConsoles, btnAccessories, btnGames;
 
     Color hoverTextColor = Color.decode("#9763F6");
-    Color originalColor = Color.decode("#2C3E50");
 
 
 
@@ -86,43 +82,28 @@ public class AdminFrame implements ActionListener {
 
 
         btnSales = new JButton("SALES");
-        btnSales.setFont(new Font("Roboto", Font.BOLD, 17));
-        btnSales.setForeground(Color.decode("#2C3E50"));
-        btnSales.setBackground(Color.decode("#FFF8F0"));
-        btnSales.setContentAreaFilled(true);
-        btnSales.setBorderPainted(false);
         btnSales.setBounds(200, 10, 250, 35);
-        pnlTabs.add(btnSales);
+        tabBtnDesigns(btnSales);
         btnSales.addActionListener(this);
-
+        pnlTabs.add(btnSales);
 
         btnInventory = new JButton("INVENTORY");
-        btnInventory.setFont(new Font("Roboto", Font.BOLD, 17));
-        btnInventory.setForeground(Color.decode("#FFF8F0"));
-        btnInventory.setBackground(Color.decode("#2C3E50"));
-        btnInventory.setContentAreaFilled(true);
-        btnInventory.setBorderPainted(false);
         btnInventory.setBounds(450, 10, 250, 35);
-        pnlTabs.add(btnInventory);
+        tabBtnDesigns(btnInventory);
         btnInventory.addActionListener(this);
+        pnlTabs.add(btnInventory);
+
 
         btnEmp = new JButton("EMPLOYEES");
-        btnEmp.setFont(new Font("Roboto", Font.BOLD, 17));
-        btnEmp.setForeground(Color.decode("#FFF8F0"));
-        btnEmp.setBackground(Color.decode("#2C3E50"));
-        btnEmp.setContentAreaFilled(true);
-        btnEmp.setBorderPainted(false);
         btnEmp.setBounds(700, 10, 260, 35);
-        pnlTabs.add(btnEmp);
+        tabBtnDesigns(btnEmp);
         btnEmp.addActionListener(this);
+        pnlTabs.add(btnEmp);
+
 
         btnOthers = new JButton("OTHERS");
-        btnOthers.setFont(new Font("Roboto", Font.BOLD, 17));
-        btnOthers.setForeground(Color.decode("#FFF8F0"));
-        btnOthers.setBackground(Color.decode("#2C3E50"));
-        btnOthers.setContentAreaFilled(true);
-        btnOthers.setBorderPainted(false);
         btnOthers.setBounds(960, 10, 200, 35);
+        tabBtnDesigns(btnOthers);
         btnOthers.addActionListener(this);
         pnlTabs.add(btnOthers);
 
@@ -134,9 +115,6 @@ public class AdminFrame implements ActionListener {
         pnlButtonsSales.setBounds(30, 350, 230, 500);
         pnlButtonsSales.setVisible(true);
         adminFrm.add(pnlButtonsSales);
-
-
-
 
         btnOrders = new JButton("ORDERS");
         btnOrders.setBounds(0, 0, 225, 35);
@@ -280,19 +258,11 @@ public class AdminFrame implements ActionListener {
         adminFrm.add(pnlOthersTab);
 
 
-
-
-        addTables();
         adminFrm.setVisible(true);
-
-
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
             new AdminFrame();
-
-        });
     }
 
     @Override
@@ -304,99 +274,59 @@ public class AdminFrame implements ActionListener {
                 btnConsoles, btnAccessories, btnGames
         };
 
+        JButton[] allTabBtns = {btnSales, btnInventory, btnEmp, btnOthers};
+
 
         if(e.getSource() == btnSales) {
             pnlButtonsSales.setVisible(true);
             pnlButtons.setVisible(false);
             pnlEmp.setVisible(false);
             pnlOthersTab.setVisible(false);
-            btnSales.setForeground(Color.decode("#2C3E50"));
-            btnSales.setBackground(Color.decode("#FFF8F0"));
-            btnInventory.setForeground(Color.decode("#FFF8F0"));
-            btnInventory.setBackground(Color.decode("#2C3E50"));
-            btnEmp.setForeground(Color.decode("#FFF8F0"));
-            btnEmp.setBackground(Color.decode("#2C3E50"));
-            btnOthers.setForeground(Color.decode("#FFF8F0"));
-            btnOthers.setBackground(Color.decode("#2C3E50"));
-            btnOrders.setForeground(Color.decode("#FFF8F0"));
-            btnOrders.setBackground(Color.decode("#04aa6d"));
-            btnPayments.setBackground(Color.decode("#2C3E50"));
-            btnPayments.setForeground(Color.decode("#FFF8F0"));
-            btnCustomerAcc.setBackground(Color.decode("#2C3E50"));
-            btnCustomerAcc.setForeground(Color.decode("#FFF8F0"));
-            btnOthers1.setBackground(Color.decode("#2C3E50"));
-            btnOthers1.setForeground(Color.decode("#FFF8F0"));
-            btnOthers2.setBackground(Color.decode("#2C3E50"));
-            btnOthers2.setForeground(Color.decode("#FFF8F0"));
+            pressedTabBtn(btnSales, allTabBtns);
+            pressedBtn(btnOrders, allLeftBtns);
         } else if (e.getSource() == btnOrders) {
             pnlButtonsSales.setVisible(true);
             pnlButtons.setVisible(false);
             pnlEmp.setVisible(false);
             pnlOthersTab.setVisible(false);
+            pressedTabBtn(btnSales, allTabBtns);
             pressedBtn(btnOrders, allLeftBtns);
         } else if (e.getSource() == btnPayments) {
             pnlButtonsSales.setVisible(true);
             pnlButtons.setVisible(false);
             pnlEmp.setVisible(false);
             pnlOthersTab.setVisible(false);
+            pressedTabBtn(btnSales, allTabBtns);
             pressedBtn(btnPayments, allLeftBtns);
         } else if (e.getSource() == btnCustomerAcc) {
             pnlButtonsSales.setVisible(true);
             pnlButtons.setVisible(false);
             pnlEmp.setVisible(false);
             pnlOthersTab.setVisible(false);
+            pressedTabBtn(btnSales, allTabBtns);
             pressedBtn(btnCustomerAcc, allLeftBtns);
-            addTables();
+            showTable("Customer");
         } else if (e.getSource() == btnOthers1) {
             pnlButtonsSales.setVisible(true);
             pnlButtons.setVisible(false);
             pnlEmp.setVisible(false);
             pnlOthersTab.setVisible(false);
+            pressedTabBtn(btnSales, allTabBtns);
             pressedBtn(btnOthers1, allLeftBtns);
         } else if (e.getSource() == btnOthers2) {
             pnlButtonsSales.setVisible(true);
             pnlButtons.setVisible(false);
             pnlEmp.setVisible(false);
             pnlOthersTab.setVisible(false);
-            btnOthers2.setForeground(Color.decode("#FFF8F0"));
-            btnOthers2.setBackground(Color.decode("#04aa6d"));
-            btnPayments.setBackground(Color.decode("#2C3E50"));
-            btnPayments.setForeground(Color.decode("#FFF8F0"));
-            btnCustomerAcc.setBackground(Color.decode("#2C3E50"));
-            btnCustomerAcc.setForeground(Color.decode("#FFF8F0"));
-            btnOthers1.setBackground(Color.decode("#2C3E50"));
-            btnOthers1.setForeground(Color.decode("#FFF8F0"));
-            btnOrders.setBackground(Color.decode("#2C3E50"));
-            btnOrders.setForeground(Color.decode("#FFF8F0"));
+            pressedTabBtn(btnSales, allTabBtns);
+            pressedBtn(btnOthers2, allLeftBtns);
         } else if (e.getSource() == btnInventory) {
             pnlButtonsSales.setVisible(false);
             pnlButtons.setVisible(true);
             pnlEmp.setVisible(false);
             pnlOthersTab.setVisible(false);
-            btnInventory.setForeground(Color.decode("#2C3E50"));
-            btnInventory.setBackground(Color.decode("#FFF8F0"));
-            btnSales.setForeground(Color.decode("#FFF8F0"));
-            btnSales.setBackground(Color.decode("#2C3E50"));
-            btnEmp.setForeground(Color.decode("#FFF8F0"));
-            btnEmp.setBackground(Color.decode("#2C3E50"));
-            btnOthers.setForeground(Color.decode("#FFF8F0"));
-            btnOthers.setBackground(Color.decode("#2C3E50"));
-            btnCPU.setForeground(Color.decode("#FFF8F0"));
-            btnCPU.setBackground(Color.decode("#04aa6d"));
-            btnGPU.setBackground(Color.decode("#2C3E50"));
-            btnGPU.setForeground(Color.decode("#FFF8F0"));
-            btnMemory.setBackground(Color.decode("#2C3E50"));
-            btnMemory.setForeground(Color.decode("#FFF8F0"));
-            btnStorage.setBackground(Color.decode("#2C3E50"));
-            btnStorage.setForeground(Color.decode("#FFF8F0"));
-            btnMotherboard.setBackground(Color.decode("#2C3E50"));
-            btnMotherboard.setForeground(Color.decode("#FFF8F0"));
-            btnCooler.setBackground(Color.decode("#2C3E50"));
-            btnCooler.setForeground(Color.decode("#FFF8F0"));
-            btnCase.setBackground(Color.decode("#2C3E50"));
-            btnCase.setForeground(Color.decode("#FFF8F0"));
-            btnPowerSupply.setBackground(Color.decode("#2C3E50"));
-            btnPowerSupply.setForeground(Color.decode("#FFF8F0"));
+            pressedTabBtn(btnInventory, allTabBtns);
+            pressedBtn(btnAll, allLeftBtns);
         } else if (e.getSource() == btnAll) {
             pressedBtn(btnAll, allLeftBtns);
         } else if (e.getSource() == btnCPU) {
@@ -404,43 +334,49 @@ public class AdminFrame implements ActionListener {
             pnlButtons.setVisible(true);
             pnlEmp.setVisible(false);
             pnlOthersTab.setVisible(false);
+            pressedTabBtn(btnInventory, allTabBtns);
             pressedBtn(btnCPU, allLeftBtns);
         } else if (e.getSource() == btnGPU) {
             pnlButtonsSales.setVisible(false);
             pnlButtons.setVisible(true);
             pnlEmp.setVisible(false);
             pnlOthersTab.setVisible(false);
+            pressedTabBtn(btnInventory, allTabBtns);
             pressedBtn(btnGPU, allLeftBtns);
         } else if (e.getSource() == btnMemory) {
             pnlButtonsSales.setVisible(false);
             pnlButtons.setVisible(true);
             pnlEmp.setVisible(false);
             pnlOthersTab.setVisible(false);
+            pressedTabBtn(btnInventory, allTabBtns);
             pressedBtn(btnMemory, allLeftBtns);
         } else if (e.getSource() == btnStorage) {
             pnlButtonsSales.setVisible(false);
             pnlButtons.setVisible(true);
             pnlOthersTab.setVisible(false);
+            pressedTabBtn(btnInventory, allTabBtns);
             pressedBtn(btnStorage, allLeftBtns);
         } else if (e.getSource() == btnMotherboard) {
             pnlButtonsSales.setVisible(false);
             pnlButtons.setVisible(true);
             pnlEmp.setVisible(false);
             pnlOthersTab.setVisible(false);
+            pressedTabBtn(btnInventory, allTabBtns);
             pressedBtn(btnMotherboard, allLeftBtns);
         } else if (e.getSource() == btnCooler) {
             pnlButtonsSales.setVisible(false);
             pnlButtons.setVisible(true);
             pnlEmp.setVisible(false);
             pnlOthersTab.setVisible(false);
+            pressedTabBtn(btnInventory, allTabBtns);
             pressedBtn(btnCooler, allLeftBtns);
 
         } else if (e.getSource() == btnCase) {
             pnlButtonsSales.setVisible(false);
             pnlButtons.setVisible(true);
             pnlOthersTab.setVisible(false);
-
             pressedBtn(btnCase, allLeftBtns);
+            pressedTabBtn(btnInventory, allTabBtns);
         } else if (e.getSource() == btnPowerSupply) {
             pnlButtonsSales.setVisible(false);
             pnlButtons.setVisible(true);
@@ -457,27 +393,13 @@ public class AdminFrame implements ActionListener {
             pnlButtons.setVisible(false);
             pnlEmp.setVisible(true);
             pnlOthersTab.setVisible(false);
-            btnEmp.setForeground(Color.decode("#2C3E50"));
-            btnEmp.setBackground(Color.decode("#FFF8F0"));
-            btnSales.setForeground(Color.decode("#FFF8F0"));
-            btnSales.setBackground(Color.decode("#2C3E50"));
-            btnInventory.setForeground(Color.decode("#FFF8F0"));
-            btnInventory.setBackground(Color.decode("#2C3E50"));
-            btnOthers.setForeground(Color.decode("#FFF8F0"));
-            btnOthers.setBackground(Color.decode("#2C3E50"));
+            pressedTabBtn(btnEmp, allTabBtns);
         } else if (e.getSource() == btnOthers) {
             pnlButtonsSales.setVisible(false);
             pnlButtons.setVisible(false);
             pnlEmp.setVisible(false);
             pnlOthersTab.setVisible(true);
-            btnOthers.setForeground(Color.decode("#2C3E50"));
-            btnOthers.setBackground(Color.decode("#FFF8F0"));
-            btnSales.setForeground(Color.decode("#FFF8F0"));
-            btnSales.setBackground(Color.decode("#2C3E50"));
-            btnInventory.setForeground(Color.decode("#FFF8F0"));
-            btnInventory.setBackground(Color.decode("#2C3E50"));
-            btnEmp.setForeground(Color.decode("#FFF8F0"));
-            btnEmp.setBackground(Color.decode("#2C3E50"));
+            pressedTabBtn(btnOthers, allTabBtns);
         }
     }
 
@@ -494,6 +416,21 @@ public class AdminFrame implements ActionListener {
             }
         }
     }
+
+    public static void pressedTabBtn(JButton selectedButton, JButton[] allButtons) {
+
+        selectedButton.setBackground(Color.WHITE);
+        selectedButton.setForeground(Color.decode("#2C3E50"));
+        selectedButton.setFont(new Font("Roboto", Font.BOLD, 17));
+
+        for (JButton btn : allButtons) {
+            if (btn != selectedButton) {
+                btn.setBackground(Color.decode("#2c3e50"));
+                btn.setForeground(Color.WHITE);
+            }
+        }
+    }
+
 
 
     private void leftBtnDesigns(JButton btnLeft) {
@@ -516,19 +453,41 @@ public class AdminFrame implements ActionListener {
         });
     }
 
+    private void tabBtnDesigns(JButton btnTabs) {
+        btnTabs.setFont(new Font("Roboto", Font.BOLD, 17));
+        btnTabs.setForeground(Color.decode("#FFF8F0"));
+        btnTabs.setBackground(Color.decode("#2C3E50"));
+        btnTabs.setContentAreaFilled(true);
+        btnTabs.setBorderPainted(false);
+        /*btnTabs.setBorder(BorderFactory.createEmptyBorder());
+        btnTabs.addMouseListener(new MouseAdapter() {
+            public void mouseEntered(MouseEvent e) {
+                btnTabs.setBackground(Color.decode("#1d2a35"));
+                btnTabs.setBorder(BorderFactory.createLineBorder(hoverTextColor, 9));
+            }
 
-    /*private void pnlDBTables() {
-        JPanel pnlDBTables = new JPanel();
-        pnlDBTables.setLayout(null);
-        pnlDBTables.setBackground(Color.decode("#95adad"));
-        pnlDBTables.setBounds(250, 130, 1050, 800);
-    }*/
+            public void mouseExited(MouseEvent e) {
+                btnTabs.setBackground(Color.decode("#2C3E50"));
+                btnTabs.setBorder(BorderFactory.createEmptyBorder());
+            }
+        }); */
+    }
 
-    private void addTables() {
+
+
+    private void showTable(String tableType) {
         AdminTableViews adminTableViews = new AdminTableViews();
-        JScrollPane customerTableScrollPane = adminTableViews.viewCustomerTable();
+        JScrollPane tableScrollPane;
+
+        switch (tableType) {
+            case "Customer":
+                tableScrollPane = adminTableViews.viewCustomerTable();
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown table type: " + tableType);
+        }
         pnlDBTable.removeAll();
-        pnlDBTable.add(customerTableScrollPane, BorderLayout.CENTER);
+        pnlDBTable.add(tableScrollPane, BorderLayout.CENTER);
         pnlDBTable.revalidate();
         pnlDBTable.repaint();
     }
