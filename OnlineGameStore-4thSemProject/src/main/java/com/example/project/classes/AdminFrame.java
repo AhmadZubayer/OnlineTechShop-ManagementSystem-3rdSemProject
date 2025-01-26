@@ -313,6 +313,7 @@ public class AdminFrame implements ActionListener {
             pnlOthersTab.setVisible(false);
             pressedTabBtn(btnSales, allTabBtns);
             pressedBtn(btnOthers1, allLeftBtns);
+
         } else if (e.getSource() == btnOthers2) {
             pnlButtonsSales.setVisible(true);
             pnlButtons.setVisible(false);
@@ -327,8 +328,10 @@ public class AdminFrame implements ActionListener {
             pnlOthersTab.setVisible(false);
             pressedTabBtn(btnInventory, allTabBtns);
             pressedBtn(btnAll, allLeftBtns);
+            showTable("AllProducts");
         } else if (e.getSource() == btnAll) {
             pressedBtn(btnAll, allLeftBtns);
+            showTable("AllProducts");
         } else if (e.getSource() == btnCPU) {
             pnlButtonsSales.setVisible(false);
             pnlButtons.setVisible(true);
@@ -482,6 +485,9 @@ public class AdminFrame implements ActionListener {
         switch (tableType) {
             case "Customer":
                 tableScrollPane = adminTableViews.viewCustomerTable();
+                break;
+            case "AllProducts":
+                tableScrollPane = adminTableViews.viewAllProductsTable();
                 break;
             default:
                 throw new IllegalArgumentException("Unknown table type: " + tableType);

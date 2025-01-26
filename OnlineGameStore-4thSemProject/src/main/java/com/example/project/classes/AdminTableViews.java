@@ -77,6 +77,38 @@ public class AdminTableViews extends JFrame {
         return createTable(data, columnNames);
     }
 
+    public JScrollPane viewAllProductsTable() {
+        ArrayList<String[]> productList = new ArrayList<>();
+        String query = "SELECT * FROM Products;";
+
+        try (Connection connection = DatabaseConfig.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet rs = statement.executeQuery(query)) {
+
+            while (rs.next()) {
+                String productId = rs.getString("PRODUCT_ID");
+                String productName = rs.getString("PRODUCT_NAME");
+                String brand = rs.getString("BRAND");
+                String category = rs.getString("CATEGORY");
+                String price = String.valueOf(rs.getDouble("PRICE"));
+                String vat = String.valueOf(rs.getDouble("VAT"));
+                String availableQuantity = String.valueOf(rs.getInt("AVAILABLE_QUANTITY"));
+                String sold = String.valueOf(rs.getInt("SOLD"));
+
+                productList.add(new String[]{productId, productName, brand, category, price, vat, availableQuantity, sold});
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error loading product data: " + e.getMessage(),
+                    "Database Error", JOptionPane.ERROR_MESSAGE);
+            return new JScrollPane(new JTable());
+        }
+
+        String[][] data = productList.toArray(new String[0][0]);
+        String[] columnNames = {"Product ID", "Product Name", "Brand", "Category", "Price", "VAT", "Available Quantity", "Sold"};
+        return createTable(data, columnNames);
+    }
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             AdminTableViews frame = new AdminTableViews();
