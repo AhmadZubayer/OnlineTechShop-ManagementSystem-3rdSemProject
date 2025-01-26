@@ -77,9 +77,51 @@ public class AdminTableViews extends JFrame {
         return createTable(data, columnNames);
     }
 
-    public JScrollPane viewAllProductsTable() {
+    public JScrollPane viewAllProductsTable(String sort) {
         ArrayList<String[]> productList = new ArrayList<>();
-        String query = "SELECT * FROM Products;";
+        String query;
+
+        switch (sort.toLowerCase()) {
+            case "all":
+                query = "SELECT * FROM Products;";
+                break;
+            case "cpu":
+                query = "SELECT * FROM Products WHERE CATEGORY = 'CPU';";
+                break;
+            case "gpu":
+                query = "SELECT * FROM Products WHERE CATEGORY = 'GPU';";
+                break;
+            case "memory":
+                query = "SELECT * FROM Products WHERE CATEGORY = 'MEMORY';";
+                break;
+            case "ssd":
+                query = "SELECT * FROM Products WHERE CATEGORY = 'SSD';";
+                break;
+            case "motherboard":
+                query = "SELECT * FROM Products WHERE CATEGORY = 'MOTHERBOARD';";
+                break;
+            case "case":
+                query = "SELECT * FROM Products WHERE CATEGORY = 'CASE';";
+                break;
+            case "cooler":
+                query = "SELECT * FROM Products WHERE CATEGORY = 'COOLER';";
+                break;
+            case "psu":
+                query = "SELECT * FROM Products WHERE CATEGORY = 'PSU';";
+                break;
+            case "gaming consoles":
+                query = "SELECT * FROM Products WHERE CATEGORY = 'Gaming Consoles';";
+                break;
+            case "gaming accessories":
+                query = "SELECT * FROM Products WHERE CATEGORY = 'Gaming Accessories';";
+                break;
+            case "games":
+                query = "SELECT * FROM Products WHERE CATEGORY = 'Games';";
+                break;
+            default:
+                query = "SELECT * FROM Products;";
+                break;
+        }
 
         try (Connection connection = DatabaseConfig.getConnection();
              Statement statement = connection.createStatement();

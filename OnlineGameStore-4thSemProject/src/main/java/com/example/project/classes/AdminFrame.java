@@ -18,6 +18,7 @@ public class AdminFrame implements ActionListener {
     public JButton btnAll, btnCPU, btnGPU, btnMemory, btnStorage, btnMotherboard, btnCase, btnCooler, btnConsoles, btnAccessories, btnGames;
 
     Color hoverTextColor = Color.decode("#9763F6");
+    String productCategory;
 
 
 
@@ -328,15 +329,19 @@ public class AdminFrame implements ActionListener {
             pnlOthersTab.setVisible(false);
             pressedTabBtn(btnInventory, allTabBtns);
             pressedBtn(btnAll, allLeftBtns);
-            showTable("AllProducts");
+            productCategory = "allproducts";
+            showTable(productCategory);
         } else if (e.getSource() == btnAll) {
             pressedBtn(btnAll, allLeftBtns);
-            showTable("AllProducts");
+            productCategory = "allproducts";
+            showTable(productCategory);
         } else if (e.getSource() == btnCPU) {
             pnlButtonsSales.setVisible(false);
             pnlButtons.setVisible(true);
             pnlEmp.setVisible(false);
             pnlOthersTab.setVisible(false);
+            productCategory = "cpu";
+            showTable(productCategory);
             pressedTabBtn(btnInventory, allTabBtns);
             pressedBtn(btnCPU, allLeftBtns);
         } else if (e.getSource() == btnGPU) {
@@ -344,6 +349,8 @@ public class AdminFrame implements ActionListener {
             pnlButtons.setVisible(true);
             pnlEmp.setVisible(false);
             pnlOthersTab.setVisible(false);
+            productCategory = "gpu";
+            showTable(productCategory);
             pressedTabBtn(btnInventory, allTabBtns);
             pressedBtn(btnGPU, allLeftBtns);
         } else if (e.getSource() == btnMemory) {
@@ -353,12 +360,16 @@ public class AdminFrame implements ActionListener {
             pnlOthersTab.setVisible(false);
             pressedTabBtn(btnInventory, allTabBtns);
             pressedBtn(btnMemory, allLeftBtns);
+            productCategory = "memory";
+            showTable(productCategory);
         } else if (e.getSource() == btnStorage) {
             pnlButtonsSales.setVisible(false);
             pnlButtons.setVisible(true);
             pnlOthersTab.setVisible(false);
             pressedTabBtn(btnInventory, allTabBtns);
             pressedBtn(btnStorage, allLeftBtns);
+            productCategory = "storage";
+            showTable(productCategory);
         } else if (e.getSource() == btnMotherboard) {
             pnlButtonsSales.setVisible(false);
             pnlButtons.setVisible(true);
@@ -366,6 +377,8 @@ public class AdminFrame implements ActionListener {
             pnlOthersTab.setVisible(false);
             pressedTabBtn(btnInventory, allTabBtns);
             pressedBtn(btnMotherboard, allLeftBtns);
+            productCategory = "motherboard";
+            showTable(productCategory);
         } else if (e.getSource() == btnCooler) {
             pnlButtonsSales.setVisible(false);
             pnlButtons.setVisible(true);
@@ -373,24 +386,35 @@ public class AdminFrame implements ActionListener {
             pnlOthersTab.setVisible(false);
             pressedTabBtn(btnInventory, allTabBtns);
             pressedBtn(btnCooler, allLeftBtns);
-
+            productCategory = "cooler";
+            showTable(productCategory);
         } else if (e.getSource() == btnCase) {
             pnlButtonsSales.setVisible(false);
             pnlButtons.setVisible(true);
             pnlOthersTab.setVisible(false);
             pressedBtn(btnCase, allLeftBtns);
             pressedTabBtn(btnInventory, allTabBtns);
+            productCategory = "case";
+            showTable(productCategory);
         } else if (e.getSource() == btnPowerSupply) {
             pnlButtonsSales.setVisible(false);
             pnlButtons.setVisible(true);
             pnlOthersTab.setVisible(false);
             pressedBtn(btnPowerSupply, allLeftBtns);
+            productCategory = "psu";
+            showTable(productCategory);
         } else if (e.getSource() == btnConsoles) {
             pressedBtn(btnConsoles, allLeftBtns);
+            productCategory = "consoles";
+            showTable(productCategory);
         } else if (e.getSource() == btnAccessories) {
             pressedBtn(btnAccessories, allLeftBtns);
+            productCategory = "accessories";
+            showTable(productCategory);
         } else if (e.getSource() == btnGames) {
             pressedBtn(btnGames, allLeftBtns);
+            productCategory = "games";
+            showTable(productCategory);
         } else if (e.getSource() == btnEmp) {
             pnlButtonsSales.setVisible(false);
             pnlButtons.setVisible(false);
@@ -478,20 +502,54 @@ public class AdminFrame implements ActionListener {
 
 
 
-    private void showTable(String tableType) {
+    private void showTable(String productCategory) {
         AdminTableViews adminTableViews = new AdminTableViews();
         JScrollPane tableScrollPane;
 
-        switch (tableType) {
-            case "Customer":
+        switch (productCategory.toLowerCase()) {
+            case "customer":
                 tableScrollPane = adminTableViews.viewCustomerTable();
                 break;
-            case "AllProducts":
-                tableScrollPane = adminTableViews.viewAllProductsTable();
+            case "allproducts":
+                tableScrollPane = adminTableViews.viewAllProductsTable("all");
+                break;
+            case "cpu":
+                tableScrollPane = adminTableViews.viewAllProductsTable("cpu");
+                break;
+            case "gpu":
+                tableScrollPane = adminTableViews.viewAllProductsTable("gpu");
+                break;
+            case "memory":
+                tableScrollPane = adminTableViews.viewAllProductsTable("memory");
+                break;
+            case "storage":
+                tableScrollPane = adminTableViews.viewAllProductsTable("ssd");
+                break;
+            case "motherboard":
+                tableScrollPane = adminTableViews.viewAllProductsTable("motherboard");
+                break;
+            case "cooler":
+                tableScrollPane = adminTableViews.viewAllProductsTable("cooler");
+                break;
+            case "case":
+                tableScrollPane = adminTableViews.viewAllProductsTable("case");
+                break;
+            case "psu":
+                tableScrollPane = adminTableViews.viewAllProductsTable("psu");
+                break;
+            case "consoles":
+                tableScrollPane = adminTableViews.viewAllProductsTable("gaming consoles");
+                break;
+            case "accessories":
+                tableScrollPane = adminTableViews.viewAllProductsTable("gaming accessories");
+                break;
+            case "games":
+                tableScrollPane = adminTableViews.viewAllProductsTable("games");
                 break;
             default:
-                throw new IllegalArgumentException("Unknown table type: " + tableType);
+                throw new IllegalArgumentException("Unknown product category: " + productCategory);
         }
+
         pnlDBTable.removeAll();
         pnlDBTable.add(tableScrollPane, BorderLayout.CENTER);
         pnlDBTable.revalidate();
