@@ -5,6 +5,7 @@ import com.example.project.database.DatabaseConfig;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -22,13 +23,30 @@ public class AdminTableViews extends JFrame {
     }
 
     public JScrollPane createTable(String[][] data, String[] columnNames) {
-        JTable table = new JTable(new DefaultTableModel(data, columnNames));
+        JTable table = new JTable(new DefaultTableModel(data, columnNames)) {
+            @Override
+            public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+                Component component = super.prepareRenderer(renderer, row, column);
+                if (!isRowSelected(row)) {
+                    // Alternate row colors
+                    component.setBackground(row % 2 == 0 ? Color.decode("#1d2a35") : Color.decode("#2c3e50"));
+                    component.setForeground(Color.WHITE);
+                } else {
+                    component.setBackground(Color.decode("#9763F6"));
+                    component.setForeground(Color.WHITE);
+                }
+                return component;
+            }
+        };
 
         table.setBackground(Color.decode("#1d2a35"));
         table.setForeground(Color.WHITE);
         table.setFont(new Font("Roboto", Font.PLAIN, 15));
         table.setRowHeight(35);
-        table.setGridColor(Color.WHITE);
+        table.setShowHorizontalLines(false);
+        table.setGridColor(Color.decode("#34495e"));
+
+        //table.setIntercellSpacing(new Dimension(5, 1));
 
         JTableHeader header = table.getTableHeader();
         header.setFont(new Font("Roboto", Font.BOLD, 16));
@@ -45,6 +63,8 @@ public class AdminTableViews extends JFrame {
 
         return tableScrollPane;
     }
+
+
 
     public JScrollPane viewCustomerTable() {
         ArrayList<String[]> customerList = new ArrayList<>();

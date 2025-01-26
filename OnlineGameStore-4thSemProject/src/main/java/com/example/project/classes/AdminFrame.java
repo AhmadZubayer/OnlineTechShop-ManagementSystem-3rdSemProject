@@ -9,8 +9,8 @@ import java.awt.event.MouseEvent;
 
 public class AdminFrame implements ActionListener {
     public JFrame adminFrm;
-    public JPanel pnl1,pnlTabs,pnlOthersTab, pnlTools;
-    public JLabel lblUserBar;
+    private JPanel pnl1,pnlTabs,pnlOthersTab, pnlTools;
+    private JLabel lblUserBar;
     public JButton btnUser,btnPowerSupply, btnInventory, btnEmp, btnOthers;
     public JPanel  pnlDBTable, pnlButtons ;
     public JPanel pnlButtonsSales, pnlEmp;
