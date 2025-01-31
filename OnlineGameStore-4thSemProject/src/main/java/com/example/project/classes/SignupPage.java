@@ -277,7 +277,7 @@ public class SignupPage implements ActionListener {
 
 
             try (Connection connection = DatabaseConfig.getConnection()) {
-                String checkCustomerIdQuery = "SELECT * FROM customer WHERE CUSTOMER_ID = ?";
+                String checkCustomerIdQuery = "SELECT * FROM customer WHERE C_USERNAME = ?";
                 PreparedStatement checkCustomerIdStmt = connection.prepareStatement(checkCustomerIdQuery);
                 checkCustomerIdStmt.setString(1, customerId);
                 ResultSet rsCustomerId = checkCustomerIdStmt.executeQuery();
@@ -307,7 +307,7 @@ public class SignupPage implements ActionListener {
                 }
 
                 // Insert new customer into the database
-                String insertQuery = "INSERT INTO customer (CUSTOMER_ID, CUSTOMER_NAME, PHONE_NO, EMAIL, ADDRESS, PASSWORD, DATE_REGISTERED) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                String insertQuery = "INSERT INTO customer (C_USERNAME, CUSTOMER_NAME, PHONE_NO, EMAIL, ADDRESS, PASSWORD, DATE_REGISTERED) VALUES (?, ?, ?, ?, ?, ?, ?)";
                 PreparedStatement insertStmt = connection.prepareStatement(insertQuery);
                 insertStmt.setString(1, customerId);
                 insertStmt.setString(2, customerName);

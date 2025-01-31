@@ -351,7 +351,7 @@ public class LoginPage2 implements ActionListener {
         }
 
         // SQL query to check user credentials
-        String query = "SELECT * FROM customer WHERE CUSTOMER_NAME = ? AND PASSWORD = ?";
+        String query = "SELECT * FROM customer WHERE C_USERNAME = ? AND PASSWORD = ?";
 
         try (Connection connection = DatabaseConfig.getConnection();
              PreparedStatement pst = connection.prepareStatement(query)) {
