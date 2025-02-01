@@ -1,4 +1,4 @@
-package com.example.project.classes;
+package com.gamingstore.classes;
 
 import javax.swing.*;
 import java.awt.*;

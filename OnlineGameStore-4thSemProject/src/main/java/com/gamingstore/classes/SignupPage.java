@@ -1,6 +1,6 @@
-package com.example.project.classes;
+package com.gamingstore.classes;
 
-import com.example.project.database.DatabaseConfig;
+import com.gamingstore.database.DatabaseConfig;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -8,8 +8,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class SignupPage implements ActionListener {
 

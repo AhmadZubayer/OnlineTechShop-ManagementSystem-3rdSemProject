@@ -1,4 +1,4 @@
-package com.example.project.database;
+package com.gamingstore.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

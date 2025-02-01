@@ -1,11 +1,7 @@
-package com.example.project.classes;
+package com.gamingstore.classes;
 
 import javax.swing.*;
-import javax.swing.border.*;
-import java.io.File;
-import java.io.IOException;
 import java.awt.*;
-import java.awt.font.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;

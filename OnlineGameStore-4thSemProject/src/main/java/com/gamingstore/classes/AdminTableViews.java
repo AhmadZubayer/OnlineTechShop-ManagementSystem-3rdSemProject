@@ -1,6 +1,6 @@
-package com.example.project.classes;
+package com.gamingstore.classes;
 
-import com.example.project.database.DatabaseConfig;
+import com.gamingstore.database.DatabaseConfig;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -75,7 +75,7 @@ public class AdminTableViews extends JFrame {
              ResultSet rs = statement.executeQuery(query)) {
 
             while (rs.next()) {
-                String customerId = rs.getString("CUSTOMER_ID");
+                String customerId = rs.getString("C_USERNAME");
                 String customerName = rs.getString("CUSTOMER_NAME");
                 String phoneNo = String.valueOf(rs.getInt("PHONE_NO"));
                 String email = rs.getString("EMAIL");

@@ -1,6 +1,6 @@
-package com.example.project;
+package com.gamingstore;
 
-import com.example.project.classes.LoginPage2;
+import com.gamingstore.classes.LoginPage2;
 
 public class Main {
     public static void main(String[] args) {

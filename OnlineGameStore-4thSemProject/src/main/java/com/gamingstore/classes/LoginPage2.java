@@ -1,8 +1,8 @@
-package com.example.project.classes;
+package com.gamingstore.classes;
 
 //import com.example.SignupPage;
 
-import com.example.project.database.DatabaseConfig;
+import com.gamingstore.database.DatabaseConfig;
 
 import javax.swing.*;
 import java.awt.*;
@@ -350,7 +350,7 @@ public class LoginPage2 implements ActionListener {
             return;
         }
 
-        // SQL query to check user credentials
+      
         String query = "SELECT * FROM customer WHERE C_USERNAME = ? AND PASSWORD = ?";
 
         try (Connection connection = DatabaseConfig.getConnection();
@@ -361,11 +361,9 @@ public class LoginPage2 implements ActionListener {
 
             try (ResultSet rs = pst.executeQuery()) {
                 if (rs.next()) {
-                    // User found, proceed to the next page
                     frm.dispose();
                     new LoadingPage(username);
                 } else {
-                    // User not found, show error message
                     lblErrorFace.setVisible(true);
                     lblError.setVisible(true);
                     btnErrorClose.setVisible(true);
