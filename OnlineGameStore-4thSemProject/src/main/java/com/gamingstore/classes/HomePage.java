@@ -2,6 +2,7 @@ package com.gamingstore.classes;
 
 import com.gamingstore.classes.UIDesign.UIDesign;
 import com.gamingstore.classes.products.*;
+import com.gamingstore.database.DatabaseConfig;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,6 +11,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 
 public class HomePage implements ActionListener {
     public JFrame frm, frmCart;
@@ -150,7 +156,7 @@ public class HomePage implements ActionListener {
         pnlConsoles.setBounds(0, 345, 1300, 500);
         pnlConsoles.setVisible(true);
         btnConsole1 = UIDesign.productBtns(pnlConsoles, "Files\\Consoles\\PlayStation 5 Pro.png", "699.99");
-        btnConsole2 = UIDesign.productBtns(pnlConsoles, "Files\\Consoles\\PlayStation 5 Pro.png", "699.99");
+        btnConsole2 = UIDesign.productBtns(pnlConsoles, "Files\\Consoles\\PlayStation 5 Pro.png", getPriceFromDatabase("CONSL001"));
         btnConsole3 = UIDesign.productBtns(pnlConsoles, "Files\\Consoles\\PlayStation 5 Pro.png", "699.99");
         btnConsole4 = UIDesign.productBtns(pnlConsoles, "Files\\Consoles\\PlayStation 5 Pro.png", "699.99");
         btnConsole5 = UIDesign.productBtns(pnlConsoles, "Files\\Consoles\\PlayStation 5 Pro.png", "699.99");
@@ -333,14 +339,7 @@ public class HomePage implements ActionListener {
             pnlMotherboard.setVisible(false);
             pnlCooler.setVisible(false);
             pnlCase.setVisible(false);
-            btnConsoles.setForeground(Color.decode("#2C3E50"));
-            btnConsoles.setBackground(Color.decode("#FFF8F0"));
-            btnPCComponents.setForeground(Color.decode("#FFF8F0"));
-            btnPCComponents.setBackground(Color.decode("#2C3E50"));
-            btnAccessories.setForeground(Color.decode("#FFF8F0"));
-            btnAccessories.setBackground(Color.decode("#2C3E50"));
-            btnGames.setForeground(Color.decode("#FFF8F0"));
-            btnGames.setBackground(Color.decode("#2C3E50"));
+            UIDesign.pressedTabBtn(btnConsoles, allTabBtns);
         } else if (e.getSource() == btnPCComponents) {
             pnlConsoles.setVisible(false);
             pnlGames.setVisible(false);
@@ -353,14 +352,8 @@ public class HomePage implements ActionListener {
             pnlMotherboard.setVisible(false);
             pnlCooler.setVisible(false);
             pnlCase.setVisible(false);
-            btnPCComponents.setForeground(Color.decode("#2C3E50"));
-            btnPCComponents.setBackground(Color.decode("#FFF8F0"));
-            btnConsoles.setForeground(Color.decode("#FFF8F0"));
-            btnConsoles.setBackground(Color.decode("#2C3E50"));
-            btnAccessories.setForeground(Color.decode("#FFF8F0"));
-            btnAccessories.setBackground(Color.decode("#2C3E50"));
-            btnGames.setForeground(Color.decode("#FFF8F0"));
-            btnGames.setBackground(Color.decode("#2C3E50"));
+            UIDesign.pressedTabBtn(btnPCComponents, allTabBtns);
+            UIDesign.pressedLeftBtn(btnCPU, allLeftBtns);
         } else if (e.getSource() == btnGames) {
             pnlConsoles.setVisible(false);
             pnlLeftBtns.setVisible(false);
@@ -374,14 +367,7 @@ public class HomePage implements ActionListener {
             pnlCooler.setVisible(false);
             pnlCase.setVisible(false);
             pnlPowerSupply.setVisible(false);
-            btnGames.setForeground(Color.decode("#2C3E50"));
-            btnGames.setBackground(Color.decode("#FFF8F0"));
-            btnConsoles.setForeground(Color.decode("#FFF8F0"));
-            btnConsoles.setBackground(Color.decode("#2C3E50"));
-            btnAccessories.setForeground(Color.decode("#FFF8F0"));
-            btnAccessories.setBackground(Color.decode("#2C3E50"));
-            btnPCComponents.setForeground(Color.decode("#FFF8F0"));
-            btnPCComponents.setBackground(Color.decode("#2C3E50"));
+            UIDesign.pressedTabBtn(btnGames, allTabBtns);
         } else if (e.getSource() == btnAccessories) {
             pnlConsoles.setVisible(false);
             pnlLeftBtns.setVisible(false);
@@ -395,14 +381,7 @@ public class HomePage implements ActionListener {
             pnlCooler.setVisible(false);
             pnlCase.setVisible(false);
             pnlPowerSupply.setVisible(false);
-            btnAccessories.setForeground(Color.decode("#2C3E50"));
-            btnAccessories.setBackground(Color.decode("#FFF8F0"));
-            btnConsoles.setForeground(Color.decode("#FFF8F0"));
-            btnConsoles.setBackground(Color.decode("#2C3E50"));
-            btnGames.setForeground(Color.decode("#FFF8F0"));
-            btnGames.setBackground(Color.decode("#2C3E50"));
-            btnPCComponents.setForeground(Color.decode("#FFF8F0"));
-            btnPCComponents.setBackground(Color.decode("#2C3E50"));
+            UIDesign.pressedTabBtn(btnAccessories, allTabBtns);
         } else if (e.getSource() == btnCPU) {
             pnlCPU.setVisible(true);
             pnlGPU.setVisible(false);
@@ -412,6 +391,8 @@ public class HomePage implements ActionListener {
             pnlCooler.setVisible(false);
             pnlCase.setVisible(false);
             pnlPowerSupply.setVisible(false);
+            UIDesign.pressedTabBtn(btnPCComponents, allTabBtns);
+            UIDesign.pressedLeftBtn(btnCPU, allLeftBtns);
         } else if (e.getSource() == btnGPU) {
             pnlCPU.setVisible(false);
             pnlGPU.setVisible(true);
@@ -421,6 +402,8 @@ public class HomePage implements ActionListener {
             pnlCooler.setVisible(false);
             pnlCase.setVisible(false);
             pnlPowerSupply.setVisible(false);
+            UIDesign.pressedTabBtn(btnPCComponents, allTabBtns);
+            UIDesign.pressedLeftBtn(btnGPU, allLeftBtns);
         } else if (e.getSource() == btnMemory) {
             pnlCPU.setVisible(false);
             pnlGPU.setVisible(false);
@@ -430,6 +413,8 @@ public class HomePage implements ActionListener {
             pnlCooler.setVisible(false);
             pnlCase.setVisible(false);
             pnlPowerSupply.setVisible(false);
+            UIDesign.pressedTabBtn(btnPCComponents, allTabBtns);
+            UIDesign.pressedLeftBtn(btnMemory, allLeftBtns);
         } else if (e.getSource() == btnStorage) {
             pnlCPU.setVisible(false);
             pnlGPU.setVisible(false);
@@ -439,6 +424,8 @@ public class HomePage implements ActionListener {
             pnlCooler.setVisible(false);
             pnlCase.setVisible(false);
             pnlPowerSupply.setVisible(false);
+            UIDesign.pressedTabBtn(btnPCComponents, allTabBtns);
+            UIDesign.pressedLeftBtn(btnStorage, allLeftBtns);
         } else if (e.getSource() == btnMotherboard) {
             pnlCPU.setVisible(false);
             pnlGPU.setVisible(false);
@@ -448,6 +435,8 @@ public class HomePage implements ActionListener {
             pnlCooler.setVisible(false);
             pnlCase.setVisible(false);
             pnlPowerSupply.setVisible(false);
+            UIDesign.pressedTabBtn(btnPCComponents, allTabBtns);
+            UIDesign.pressedLeftBtn(btnMotherboard, allLeftBtns);
         } else if (e.getSource() == btnCooler) {
             pnlCPU.setVisible(false);
             pnlGPU.setVisible(false);
@@ -457,6 +446,8 @@ public class HomePage implements ActionListener {
             pnlCooler.setVisible(true);
             pnlCase.setVisible(false);
             pnlPowerSupply.setVisible(false);
+            UIDesign.pressedTabBtn(btnPCComponents, allTabBtns);
+            UIDesign.pressedLeftBtn(btnCooler, allLeftBtns);
         } else if (e.getSource() == btnCase) {
             pnlCPU.setVisible(false);
             pnlGPU.setVisible(false);
@@ -466,6 +457,8 @@ public class HomePage implements ActionListener {
             pnlCooler.setVisible(false);
             pnlCase.setVisible(true);
             pnlPowerSupply.setVisible(false);
+            UIDesign.pressedTabBtn(btnPCComponents, allTabBtns);
+            UIDesign.pressedLeftBtn(btnCase, allLeftBtns);
         } else if (e.getSource() == btnPowerSupply) {
             pnlCPU.setVisible(false);
             pnlGPU.setVisible(false);
@@ -475,6 +468,8 @@ public class HomePage implements ActionListener {
             pnlCooler.setVisible(false);
             pnlCase.setVisible(false);
             pnlPowerSupply.setVisible(true);
+            UIDesign.pressedTabBtn(btnPCComponents, allTabBtns);
+            UIDesign.pressedLeftBtn(btnPowerSupply, allLeftBtns);
         }else if(e.getSource() == btnBackCart) {
             frmCart.setVisible(false);
             lblCartBar.setVisible(false);
@@ -841,6 +836,27 @@ public class HomePage implements ActionListener {
 
         cartTextArea.setText(cartContents.toString());
         lblTotalPrice.setText("Total Price: $" + String.format("%.2f", totalPrice));
+    }
+
+    public String getPriceFromDatabase(String Product_ID) {
+        String price = null;
+        String query = "SELECT PRICE FROM products WHERE PRODUCT_ID = ?";
+
+        try (Connection connection = DatabaseConfig.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setString(1, Product_ID);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                price = resultSet.getString("price");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace(); // Handle exceptions properly in real-world applications
+        }
+
+        return price;
     }
 
 }
