@@ -934,224 +934,224 @@ public class PcComponents implements ActionListener {
         else if(e.getSource() == btnCPU1)
         {
             productDetails = "AMD RYZEN THREADRPPER PRO...$9999.99";
-            HomePage.addToCart(productDetails);
+            //HomePage.addToCart(productDetails);
             bc.back(scpu[0] , 0 , pcpu[0]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnCPU2)
         {
             productDetails = "AMD RYZEN 9 9950X...$629.99";
-            HomePage.addToCart(productDetails);
+            //HomePage.addToCart(productDetails);
             bc.back(scpu[1] , 0 , pcpu[1]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnCPU3)
         {
             productDetails = "INTEL i9 14900KS...$650.99";
-            HomePage.addToCart(productDetails);
+            //HomePage.addToCart(productDetails);
             bc.back(scpu[2] , 0 , pcpu[2]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnCPU4)
         {
             productDetails = "INTEL i9 14900K...$389.99";
-            HomePage.addToCart(productDetails);
+            //HomePage.addToCart(productDetails);
             bc.back(scpu[3] , 0 , pcpu[3]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnGPU1)
         {
             productDetails = "ASUS ROG RTX 4090...$1999.99";
-            HomePage.addToCart(productDetails);
+            //HomePage.addToCart(productDetails);
             bc.back(sgpu[0] , 4 , pgpu[0]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnGPU2)
         {
             productDetails = "ASUS ROG STRIX RTX 4080...$1299.99";
-            HomePage.addToCart(productDetails);
+            //HomePage.addToCart(productDetails);
             bc.back(sgpu[1] , 4 , pgpu[1]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnGPU3)
         {
             productDetails = "ASUS ROG STRIX RTX 4080 (WHITE)...$1299.99";
-            HomePage.addToCart(productDetails);
+            //HomePage.addToCart(productDetails);
             bc.back(sgpu[2] , 4 , pgpu[2]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnGPU4)
         {
             productDetails = "NVIDIA RTX A6000..$4999.99";
-            HomePage.addToCart(productDetails);
+            //HomePage.addToCart(productDetails);
             bc.back(sgpu[3] , 4 , pgpu[3]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnCooler1)
         {
             productDetails = "CORSAIR ICUE LCD LIQUID COOLER...$229.99";
-            HomePage.addToCart(productDetails);
+            //HomePage.addToCart(productDetails);
             bc.back(scooler[0] , 1 , pcooler[0]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnCooler2)
         {
             productDetails = "CORSAIR ICUE LCD LIQUID COOLER (WHITE)...$229.99";
-            HomePage.addToCart(productDetails);
+            //HomePage.addToCart(productDetails);
             bc.back(scooler[1] , 1 , pcooler[1]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnCooler3)
         {
             productDetails = "CORSAIR H100X RGB ELITE...$199.99";
-            HomePage.addToCart(productDetails);
+            //HomePage.addToCart(productDetails);
             bc.back(scooler[2] , 1 , pcooler[2]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnCooler4)
         {
             productDetails = "MSI MAG CORELIQUID...$159.99";
-            HomePage.addToCart(productDetails);
+            //HomePage.addToCart(productDetails);
             bc.back(scooler[3] , 1 , pcooler[3]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnMotherboard1)
         {
             productDetails = "ASUS ROG MAXIMUSS XII...$549.99";
-            HomePage.addToCart(productDetails);
+            //HomePage.addToCart(productDetails);
             bc.back(smb[0] , 2 , pmb[0]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnMotherboard2)
         {
             productDetails = "ASUS ROG STRIX B650...$299.99";
-            HomePage.addToCart(productDetails);
+            //HomePage.addToCart(productDetails);
             bc.back(smb[1] , 2 , pmb[1]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnMotherboard3)
         {
             productDetails = "GIGABYTE B650E AORUS...$249.99";
-            HomePage.addToCart(productDetails);
+            //HomePage.addToCart(productDetails);
             bc.back(smb[2] , 2 , pmb[2]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnMotherboard4)
         {
             productDetails = "MSI MPG z790 Carbon...$469.99";
-            HomePage.addToCart(productDetails);
+            //HomePage.addToCart(productDetails);
             bc.back(smb[3] , 2 , pmb[3]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnMemory1)
         {
             productDetails = "CORSAIR 64GB DDR5...$229.99";
-            HomePage.addToCart(productDetails);
+            //HomePage.addToCart(productDetails);
             bc.back(sram[0] , 3 , pram[0]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnMemory2)
         {
             productDetails = "CORSAIR 96GB DDR5...$379.99";
-            HomePage.addToCart(productDetails);
+            //HomePage.addToCart(productDetails);
             bc.back(sram[1] , 3 , pram[1]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnMemory3)
         {
             productDetails = "CORSAIR 128GB DDR5...$479.99";
-            HomePage.addToCart(productDetails);
+            //HomePage.addToCart(productDetails);
             bc.back(sram[2] , 3 , pram[2]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnMemory4)
         {
             productDetails = "CORSAIR 64GB DDR5 (WHITE)...$279.99";
-            HomePage.addToCart(productDetails);
+            //HomePage.addToCart(productDetails);
             bc.back(sram[3] , 3, pram[3]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnStorage1)
         {
             productDetails = "SABRENT 8 TB SSD...$1199.99";
-            HomePage.addToCart(productDetails);
+            //HomePage.addToCart(productDetails);
             bc.back(sstorage[0] , 5 , pstorage[0]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnStorage2)
         {
             productDetails = "SAMSUNG 980 EVO PRO SSD 1 TB...$99.99";
-            HomePage.addToCart(productDetails);
+            //HomePage.addToCart(productDetails);
             bc.back(sstorage[1] , 5 , pstorage[1]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnStorage3)
         {
             productDetails = "CORSAIR MP600 8 TB ...$849.99";
-            HomePage.addToCart(productDetails);
+            //HomePage.addToCart(productDetails);
             bc.back(sstorage[2] , 5 , pstorage[2]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnStorage4)
         {
             productDetails = "MSI SPATIUM 4TB...$289.99";
-            HomePage.addToCart(productDetails);
+            //HomePage.addToCart(productDetails);
             bc.back(sstorage[3] , 5 , pstorage[3]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnPowerSupply1)
         {
             productDetails = "CORSAIR 1500W PLATINUM...$369.99";
-            HomePage.addToCart(productDetails);
+            //HomePage.addToCart(productDetails);
             bc.back(spsu[0] , 6 , ppsu[0]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnPowerSupply2)
         {
             productDetails = "ROG THOR 1200W PLATINUM...$329.99";
-            HomePage.addToCart(productDetails);
+            //HomePage.addToCart(productDetails);
             bc.back(spsu[1] , 6, ppsu[1]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnPowerSupply3)
         {
             productDetails = "ROG STRIX 1000W GOLD...$189.99";
-            HomePage.addToCart(productDetails);
+           // HomePage.addToCart(productDetails);
             bc.back(spsu[2] , 6 , ppsu[2]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnPowerSupply4)
         {
             productDetails = "ROG STRIX 1000W GOLD AURA WHITE...$229.99";
-            HomePage.addToCart(productDetails);
+            //HomePage.addToCart(productDetails);
             bc.back(spsu[3] , 6 , ppsu[3]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnCase1)
         {
             productDetails = "CORSAIR ICUE 500T...$399.99";
-            HomePage.addToCart(productDetails);
+            //HomePage.addToCart(productDetails);
             bc.back(scasing[0] , 7 , pcasing[0]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnCase2)
         {
             productDetails = "COOLER MASTER TD500...$389.99";
-            HomePage.addToCart(productDetails);
+            //HomePage.addToCart(productDetails);
             bc.back(scasing[1] , 7 , pcasing[1]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnCase3)
         {
             productDetails = "ASUS ROG STRIX HELLOS...$289.99";
-            HomePage.addToCart(productDetails);
+            //HomePage.addToCart(productDetails);
             bc.back(scasing[2] , 7 , pcasing[2]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnCase4)
         {
             productDetails = "CORSAIR ICUE 500T (WHITE)...$399.99";
-            HomePage.addToCart(productDetails);
+           // HomePage.addToCart(productDetails);
             bc.back(scasing[3] , 7 , pcasing[3]);
             frm3.setVisible(false);
         }

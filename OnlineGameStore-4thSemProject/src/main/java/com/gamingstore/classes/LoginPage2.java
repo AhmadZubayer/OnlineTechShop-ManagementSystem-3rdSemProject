@@ -350,7 +350,6 @@ public class LoginPage2 implements ActionListener {
             return;
         }
 
-      
         String query = "SELECT * FROM customer WHERE C_USERNAME = ? AND PASSWORD = ?";
 
         try (Connection connection = DatabaseConfig.getConnection();
@@ -361,8 +360,10 @@ public class LoginPage2 implements ActionListener {
 
             try (ResultSet rs = pst.executeQuery()) {
                 if (rs.next()) {
+                    CurrentUser.setCurrentUser(username);
                     frm.dispose();
-                    new LoadingPage(username);
+                    HomePage homePage = new HomePage();
+                    homePage.HomePageUI();;
                 } else {
                     lblErrorFace.setVisible(true);
                     lblError.setVisible(true);
@@ -376,4 +377,5 @@ public class LoginPage2 implements ActionListener {
             btnErrorClose.setVisible(true);
         }
     }
+
 }

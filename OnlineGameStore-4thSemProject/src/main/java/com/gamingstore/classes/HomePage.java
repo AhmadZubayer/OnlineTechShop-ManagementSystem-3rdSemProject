@@ -1,5 +1,6 @@
 package com.gamingstore.classes;
 
+import com.gamingstore.classes.DatabaseRW.ProductDatabaseRO;
 import com.gamingstore.classes.UIDesign.UIDesign;
 import com.gamingstore.classes.products.*;
 import com.gamingstore.database.DatabaseConfig;
@@ -39,15 +40,20 @@ public class HomePage implements ActionListener {
     JButton btnCooler1, btnCooler2, btnCooler3, btnCooler4;
     private static final String CART_FILE = "cart.txt";
     JTextArea cartTextArea;
+    String username;
 
     //public List<Product> products = new ArrayList<>();
 
 
-    public HomePage() {}
+    public HomePage() {
+        this.username = CurrentUser.getCurrentUser();
+    }
 
     public void HomePageUI() {
         frm = new JFrame();
         UIDesign.Frm3Design(frm, "Home Page");
+
+
 
         btnBack = new JButton();
         UIDesign.backBtnDesign(btnBack);
@@ -156,7 +162,7 @@ public class HomePage implements ActionListener {
         pnlConsoles.setBounds(0, 345, 1300, 500);
         pnlConsoles.setVisible(true);
         btnConsole1 = UIDesign.productBtns(pnlConsoles, "Files\\Consoles\\PlayStation 5 Pro.png", "699.99");
-        btnConsole2 = UIDesign.productBtns(pnlConsoles, "Files\\Consoles\\PlayStation 5 Pro.png", getPriceFromDatabase("CONSL001"));
+        btnConsole2 = UIDesign.productBtns(pnlConsoles, "Files\\Consoles\\PlayStation 5 Pro.png", ProductDatabaseRO.getPriceFromDatabase("CONSL001"));
         btnConsole3 = UIDesign.productBtns(pnlConsoles, "Files\\Consoles\\PlayStation 5 Pro.png", "699.99");
         btnConsole4 = UIDesign.productBtns(pnlConsoles, "Files\\Consoles\\PlayStation 5 Pro.png", "699.99");
         btnConsole5 = UIDesign.productBtns(pnlConsoles, "Files\\Consoles\\PlayStation 5 Pro.png", "699.99");
@@ -475,7 +481,7 @@ public class HomePage implements ActionListener {
             lblCartBar.setVisible(false);
             lblUserBar.setVisible(true);
         }else  if (e.getSource() == btnConsole1) {
-            new Ps5Pro();
+            new Ps5Pro(username);
         } else if (e.getSource() == btnConsole2) {
             new Ps5();
         } else if(e.getSource() == btnConsole6 ) {
@@ -524,100 +530,100 @@ public class HomePage implements ActionListener {
             new ElderRing();
         } else if(e.getSource() == btnCPU1) {
             productDetails = "AMD RYZEN THREADRPPER PRO...$9999.99";
-            addToCart(productDetails);
+            //addToCart(productDetails);
         } else if(e.getSource() == btnCPU2) {
             productDetails = "AMD RYZEN 9 9950X...$629.99";
-            addToCart(productDetails);
+            //addToCart(productDetails);
         } else if(e.getSource() == btnCPU3) {
             productDetails = "INTEL i9 14900KS...$650.99";
-            addToCart(productDetails);
+            //addToCart(productDetails);
         }else if(e.getSource() == btnCPU4) {
             productDetails = "INTEL i9 14900K...$389.99";
-            addToCart(productDetails);
+            //addToCart(productDetails);
         } else if(e.getSource() == btnGPU1) {
             productDetails = "ASUS ROG RTX 4090...$1999.99";
-            addToCart(productDetails);
+            //addToCart(productDetails);
         } else if(e.getSource() == btnGPU2) {
             productDetails = "ASUS ROG STRIX RTX 4080...$1299.99";
-            addToCart(productDetails);
+            //addToCart(productDetails);
         } else if(e.getSource() == btnGPU3) {
             productDetails = "ASUS ROG STRIX RTX 4080 (WHITE)...$1299.99";
-            addToCart(productDetails);
+            //addToCart(productDetails);
         }else if(e.getSource() == btnGPU4) {
             productDetails = "NVIDIA RTX A6000..$4999.99";
-            addToCart(productDetails);
+           // addToCart(productDetails);
         } else if(e.getSource() == btnMemory1) {
             productDetails = "CORSAIR 64GB DDR5...$229.99";
-            addToCart(productDetails);
+           // addToCart(productDetails);
         } else if(e.getSource() == btnMemory2) {
             productDetails = "CORSAIR 96GB DDR5...$379.99";
-            addToCart(productDetails);
+            //addToCart(productDetails);
         }else if(e.getSource() == btnMemory3) {
             productDetails = "CORSAIR 128GB DDR5...$479.99";
-            addToCart(productDetails);
+            //addToCart(productDetails);
         }else if(e.getSource() == btnMemory4) {
             productDetails = "CORSAIR 64GB DDR5 (WHITE)...$279.99";
-            addToCart(productDetails);
+            //addToCart(productDetails);
         }else if(e.getSource() == btnStorage1) {
             productDetails = "SABRENT 8 TB SSD...$1199.99";
-            addToCart(productDetails);
+            //addToCart(productDetails);
         }else if(e.getSource() == btnStorage2) {
             productDetails = "SAMSUNG 980 EVO PRO SSD 1 TB...$99.99";
-            addToCart(productDetails);
+            //addToCart(productDetails);
         }else if(e.getSource() == btnStorage3) {
             productDetails = "CORSAIR MP600 8 TB ...$849.99";
-            addToCart(productDetails);
+            //addToCart(productDetails);
         }else if(e.getSource() == btnStorage4) {
             productDetails = "MSI SPATIUM 4TB...$289.99";
-            addToCart(productDetails);
+            //addToCart(productDetails);
         }else if(e.getSource() == btnMotherboard1) {
             productDetails = "ASUS ROG MAXIMUSS XII...$549.99";
-            addToCart(productDetails);
+            //addToCart(productDetails);
         }else if(e.getSource() == btnMotherboard2) {
             productDetails = "ASUS ROG STRIX B650...$299.99";
-            addToCart(productDetails);
+            //addToCart(productDetails);
         }else if(e.getSource() == btnMotherboard3) {
             productDetails = "GIGABYTE B650E AORUS...$249.99";
-            addToCart(productDetails);
+            //addToCart(productDetails);
         }else if(e.getSource() == btnMotherboard4) {
             productDetails = "MSI MPG z790 Carbon...$469.99";
-            addToCart(productDetails);
+            //addToCart(productDetails);
         }else if(e.getSource() == btnCase1) {
             productDetails = "CORSAIR ICUE 500T...$399.99";
-            addToCart(productDetails);
+            //addToCart(productDetails);
         }else if(e.getSource() == btnCase2) {
             productDetails = "COOLER MASTER TD500...$389.99";
-            addToCart(productDetails);
+            //addToCart(productDetails);
         }else if(e.getSource() == btnCase3) {
             productDetails = "ASUS ROG STRIX HELLOS...$289.99";
-            addToCart(productDetails);
+            //addToCart(productDetails);
         }else if(e.getSource() == btnCase4) {
             productDetails = "CORSAIR ICUE 500T (WHITE)...$399.99";
-            addToCart(productDetails);
+            ///addToCart(productDetails);
         }else if(e.getSource() == btnCooler1) {
             productDetails = "CORSAIR ICUE LCD LIQUID COOLER...$229.99";
-            addToCart(productDetails);
+            //addToCart(productDetails);
         }else if(e.getSource() == btnCooler2) {
             productDetails = "CORSAIR ICUE LCD LIQUID COOLER (WHITE)...$229.99";
-            addToCart(productDetails);
+            //addToCart(productDetails);
         }else if(e.getSource() == btnCooler3) {
             productDetails = "CORSAIR H100X RGB ELITE...$199.99";
-            addToCart(productDetails);
+            //addToCart(productDetails);
         }else if(e.getSource() == btnCooler4) {
             productDetails = "MSI MAG CORELIQUID...$159.99";
-            addToCart(productDetails);
+            //addToCart(productDetails);
         }else if(e.getSource() == btnPowerSupply1) {
             productDetails = "CORSAIR 1500W PLATINUM...$369.99";
-            addToCart(productDetails);
+            //addToCart(productDetails);
         }else if(e.getSource() == btnPowerSupply2) {
             productDetails = "ROG THOR 1200W PLATINUM...$329.99";
-            addToCart(productDetails);
+           // addToCart(productDetails);
         }else if(e.getSource() == btnPowerSupply3) {
             productDetails = "ROG STRIX 1000W GOLD...$189.99";
-            addToCart(productDetails);
+           // addToCart(productDetails);
         }else if(e.getSource() == btnPowerSupply4) {
             productDetails = "ROG STRIX 1000W GOLD AURA WHITE...$229.99";
-            addToCart(productDetails);
+           // addToCart(productDetails);
         } else if(e.getSource() == btnPCBuilder) {
             new BuildPc();
         } else if (e.getSource() == btnProceedToCheckout) {
@@ -625,239 +631,14 @@ public class HomePage implements ActionListener {
         }  else if (e.getSource() == btnBack) {
             frm.dispose();
             new LoginPage2();
-        }
-    }
-
-    public static void addToCart(String productDetails) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(CART_FILE, true))) {
-            writer.write(productDetails);
-            writer.newLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void cart() {
-        frmCart = new JFrame();
-        frmCart.setSize(850, 700);
-        frmCart.getContentPane().setBackground(Color.decode("#1e1f22"));
-        frmCart.setLayout(null);
-        frmCart.setLocationRelativeTo(null);
-        frmCart.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frmCart.setResizable(false);
-
-        JPanel pnlcarttextArea = new JPanel();
-        pnlcarttextArea.setLayout(null);
-        pnlcarttextArea.setBackground(Color.decode("#2C3E50"));
-        pnlcarttextArea.setBounds(0, 0, 470, 700);
-        frmCart.add(pnlcarttextArea);
-
-        ImageIcon icon = new ImageIcon("Files\\YOUR CART1.png");
-        JLabel lblImage = new JLabel(icon);
-        lblImage.setBounds(10, 10, 400, 120);
-        pnlcarttextArea.add(lblImage);
-
-        cartTextArea = new JTextArea();
-        cartTextArea.setEditable(false);
-        cartTextArea.setLineWrap(true);
-        cartTextArea.setWrapStyleWord(true);
-        cartTextArea.setFont(new Font("ROBOTO", Font.BOLD, 18));
-        cartTextArea.setForeground(Color.decode("#e2e2e2"));
-        cartTextArea.setBackground(Color.decode("#2C3E50"));
-        cartTextArea.setBounds(20, 180, 400, 450);
-        cartTextArea.setBorder(BorderFactory.createEmptyBorder()); // Remove the border for a clean look
-        pnlcarttextArea.add(cartTextArea);
-
-        lblTotalPrice = new JLabel("Total Price: $0.00");
-        lblTotalPrice.setBounds(520, 200, 300, 40); // Set the position and size
-        lblTotalPrice.setFont(new Font("SansSerif", Font.BOLD, 25));
-        lblTotalPrice.setForeground(Color.decode("#ffbd59"));
-        frmCart.add(lblTotalPrice);
-
-        btnProceedToCheckout = new JButton("$ PROCEED TO CHECKOUT >");
-        btnProceedToCheckout.setFont(new Font("Roboto", Font.BOLD, 17));
-        btnProceedToCheckout.setBackground(Color.decode("#00bf63"));
-        btnProceedToCheckout.setForeground(Color.decode("#FFF8F0"));
-        btnProceedToCheckout.setContentAreaFilled(true);
-        btnProceedToCheckout.setBorderPainted(false);
-        btnProceedToCheckout.setBounds(520, 480, 260, 35);
-
-        btnProceedToCheckout.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent e) {
-                btnProceedToCheckout.setBackground(Color.decode("#00bf62"));
-            }
-
-            public void mouseExited(java.awt.event.MouseEvent e) {
-                btnProceedToCheckout.setBackground(Color.decode("#00bf63"));
-            }
-        });
-
-        btnProceedToCheckout.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frmCart.dispose();
-                new PurchaseConfirmed();
-            }
-        });
-
-        frmCart.add(btnProceedToCheckout);
-
-
-        btnBackCart = new JButton("BACK");
-        btnBackCart.setFont(new Font("Roboto", Font.BOLD, 17));
-        btnBackCart.setBackground(Color.decode("#007eff")); // Set text color
-        btnBackCart.setForeground(Color.decode("#FFF8F0"));
-        btnBackCart.setContentAreaFilled(true);
-        btnBackCart.setBorderPainted(false);
-        btnBackCart.setBounds(520, 530, 260, 35);
-        btnBackCart.addMouseListener(new MouseAdapter() {
-            public void mouseEntered(MouseEvent e) {
-                btnBackCart.setBackground(Color.decode("#00bf62"));
-            }
-
-            public void mouseExited(MouseEvent e) {
-                btnBackCart.setBackground(Color.decode("#007eff"));
-            }
-        });
-        btnBackCart.addActionListener(this);
-        frmCart.add(btnBackCart);
-
-        JButton btnRemoveItem = new JButton("REMOVE ITEM");
-        btnRemoveItem.setFont(new Font("Roboto", Font.BOLD, 17));
-        btnRemoveItem.setBackground(Color.decode("#ff4d4d"));
-        btnRemoveItem.setForeground(Color.decode("#FFF8F0"));
-        btnRemoveItem.setContentAreaFilled(true);
-        btnRemoveItem.setBorderPainted(false);
-        btnRemoveItem.setBounds(650, 60, 160, 35); // Set the position and size of the button
-        btnRemoveItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String itemToRemove = JOptionPane.showInputDialog(frmCart, "Enter the item to remove:", "Remove Item", JOptionPane.PLAIN_MESSAGE);
-                if (itemToRemove != null && !itemToRemove.trim().isEmpty()) {
-                    removeItemFromCart(itemToRemove);
-                    displayCartContents(); // Refresh the cart display
-                }
-            }
-        });
-        frmCart.add(btnRemoveItem);
-
-
-        JButton btnClearCart = new JButton("CLEAR CART");
-        btnClearCart.setFont(new Font("Roboto", Font.BOLD, 17));
-        btnClearCart.setBackground(Color.decode("#ff4d4d")); // Set button color
-        btnClearCart.setForeground(Color.decode("#FFF8F0"));
-        btnClearCart.setContentAreaFilled(true);
-        btnClearCart.setBorderPainted(false);
-        btnClearCart.setBounds(650, 10, 160, 35); // Set the position and size of the button
-        btnClearCart.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Clear the cart file
-                try (PrintWriter writer = new PrintWriter("cart.txt")) {
-                    writer.print(""); // Clear the content of the file
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-
-                // Clear the text area
-                cartTextArea.setText("");
-                lblTotalPrice.setText("Total Price: $0.00"); // Reset the total price label
-            }
-        });
-        frmCart.add(btnClearCart);
-
-        frmCart.setVisible(false);
-    }
-
-    private void removeItemFromCart(String itemToRemove) {
-        File inputFile = new File(CART_FILE);
-        File tempFile = new File("temp_cart.txt");
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-             BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
-
-            String line;
-            boolean itemFound = false;
-
-            while ((line = reader.readLine()) != null) {
-                if (line.contains(itemToRemove) && !itemFound) {
-                    // Skip writing this line to the temp file to "remove" it
-                    itemFound = true;
-                } else {
-                    writer.write(line);
-                    writer.newLine();
-                }
-            }
-
-            if (!itemFound) {
-                JOptionPane.showMessageDialog(frmCart, "Item not found in cart.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // Replace the old cart file with the updated temp file
-        if (!inputFile.delete()) {
-            System.err.println("Could not delete original cart file.");
-            return;
-        }
-        if (!tempFile.renameTo(inputFile)) {
-            System.err.println("Could not rename temp cart file.");
-        }
+        } else if (e.getSource() == btnCart) {
+            Cart cart = new Cart();
+            cart.CartUI();
     }
 
 
 
-    private void displayCartContents() {
-        double totalPrice = 0.0;
-        StringBuilder cartContents = new StringBuilder();
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(CART_FILE))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                cartContents.append(line).append("\n");
-
-
-                String[] parts = line.split("\\.\\.+\\$");
-                if (parts.length == 2) {
-                    try {
-                        double price = Double.parseDouble(parts[1]);
-                        totalPrice += price;
-                    } catch (NumberFormatException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-        cartTextArea.setText(cartContents.toString());
-        lblTotalPrice.setText("Total Price: $" + String.format("%.2f", totalPrice));
-    }
-
-    public String getPriceFromDatabase(String Product_ID) {
-        String price = null;
-        String query = "SELECT PRICE FROM products WHERE PRODUCT_ID = ?";
-
-        try (Connection connection = DatabaseConfig.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
-            preparedStatement.setString(1, Product_ID);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                price = resultSet.getString("price");
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace(); // Handle exceptions properly in real-world applications
-        }
-
-        return price;
-    }
-
+}
 }
 
