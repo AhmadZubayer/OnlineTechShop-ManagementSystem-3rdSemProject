@@ -1,5 +1,7 @@
 package com.gamingstore.classes;
 
+import com.gamingstore.classes.DatabaseRW.ProductDatabaseRW;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,7 +12,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class PcComponents implements ActionListener {
-    JFrame frm3;
+    static JFrame frm3;
     public JPanel  pnlButtons, pnlCPU, pnlGPU, pnlMemory, pnlStorage, pnlMotherboard, pnlCase, pnlCooler, pnlPowerSupply  ;
     JButton btnCPU, btnGPU, btnMemory, btnStorage, btnMotherboard, btnCase, btnCooler,btnPowerSupply;
     JButton btnCPU1, btnCPU2, btnCPU3, btnCPU4;
@@ -21,14 +23,14 @@ public class PcComponents implements ActionListener {
     JButton btnCase1, btnCase2, btnCase3, btnCase4;
     JButton btnCooler1, btnCooler2, btnCooler3, btnCooler4;
     JButton btnPowerSupply1,btnPowerSupply2,btnPowerSupply3,btnPowerSupply4;
-    String[] scpu = {"AMD RYZEN THREADRPPER PRO","AMD RYZEN 9 9950X","INTEL i9 14900KS","INTEL i9 14900K"};
-    String[] scooler = {"CORSAIR ICUE LCD LIQUID COOLER","CORSAIR ICUE LCD LIQUID COOLER (WHITE)","CORSAIR H100X RGB ELITE","MSI MAG CORELIQUID"};
-    String[] sram = {"CORSAIR 64GB DDR5","CORSAIR 96GB DDR5","CORSAIR 128GB DDR5","CORSAIR 64GB DDR5 (WHITE)"};
-    String[] smb = {"ASUS ROG MAXIMUSS XII","ASUS ROG STRIX B650","GIGABYTE B650E AORUS","MSI MPG z790 Carbon"};
-    String[] sgpu = {"ASUS ROG RTX 4090","ASUS ROG STRIX RTX 4080","ASUS ROG STRIX RTX 4080 (WHITE)","NVIDIA RTX A6000"};
-    String[] sstorage = {"SABRENT 8 TB SSD","SAMSUNG 980 EVO PRO SSD 1 TB","CORSAIR MP600 8 TB","MSI SPATIUM 4TB"};
-    String[] spsu = {"CORSAIR 1500W PLATINUM","ROG THOR 1200W PLATINUM","ROG STRIX 1000W GOLD","ROG STRIX 1000W GOLD AURA WHITE"};
-    String[] scasing = {"CORSAIR ICUE 500T","COOLER MASTER TD500","ASUS ROG STRIX HELLOS","CORSAIR ICUE 500T (WHITE)"};
+    String[] scpu = {"CPU001","CPU002","CPU003","CPU004"};
+    String[] scooler = {"COL001","COL002","COL003","COL004"};
+    String[] sram = {"MEM001","MEM002","MEM003","MEM004"};
+    String[] smb = {"MBD001","MBD002","MBD003","MBD004"};
+    String[] sgpu = {"GPU001","GPU002","GPU003","GPU004"};
+    String[] sstorage = {"SSD001","SSD002","SSD003","SSD004"};
+    String[] spsu = {"PSU001","PSU002","PSU003","PSU004"};
+    String[] scasing = {"CASE001","CASE002","CASE003","CASE004"};
 
     double[] pcpu = {9999.99,629.99,650.99,389.99};
     double[] pcooler = {229.99,229.99,199.99,159.99};
@@ -841,6 +843,7 @@ public class PcComponents implements ActionListener {
 
 
 
+
         frm3.setVisible(true);
     }
 
@@ -855,6 +858,8 @@ public class PcComponents implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        Cart cart = new Cart();
+
         String productDetails = "";
         if (e.getSource() == btnCPU) {
             pnlCPU.setVisible(true);
@@ -933,225 +938,226 @@ public class PcComponents implements ActionListener {
         }
         else if(e.getSource() == btnCPU1)
         {
-            productDetails = "AMD RYZEN THREADRPPER PRO...$9999.99";
+            //productDetails = "AMD RYZEN THREADRPPER PRO...$9999.99";
             //HomePage.addToCart(productDetails);
-            bc.back(scpu[0] , 0 , pcpu[0]);
+
+            bc.back(scpu[0], 0 , pcpu[0]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnCPU2)
         {
-            productDetails = "AMD RYZEN 9 9950X...$629.99";
+            //productDetails = "AMD RYZEN 9 9950X...$629.99";
             //HomePage.addToCart(productDetails);
             bc.back(scpu[1] , 0 , pcpu[1]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnCPU3)
         {
-            productDetails = "INTEL i9 14900KS...$650.99";
+            //productDetails = "INTEL i9 14900KS...$650.99";
             //HomePage.addToCart(productDetails);
             bc.back(scpu[2] , 0 , pcpu[2]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnCPU4)
         {
-            productDetails = "INTEL i9 14900K...$389.99";
+            //productDetails = "INTEL i9 14900K...$389.99";
             //HomePage.addToCart(productDetails);
             bc.back(scpu[3] , 0 , pcpu[3]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnGPU1)
         {
-            productDetails = "ASUS ROG RTX 4090...$1999.99";
+            //productDetails = "ASUS ROG RTX 4090...$1999.99";
             //HomePage.addToCart(productDetails);
             bc.back(sgpu[0] , 4 , pgpu[0]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnGPU2)
         {
-            productDetails = "ASUS ROG STRIX RTX 4080...$1299.99";
+            //productDetails = "ASUS ROG STRIX RTX 4080...$1299.99";
             //HomePage.addToCart(productDetails);
             bc.back(sgpu[1] , 4 , pgpu[1]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnGPU3)
         {
-            productDetails = "ASUS ROG STRIX RTX 4080 (WHITE)...$1299.99";
+            //productDetails = "ASUS ROG STRIX RTX 4080 (WHITE)...$1299.99";
             //HomePage.addToCart(productDetails);
             bc.back(sgpu[2] , 4 , pgpu[2]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnGPU4)
         {
-            productDetails = "NVIDIA RTX A6000..$4999.99";
+            //productDetails = "NVIDIA RTX A6000..$4999.99";
             //HomePage.addToCart(productDetails);
             bc.back(sgpu[3] , 4 , pgpu[3]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnCooler1)
         {
-            productDetails = "CORSAIR ICUE LCD LIQUID COOLER...$229.99";
+            //productDetails = "CORSAIR ICUE LCD LIQUID COOLER...$229.99";
             //HomePage.addToCart(productDetails);
             bc.back(scooler[0] , 1 , pcooler[0]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnCooler2)
         {
-            productDetails = "CORSAIR ICUE LCD LIQUID COOLER (WHITE)...$229.99";
+            //productDetails = "CORSAIR ICUE LCD LIQUID COOLER (WHITE)...$229.99";
             //HomePage.addToCart(productDetails);
             bc.back(scooler[1] , 1 , pcooler[1]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnCooler3)
         {
-            productDetails = "CORSAIR H100X RGB ELITE...$199.99";
+            //productDetails = "CORSAIR H100X RGB ELITE...$199.99";
             //HomePage.addToCart(productDetails);
             bc.back(scooler[2] , 1 , pcooler[2]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnCooler4)
         {
-            productDetails = "MSI MAG CORELIQUID...$159.99";
+            //productDetails = "MSI MAG CORELIQUID...$159.99";
             //HomePage.addToCart(productDetails);
             bc.back(scooler[3] , 1 , pcooler[3]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnMotherboard1)
         {
-            productDetails = "ASUS ROG MAXIMUSS XII...$549.99";
+            //productDetails = "ASUS ROG MAXIMUSS XII...$549.99";
             //HomePage.addToCart(productDetails);
             bc.back(smb[0] , 2 , pmb[0]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnMotherboard2)
         {
-            productDetails = "ASUS ROG STRIX B650...$299.99";
+            //productDetails = "ASUS ROG STRIX B650...$299.99";
             //HomePage.addToCart(productDetails);
             bc.back(smb[1] , 2 , pmb[1]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnMotherboard3)
         {
-            productDetails = "GIGABYTE B650E AORUS...$249.99";
+            //productDetails = "GIGABYTE B650E AORUS...$249.99";
             //HomePage.addToCart(productDetails);
             bc.back(smb[2] , 2 , pmb[2]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnMotherboard4)
         {
-            productDetails = "MSI MPG z790 Carbon...$469.99";
+            //productDetails = "MSI MPG z790 Carbon...$469.99";
             //HomePage.addToCart(productDetails);
             bc.back(smb[3] , 2 , pmb[3]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnMemory1)
         {
-            productDetails = "CORSAIR 64GB DDR5...$229.99";
+            //productDetails = "CORSAIR 64GB DDR5...$229.99";
             //HomePage.addToCart(productDetails);
             bc.back(sram[0] , 3 , pram[0]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnMemory2)
         {
-            productDetails = "CORSAIR 96GB DDR5...$379.99";
-            //HomePage.addToCart(productDetails);
+            //productDetails = "CORSAIR 96GB DDR5...$379.99";
+            //.addToCart(productDetails);
             bc.back(sram[1] , 3 , pram[1]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnMemory3)
         {
-            productDetails = "CORSAIR 128GB DDR5...$479.99";
+            //productDetails = "CORSAIR 128GB DDR5...$479.99";
             //HomePage.addToCart(productDetails);
             bc.back(sram[2] , 3 , pram[2]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnMemory4)
         {
-            productDetails = "CORSAIR 64GB DDR5 (WHITE)...$279.99";
+            //productDetails = "CORSAIR 64GB DDR5 (WHITE)...$279.99";
             //HomePage.addToCart(productDetails);
             bc.back(sram[3] , 3, pram[3]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnStorage1)
         {
-            productDetails = "SABRENT 8 TB SSD...$1199.99";
+            //productDetails = "SABRENT 8 TB SSD...$1199.99";
             //HomePage.addToCart(productDetails);
             bc.back(sstorage[0] , 5 , pstorage[0]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnStorage2)
         {
-            productDetails = "SAMSUNG 980 EVO PRO SSD 1 TB...$99.99";
+            //productDetails = "SAMSUNG 980 EVO PRO SSD 1 TB...$99.99";
             //HomePage.addToCart(productDetails);
             bc.back(sstorage[1] , 5 , pstorage[1]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnStorage3)
         {
-            productDetails = "CORSAIR MP600 8 TB ...$849.99";
+            //productDetails = "CORSAIR MP600 8 TB ...$849.99";
             //HomePage.addToCart(productDetails);
             bc.back(sstorage[2] , 5 , pstorage[2]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnStorage4)
         {
-            productDetails = "MSI SPATIUM 4TB...$289.99";
+            //productDetails = "MSI SPATIUM 4TB...$289.99";
             //HomePage.addToCart(productDetails);
             bc.back(sstorage[3] , 5 , pstorage[3]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnPowerSupply1)
         {
-            productDetails = "CORSAIR 1500W PLATINUM...$369.99";
+            //productDetails = "CORSAIR 1500W PLATINUM...$369.99";
             //HomePage.addToCart(productDetails);
             bc.back(spsu[0] , 6 , ppsu[0]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnPowerSupply2)
         {
-            productDetails = "ROG THOR 1200W PLATINUM...$329.99";
+            //productDetails = "ROG THOR 1200W PLATINUM...$329.99";
             //HomePage.addToCart(productDetails);
             bc.back(spsu[1] , 6, ppsu[1]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnPowerSupply3)
         {
-            productDetails = "ROG STRIX 1000W GOLD...$189.99";
-           // HomePage.addToCart(productDetails);
+            //productDetails = "ROG STRIX 1000W GOLD...$189.99";
+            //HomePage.addToCart(productDetails);
             bc.back(spsu[2] , 6 , ppsu[2]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnPowerSupply4)
         {
-            productDetails = "ROG STRIX 1000W GOLD AURA WHITE...$229.99";
+            //productDetails = "ROG STRIX 1000W GOLD AURA WHITE...$229.99";
             //HomePage.addToCart(productDetails);
             bc.back(spsu[3] , 6 , ppsu[3]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnCase1)
         {
-            productDetails = "CORSAIR ICUE 500T...$399.99";
+            //productDetails = "CORSAIR ICUE 500T...$399.99";
             //HomePage.addToCart(productDetails);
             bc.back(scasing[0] , 7 , pcasing[0]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnCase2)
         {
-            productDetails = "COOLER MASTER TD500...$389.99";
+            //productDetails = "COOLER MASTER TD500...$389.99";
             //HomePage.addToCart(productDetails);
             bc.back(scasing[1] , 7 , pcasing[1]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnCase3)
         {
-            productDetails = "ASUS ROG STRIX HELLOS...$289.99";
+            //productDetails = "ASUS ROG STRIX HELLOS...$289.99";
             //HomePage.addToCart(productDetails);
             bc.back(scasing[2] , 7 , pcasing[2]);
             frm3.setVisible(false);
         }
         else if(e.getSource() == btnCase4)
         {
-            productDetails = "CORSAIR ICUE 500T (WHITE)...$399.99";
-           // HomePage.addToCart(productDetails);
+            //productDetails = "CORSAIR ICUE 500T (WHITE)...$399.99";
+            //HomePage.addToCart(productDetails);
             bc.back(scasing[3] , 7 , pcasing[3]);
             frm3.setVisible(false);
         }

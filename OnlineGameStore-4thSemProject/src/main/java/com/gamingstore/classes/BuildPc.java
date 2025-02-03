@@ -1,22 +1,33 @@
 package com.gamingstore.classes;
 
+import com.gamingstore.classes.DatabaseRW.ProductDatabaseRW;
+
 import javax.swing.*;
+import javax.swing.border.*;
+import java.io.File;
+import java.io.IOException;
 import java.awt.*;
+import java.awt.font.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Arrays;
 
 public class BuildPc implements ActionListener{
 
     public JFrame fr;
     public JPanel p1,price,cpu,cooler,mb,ram,gpu,storage,psu,casing;
     public JLabel top,lcpu,lcooler,lram,lmb,lgpu,lstorage,lpsu,lcasing;
-    public JButton bcpu,bcooler,bram,bmb,bgpu,bstorage,bpsu,bcasing,bprice;
+    public JButton bcpu,bcooler,bram,bmb,bgpu,bstorage,bpsu,bcasing,bprice,br;
     Font customFont;
     String[] pcC = {"CPU","CPU COOLER","MOTHERBOARD","RAM","GRAPHICS CARD","STORAGE","POWER SUPPLY","CASING"};
     double pr = 0;
     double[] lastSelectedPrice = {0,0,0,0,0,0,0,0};
+    int c = 1;
+    double ubr = 0;
+    String brname;
+    String[] productID = {"CPU","CPU COOLER","MOTHERBOARD","RAM","GRAPHICS CARD","STORAGE","POWER SUPPLY","CASING"};
 
     public BuildPc()
     {
@@ -54,11 +65,11 @@ public class BuildPc implements ActionListener{
 
         price = new JPanel();
         price.setLayout(null);
-        price.setBackground(Color.decode("#FFF8F0"));
+        price.setBackground(Color.decode("#1d2a35"));
         price.setBounds(0, 160, 1600, 95);
 
         String buttonText = "<html>" +
-                "PRICE <br>" +  // Display price on one line
+                "CONFIRM BUILD <br>" +  // Display price on one line
                 "$ " + pr+  // Display the double value on the next line
                 "</html>";
 
@@ -70,6 +81,7 @@ public class BuildPc implements ActionListener{
         bprice.setContentAreaFilled(true);
         bprice.setBorderPainted(false);
         bprice.setBounds(1200, 5, 250, 70);
+        bprice.addActionListener(this);
         bprice.addMouseListener(new MouseAdapter() {
             public void mouseEntered(MouseEvent e) {
                 bprice.setBackground(hoverColor);
@@ -369,6 +381,26 @@ public class BuildPc implements ActionListener{
         casing.add(bcasing);
         bcasing.addActionListener(this);
 
+        //--
+        br = new JButton(c+"X");
+        br.setFont(new Font("Roboto", Font.BOLD, 20));
+        br.setForeground(Color.WHITE);
+        br.setBackground(originalColor);
+        br.setContentAreaFilled(true);
+        br.setBorderPainted(false);
+        br.setBounds(1150, 20, 120, 40);
+        br.addMouseListener(new MouseAdapter() {
+            public void mouseEntered(MouseEvent e) {
+                br.setBackground(hoverColor);
+            }
+            public void mouseExited(MouseEvent e) {
+                br.setBackground(originalColor);
+            }
+        });
+        ram.add(br);
+        br.addActionListener(this);
+        br.setVisible(false);
+
         //----
 
 
@@ -377,7 +409,7 @@ public class BuildPc implements ActionListener{
         fr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         fr.setSize(1600,1020);
         fr.setLayout(null);
-        fr.getContentPane().setBackground(Color.decode("#FFF8F0"));
+        fr.getContentPane().setBackground(Color.decode("#1d2a35"));
         fr.add(p1);
         fr.add(price);
         fr.add(cpu);
@@ -400,6 +432,8 @@ public class BuildPc implements ActionListener{
     public void actionPerformed(ActionEvent e)
     {
         PcComponents pc = new PcComponents(BuildPc.this);
+        Cart cart = new Cart();
+        String username = CurrentUser.getCurrentUser();
         if(e.getSource()==bcpu)
         {
             pc.btnCPU.doClick();
@@ -450,7 +484,22 @@ public class BuildPc implements ActionListener{
             pc.btnCooler.setVisible(false);
             pc.btnCase.setVisible(false);
             pc.btnPowerSupply.setVisible(false);
+            bram.setVisible(false);
+            br.setVisible(true);
+            ram.revalidate();
+            ram.repaint();
+
         }
+
+        else if(e.getSource()==br)
+        {
+            PcComponents.frm3.setVisible(false);
+            c = c + 1;
+            br.setText(c+"X");
+            back(productID[3],3,lastSelectedPrice[3]);
+
+        }
+
         else if(e.getSource()==bgpu)
         {
 
@@ -505,17 +554,36 @@ public class BuildPc implements ActionListener{
         }
         else if(e.getSource() == bprice)
         {
+            PcComponents.frm3.setVisible(false);
+            for(int i=0; i<8; i++) {
+                if(i!=3) {
+                    System.out.println("pcC array: " + Arrays.toString(pcC));
+                    cart.addToCart(username, productID[i],1);
+                } else {
+                    System.out.println("pcC array: " + Arrays.toString(pcC));
+                    cart.addToCart(username, productID[i], c);
+                }
+            }
 
         }
+
     }
 
     public void back(String s,int a,double b)
     {
-        pcC[a] = s;
-        pr = pr - lastSelectedPrice[a];
-        pr = pr + b;
-
+        pcC[a] = ProductDatabaseRW.getNameFromDatabase(s);
+        productID[a] = s;
+        System.out.println(pcC[a]);
+        if(a != 3) {
+            pr = pr - lastSelectedPrice[a];
+            pr = pr + b;
+        }
+        else
+        {
+            pr = pr + b;
+        }
         lastSelectedPrice[a] = b;
+
         String formattedPrice = String.format("%.2f", pr);
 
 
@@ -529,35 +597,35 @@ public class BuildPc implements ActionListener{
 
         if(a == 0)
         {
-            lcpu.setText(s);
+            lcpu.setText(pcC[a]);
         }
         else if(a == 1)
         {
-            lcooler.setText(s);
+            lcooler.setText(pcC[a]);
         }
         else if(a == 2)
         {
-            lmb.setText(s);
+            lmb.setText(pcC[a]);
         }
         else if(a == 3)
         {
-            lram.setText(s);
+            lram.setText(pcC[a]);
         }
         else if(a == 4)
         {
-            lgpu.setText(s);
+            lgpu.setText(pcC[a]);
         }
         else if(a == 5)
         {
-            lstorage.setText(s);
+            lstorage.setText(pcC[a]);
         }
         else if(a==6)
         {
-            lpsu.setText(s);
+            lpsu.setText(pcC[a]);
         }
         else if(a==7)
         {
-            lcasing.setText(s);
+            lcasing.setText(pcC[a]);
         }
     }
 }

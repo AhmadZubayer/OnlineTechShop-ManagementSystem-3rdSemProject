@@ -2,6 +2,8 @@ package com.gamingstore.classes;
 
 //import com.example.SignupPage;
 
+import com.gamingstore.classes.DatabaseRW.AuthenticationAdmin;
+import com.gamingstore.classes.DatabaseRW.AuthenticationCustomer;
 import com.gamingstore.database.DatabaseConfig;
 
 import javax.swing.*;
@@ -21,6 +23,7 @@ public class LoginPage2 implements ActionListener {
     public JPasswordField pass;
     public JButton btnDarkMode, btnSignIn, btnSignUp, btnAdminSignIn, btnCustomerSignIn, btnErrorClose, btnAboutUs;
     private boolean isDarkMode = false;
+    String userType = "Customer";
 
     public LoginPage2() {
         frm = new JFrame("Log In Page");
@@ -44,7 +47,7 @@ public class LoginPage2 implements ActionListener {
         frm.add(pnlRight);
 
         // Load the image using the class loader
-        ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("Files/Untitled design.gif"));
+        ImageIcon icon = new ImageIcon("Files/Untitled design.gif");
         JLabel lblImage = new JLabel(icon);
         lblImage.setBounds(0, 0, 550, 315);
         pnlLeft.add(lblImage);
@@ -74,11 +77,11 @@ public class LoginPage2 implements ActionListener {
         btnAboutUs.setContentAreaFilled(true);
         btnAboutUs.setBorderPainted(false);
         btnAboutUs.setBounds(30, 560, 125, 25);
-        btnAboutUs.addActionListener(e -> aboutus());
+        //btnAboutUs.addActionListener(e -> aboutus());
         pnlLeft.add(btnAboutUs);
 
         btnDarkMode = new JButton();
-        btnDarkMode.setIcon(new ImageIcon(getClass().getClassLoader().getResource("Files/LightMode.png")));
+        btnDarkMode.setIcon(new ImageIcon("Files/LightMode.png"));
         btnDarkMode.setFont(new Font("Roboto", Font.BOLD, 16));
         btnDarkMode.setContentAreaFilled(false);
         btnDarkMode.setBorderPainted(false);
@@ -128,22 +131,22 @@ public class LoginPage2 implements ActionListener {
         pnlRight.add(passBoxBar);
 
         btnSignIn = new JButton();
-        btnSignIn.setIcon(new ImageIcon(getClass().getClassLoader().getResource("Files/Sign In Button Page1.png")));
+        btnSignIn.setIcon(new ImageIcon("Files/Sign In Button Page1.png"));
         btnSignIn.setContentAreaFilled(false);
         btnSignIn.setBorderPainted(false);
         btnSignIn.setBounds(40, 340, 150, 60);
         pnlRight.add(btnSignIn);
-        btnSignIn.addActionListener(e -> signIn());
+        btnSignIn.addActionListener(this);
 
         btnSignUp = new JButton();
-        btnSignUp.setIcon(new ImageIcon(getClass().getClassLoader().getResource("Files/Sign Up.png")));
+        btnSignUp.setIcon(new ImageIcon("Files/Sign Up.png"));
         btnSignUp.setContentAreaFilled(false);
         btnSignUp.setBorderPainted(false);
         btnSignUp.setBounds(170, 340, 150, 60);
         pnlRight.add(btnSignUp);
         btnSignUp.addActionListener(this);
 
-        ImageIcon iconErrorFace = new ImageIcon(getClass().getClassLoader().getResource("Files/ErrorFace.png"));
+        ImageIcon iconErrorFace = new ImageIcon("Files/ErrorFace.png");
         lblErrorFace = new JLabel(iconErrorFace);
         lblErrorFace.setBounds(25, 420, 50, 60);
         pnlRight.add(lblErrorFace);
@@ -159,7 +162,7 @@ public class LoginPage2 implements ActionListener {
         lblError.setVisible(false);
 
         btnErrorClose = new JButton();
-        btnErrorClose.setIcon(new ImageIcon(getClass().getClassLoader().getResource("Files/ErrorClosed.png")));
+        btnErrorClose.setIcon(new ImageIcon("Files/ErrorClosed.png"));
         btnErrorClose.setContentAreaFilled(false);
         btnErrorClose.setBorderPainted(false);
         btnErrorClose.setBounds(315, 420, 50, 60);
@@ -191,7 +194,7 @@ public class LoginPage2 implements ActionListener {
         btnCustomerSignIn.setVisible(false);
         btnCustomerSignIn.addActionListener(e -> CustomerLogin());
 
-        ImageIcon iconAdmin = new ImageIcon(getClass().getClassLoader().getResource("Files/AdminFrm1.png"));
+        ImageIcon iconAdmin = new ImageIcon("Files/AdminFrm1.png");
         lblIAdminImg = new JLabel(iconAdmin);
         lblIAdminImg.setBounds(480, 20, 450, 450);
         frm.add(lblIAdminImg);
@@ -217,14 +220,14 @@ public class LoginPage2 implements ActionListener {
             lblPnlColor = Color.WHITE;
             inputBgColor = Color.decode("#2F2F2F");
             inputTextColor = Color.WHITE;
-            btnDarkMode.setIcon(new ImageIcon(getClass().getClassLoader().getResource("Files/DarkMode.png")));
+            btnDarkMode.setIcon(new ImageIcon("Files/DarkMode.png"));
         } else {
             pnlBgColor = Color.decode("#FFF8F0");
             lblColor = Color.WHITE;
             lblPnlColor = Color.BLACK;
             inputBgColor = Color.WHITE;
             inputTextColor = Color.BLACK;
-            btnDarkMode.setIcon(new ImageIcon(getClass().getClassLoader().getResource("Files/LightMode.png")));
+            btnDarkMode.setIcon(new ImageIcon("Files/LightMode.png"));
         }
 
         pnlRight.setBackground(pnlBgColor);
@@ -241,6 +244,7 @@ public class LoginPage2 implements ActionListener {
     }
 
     private void AdminLogIn() {
+        userType = "Admin";
         pnlLeft.setVisible(false);
         lblPnl3.setVisible(false);
         btnAdminSignIn.setVisible(false);
@@ -269,7 +273,8 @@ public class LoginPage2 implements ActionListener {
         timer.start();
     }
 
-    private void CustomerLogin() {
+    private void CustomerLogin(){
+        userType = "Customer";
         btnCustomerSignIn.setVisible(false);
         btnAdminSignIn.setVisible(true);
         btnSignUp.setVisible(true);
@@ -327,55 +332,79 @@ public class LoginPage2 implements ActionListener {
         new LoginPage2();
     }
 
+
     @Override
     public void actionPerformed(ActionEvent e) {
+
+
         if (e.getSource() == btnSignUp) {
             signUp();
+        } else if (e.getSource() == btnCustomerSignIn) {
+            CustomerLogin();
+            userType = "Customer";
+        } else if (e.getSource() == btnAdminSignIn) {
+            AdminLogIn();
+            userType = "Admin";
+        } else if (e.getSource() == btnSignIn) {
+            switch (userType) {
+                case "Customer":
+                    signIn();
+                    break;
+                case "Admin":
+                    adminSignIn();
+                    break;
+                default:
+                    lblErrorFace.setVisible(true);
+                    lblError.setText("<html>Please select a user type to login.</html>");
+                    lblError.setVisible(true);
+                    btnErrorClose.setVisible(true);
+                    break;
+            }
         }
     }
 
-    private void aboutus() {
-        //frm.dispose();
-        new AboutUs();
-    }
+
+
 
     private void signIn() {
         String username = txtBx1.getText();
         String password = new String(pass.getPassword());
+        AuthenticationCustomer customerAuth = new AuthenticationCustomer();
 
-        if (username.isEmpty() || password.isEmpty()) {
+        if (customerAuth.customerLogIn(username, password)) {
+            // Successful login
+            System.out.println("Customer login successful!");
+            CurrentUser.setCurrentUser(username);
+            frm.dispose();
+            HomePage homePage = new HomePage();
+            homePage.HomePageUI();
+        } else {
             lblErrorFace.setVisible(true);
             lblError.setVisible(true);
             btnErrorClose.setVisible(true);
-            return;
-        }
-
-        String query = "SELECT * FROM customer WHERE C_USERNAME = ? AND PASSWORD = ?";
-
-        try (Connection connection = DatabaseConfig.getConnection();
-             PreparedStatement pst = connection.prepareStatement(query)) {
-
-            pst.setString(1, username);
-            pst.setString(2, password);
-
-            try (ResultSet rs = pst.executeQuery()) {
-                if (rs.next()) {
-                    CurrentUser.setCurrentUser(username);
-                    frm.dispose();
-                    HomePage homePage = new HomePage();
-                    homePage.HomePageUI();;
-                } else {
-                    lblErrorFace.setVisible(true);
-                    lblError.setVisible(true);
-                    btnErrorClose.setVisible(true);
-                }
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            lblErrorFace.setVisible(true);
-            lblError.setVisible(true);
-            btnErrorClose.setVisible(true);
+            lblError.setText("<html>Credentials do no match</html>");
+            System.out.println("Customer login failed!");
         }
     }
+
+    private void adminSignIn() {
+        String username = txtBx1.getText();
+        String password = new String(pass.getPassword());
+        AuthenticationAdmin admin = new AuthenticationAdmin();
+
+        if (admin.adminLogIn(username, password)) {
+            System.out.println("Login successful! Admin:" + username);
+            CurrentUser.setCurrentUser(username);
+            frm.dispose();
+            new AdminFrame();
+        } else {
+            lblErrorFace.setVisible(true);
+            lblError.setVisible(true);
+            btnErrorClose.setVisible(true);
+            System.out.println("Admin login failed!");
+            lblError.setText("<html>Credentials do no match</html>");
+        }
+    }
+
 
 }

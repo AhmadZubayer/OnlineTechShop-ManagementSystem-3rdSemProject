@@ -299,6 +299,7 @@ public class AdminFrame implements ActionListener {
             pnlOthersTab.setVisible(false);
             pressedTabBtn(btnSales, allTabBtns);
             pressedBtn(btnPayments, allLeftBtns);
+            showTable("Payments");
         } else if (e.getSource() == btnCustomerAcc) {
             pnlButtonsSales.setVisible(true);
             pnlButtons.setVisible(false);
@@ -545,6 +546,9 @@ public class AdminFrame implements ActionListener {
                 break;
             case "games":
                 tableScrollPane = adminTableViews.viewAllProductsTable("games");
+                break;
+            case "payments":
+                tableScrollPane = adminTableViews.viewPaymentTable();
                 break;
             default:
                 throw new IllegalArgumentException("Unknown product category: " + productCategory);

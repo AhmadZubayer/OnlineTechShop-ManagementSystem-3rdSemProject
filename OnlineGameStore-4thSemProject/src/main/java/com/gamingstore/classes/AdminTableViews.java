@@ -171,6 +171,34 @@ public class AdminTableViews extends JFrame {
         return createTable(data, columnNames);
     }
 
+    public JScrollPane viewPaymentTable() {
+        ArrayList<String[]> paymentList = new ArrayList<>();
+        String query = "SELECT paymentID, c_username, payment_date, payment_method FROM payment;";
+
+        try (Connection connection = DatabaseConfig.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet rs = statement.executeQuery(query)) {
+
+            while (rs.next()) {
+                String paymentID = String.valueOf(rs.getInt("paymentID"));
+                String username = rs.getString("c_username");
+                String paymentTime = rs.getDate("payment_date").toString();
+                String paymentMethod = rs.getString("payment_method");
+
+                paymentList.add(new String[]{paymentID, username, paymentTime, paymentMethod});
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error loading payment data: " + e.getMessage(),
+                    "Database Error", JOptionPane.ERROR_MESSAGE);
+            return new JScrollPane(new JTable());
+        }
+
+        String[][] data = paymentList.toArray(new String[0][0]);
+        String[] columnNames = {"Payment ID", "Username", "Payment Time", "Payment Method"};
+        return createTable(data, columnNames);
+    }
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             AdminTableViews frame = new AdminTableViews();
