@@ -59,7 +59,7 @@ public class SignupPage implements ActionListener {
         pnlRight.setBackground(Color.decode("#DADADA"));
         frame.add(pnlRight);
 
-        JLabel lblCustomerId = new JLabel("ENTER CUSTOMER ID");
+        JLabel lblCustomerId = new JLabel("ENTER USERNAME");
         lblCustomerId.setFont(new Font("Roboto", Font.PLAIN, 18));
         lblCustomerId.setBounds(30, 30, 240, 35);
         pnlRight.add(lblCustomerId);

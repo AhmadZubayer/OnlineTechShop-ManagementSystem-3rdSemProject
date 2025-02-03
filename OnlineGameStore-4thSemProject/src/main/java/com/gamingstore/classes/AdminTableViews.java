@@ -7,9 +7,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class AdminTableViews extends JFrame {
@@ -207,4 +205,86 @@ public class AdminTableViews extends JFrame {
             frame.setVisible(true);
         });
     }
+
+    public JScrollPane viewOrderListTable() {
+        ArrayList<String[]> orderList = new ArrayList<>();
+        String query = "SELECT orderID, paymentID, C_USERNAME, orderDate, total_price FROM orderlist;";
+
+        try (Connection connection = DatabaseConfig.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet rs = statement.executeQuery(query)) {
+
+            while (rs.next()) {
+                String orderID = String.valueOf(rs.getInt("orderID"));
+                String paymentID = String.valueOf(rs.getInt("paymentID"));
+                String username = rs.getString("C_USERNAME");
+                String orderDate = rs.getDate("orderDate").toString();
+                String totalPrice = rs.getString("total_price");
+
+                orderList.add(new String[]{orderID, paymentID, username, orderDate, totalPrice});
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error loading order list data: " + e.getMessage(),
+                    "Database Error", JOptionPane.ERROR_MESSAGE);
+            return new JScrollPane(new JTable());
+        }
+
+        String[][] data = orderList.toArray(new String[0][0]);
+        String[] columnNames = {"Order ID", "Payment ID", "Username", "Order Date", "Total Price"};
+
+        JTable table = new JTable(new DefaultTableModel(data, columnNames));
+        JScrollPane tableScrollPane = createTable(data, columnNames);
+
+
+        table.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+                    int row = table.getSelectedRow();
+                    if (row != -1) {
+                        int orderID = Integer.parseInt(table.getValueAt(row, 0).toString());
+
+                        // 🔹 Open the popup with the selected Order ID
+                        //new OrderDetailsFrame(orderID);
+                    }
+                }
+            }
+        });
+
+        return tableScrollPane;
+    }
+
+    public JScrollPane viewProductList(int productID) {
+        ArrayList<String[]> productList = new ArrayList<>();
+        String query = "SELECT p.PRODUCT_ID, p.PRODUCT_NAME, c.quantity " +
+                "FROM c_product_list c " +
+                "JOIN products p ON c.productID = p.PRODUCT_ID " +
+                "WHERE p.PRODUCT_ID = ?";
+
+        try (Connection connection = DatabaseConfig.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, productID);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                String productId = String.valueOf(rs.getInt("PRODUCT_ID"));
+                String productName = rs.getString("PRODUCT_NAME");
+                String quantity = String.valueOf(rs.getInt("quantity"));
+
+                productList.add(new String[]{productId, productName, quantity});
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error loading product data: " + e.getMessage(),
+                    "Database Error", JOptionPane.ERROR_MESSAGE);
+            return new JScrollPane(new JTable());
+        }
+
+        String[][] data = productList.toArray(new String[0][0]);
+        String[] columnNames = {"Product ID", "Product Name", "Quantity"};
+        return createTable(data, columnNames);
+    }
+
+
 }
