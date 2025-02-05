@@ -1,0 +1,20 @@
+CREATE TABLE payment (
+  paymentID NUMBER(11) PRIMARY KEY,
+  cartID NUMBER(11) UNIQUE,
+  c_username VARCHAR2(50) NOT NULL,
+  payment_date DATE NOT NULL,
+  payment_method VARCHAR2(20) DEFAULT 'not paid' NOT NULL,
+  totalPaid NUMBER(15,2) DEFAULT NULL
+);
+
+DESCRIBE payment;
+
+
+CREATE SEQUENCE payment_seq START WITH 1 INCREMENT BY 1;
+CREATE OR REPLACE TRIGGER payment_trigger
+BEFORE INSERT ON payment
+FOR EACH ROW
+WHEN (NEW.paymentID IS NULL)
+BEGIN
+  SELECT payment_seq.NEXTVAL INTO :NEW.paymentID FROM DUAL;
+END;

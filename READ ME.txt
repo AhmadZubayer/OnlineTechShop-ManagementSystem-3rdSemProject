@@ -1,0 +1,5 @@
+ADMIN ID: 54734
+ADMIN PASS: 007
+DISCOUNT CODE: IDBQ
+
+GitHub: https://github.com/AhmadZubayer/OnlineTechShop-ManagementSystem-3rdSemProject.git

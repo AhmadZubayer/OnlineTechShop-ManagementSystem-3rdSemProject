@@ -1,0 +1,8 @@
+CREATE TABLE `cart` (
+  `Cart_ID` int(11) NOT NULL,
+  `C_USERNAME` varchar(10) NOT NULL,
+  `PRODUCT_ID` varchar(9) NOT NULL,
+  `QUANTITY` int(11) NOT NULL DEFAULT 1,
+  `ADDED_DATE` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+

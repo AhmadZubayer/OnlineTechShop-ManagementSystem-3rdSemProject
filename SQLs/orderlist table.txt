@@ -1,0 +1,25 @@
+CREATE TABLE orderlist (
+  orderID NUMBER(11) NOT NULL,
+  paymentID NUMBER(11) DEFAULT NULL,
+  C_USERNAME VARCHAR2(10) DEFAULT NULL,
+  orderDate DATE DEFAULT NULL,
+  product_list VARCHAR2(1000) NOT NULL,
+  total_price NUMBER(15,2) DEFAULT NULL, 
+  CONSTRAINT fk_orderlist_payment FOREIGN KEY (paymentID) 
+  REFERENCES payment(paymentID) 
+);
+
+DESCRIBE ORDERLIST;
+
+
+CREATE SEQUENCE orderlist_seq START WITH 1 INCREMENT BY 1;
+
+
+CREATE OR REPLACE TRIGGER orderlist_trigger
+BEFORE INSERT ON orderlist
+FOR EACH ROW
+WHEN (NEW.orderID IS NULL)
+BEGIN
+  SELECT orderlist_seq.NEXTVAL INTO :NEW.orderID FROM DUAL;
+END;
+/

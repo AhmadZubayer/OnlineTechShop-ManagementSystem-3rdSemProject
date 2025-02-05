@@ -1,0 +1,2166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+- phpMyAdmin XML Dump
+- version 5.2.1
+- https://www.phpmyadmin.net
+-
+- Host: 127.0.0.1
+- Generation Time: Feb 05, 2025 at 03:58 PM
+- Server version: 10.4.32-MariaDB
+- PHP Version: 8.2.12
+-->
+
+<pma_xml_export version="1.0" xmlns:pma="https://www.phpmyadmin.net/some_doc_url/">
+    <!--
+    - Structure schemas
+    -->
+    <pma:structure_schemas>
+        <pma:database name="techshopjava" collation="utf8mb4_general_ci" charset="utf8mb4">
+            <pma:table name="cart">
+                CREATE TABLE `cart` (
+                  `serial` int(11) NOT NULL AUTO_INCREMENT,
+                  `C_USERNAME` varchar(10) NOT NULL,
+                  `PRODUCT_ID` varchar(9) NOT NULL,
+                  `QUANTITY` int(11) NOT NULL DEFAULT 1,
+                  `ADDED_DATE` timestamp NOT NULL DEFAULT current_timestamp(),
+                  PRIMARY KEY (`serial`),
+                  KEY `C_USERNAME` (`C_USERNAME`),
+                  KEY `PRODUCT_ID` (`PRODUCT_ID`),
+                  CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`C_USERNAME`) REFERENCES `customer` (`C_USERNAME`),
+                  CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`PRODUCT_ID`) REFERENCES `products` (`PRODUCT_ID`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=237 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:view name="cartdetails">
+                CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `techshopjava`.`cartdetails` AS select `p`.`PRODUCT_NAME` AS `PRODUCT_NAME`,`c`.`QUANTITY` AS `QUANTITY`,`p`.`PRICE` AS `PRICE`,`p`.`VAT` AS `VAT`,round(`c`.`QUANTITY` * `p`.`PRICE`,3) AS `TOTAL_PRICE`,round(`c`.`QUANTITY` * `p`.`PRICE` * `p`.`VAT` / 100,3) AS `VAT_AMOUNT`,`c`.`C_USERNAME` AS `C_USERNAME` from (`techshopjava`.`cart` `c` join `techshopjava`.`products` `p`) where `c`.`PRODUCT_ID` = `p`.`PRODUCT_ID`;
+            </pma:view>
+            <pma:table name="customer">
+                CREATE TABLE `customer` (
+                  `C_USERNAME` varchar(10) NOT NULL,
+                  `CUSTOMER_NAME` varchar(20) NOT NULL,
+                  `PHONE_NO` int(15) NOT NULL,
+                  `EMAIL` varchar(30) NOT NULL,
+                  `ADDRESS` varchar(30) NOT NULL,
+                  `PASSWORD` varchar(11) NOT NULL,
+                  `DATE_REGISTERED` date NOT NULL DEFAULT current_timestamp(),
+                  PRIMARY KEY (`C_USERNAME`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="discounts">
+                CREATE TABLE `discounts` (
+                  `discount_code` varchar(5) NOT NULL,
+                  `discount_percentage` decimal(3,2) NOT NULL,
+                  PRIMARY KEY (`discount_code`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="employee">
+                CREATE TABLE `employee` (
+                  `empID` varchar(5) NOT NULL,
+                  `empEmail` varchar(100) NOT NULL,
+                  `empPhone` varchar(15) NOT NULL,
+                  `empName` varchar(100) NOT NULL,
+                  `empPassword` varchar(255) NOT NULL,
+                  PRIMARY KEY (`empID`),
+                  UNIQUE KEY `empEmail` (`empEmail`),
+                  UNIQUE KEY `empPhone` (`empPhone`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="orderlist">
+                CREATE TABLE `orderlist` (
+                  `orderID` int(11) NOT NULL AUTO_INCREMENT,
+                  `paymentID` int(11) DEFAULT NULL,
+                  `C_USERNAME` varchar(10) DEFAULT NULL,
+                  `orderDate` date DEFAULT NULL,
+                  `product_list` varchar(1000) NOT NULL,
+                  `total_price` varchar(15) DEFAULT NULL,
+                  PRIMARY KEY (`orderID`),
+                  KEY `paymentID` (`paymentID`),
+                  KEY `C_USERNAME` (`C_USERNAME`),
+                  CONSTRAINT `orderlist_ibfk_1` FOREIGN KEY (`paymentID`) REFERENCES `payment` (`paymentID`),
+                  CONSTRAINT `orderlist_ibfk_2` FOREIGN KEY (`C_USERNAME`) REFERENCES `customer` (`C_USERNAME`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="payment">
+                CREATE TABLE `payment` (
+                  `paymentID` int(11) NOT NULL AUTO_INCREMENT,
+                  `cartID` int(11) NOT NULL,
+                  `c_username` varchar(50) NOT NULL,
+                  `payment_date` date NOT NULL,
+                  `payment_method` enum(&#039;bkash&#039;,&#039;card&#039;,&#039;cash on delivery&#039;,&#039;not paid&#039;) NOT NULL DEFAULT &#039;not paid&#039;,
+                  `totalPaid` decimal(15,2) DEFAULT NULL,
+                  PRIMARY KEY (`paymentID`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="products">
+                CREATE TABLE `products` (
+                  `PRODUCT_ID` varchar(9) NOT NULL,
+                  `PRODUCT_NAME` varchar(255) NOT NULL,
+                  `BRAND` varchar(255) NOT NULL,
+                  `CATEGORY` varchar(255) NOT NULL,
+                  `PRICE` decimal(10,2) NOT NULL,
+                  `VAT` decimal(3,2) DEFAULT 0.00,
+                  `AVAILABLE_QUANTITY` int(11) NOT NULL,
+                  `SOLD` int(11) NOT NULL,
+                  PRIMARY KEY (`PRODUCT_ID`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="supplier">
+                CREATE TABLE `supplier` (
+                  `supplierid` int(11) NOT NULL AUTO_INCREMENT,
+                  `suppliername` varchar(255) NOT NULL,
+                  `supplieremail` varchar(255) NOT NULL,
+                  `supplierbrand` varchar(255) NOT NULL,
+                  `productId` varchar(9) DEFAULT NULL,
+                  PRIMARY KEY (`supplierid`),
+                  KEY `productId` (`productId`),
+                  CONSTRAINT `supplier_ibfk_1` FOREIGN KEY (`productId`) REFERENCES `products` (`PRODUCT_ID`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+        </pma:database>
+    </pma:structure_schemas>
+
+    <!--
+    - Database: 'techshopjava'
+    -->
+    <database name="techshopjava">
+        <!-- Table cart -->
+        <table name="cart">
+            <column name="serial">7</column>
+            <column name="C_USERNAME">069</column>
+            <column name="PRODUCT_ID">CONSL001</column>
+            <column name="QUANTITY">1</column>
+            <column name="ADDED_DATE">2025-02-02 18:02:56</column>
+        </table>
+        <table name="cart">
+            <column name="serial">8</column>
+            <column name="C_USERNAME">069</column>
+            <column name="PRODUCT_ID">CONSL002</column>
+            <column name="QUANTITY">1</column>
+            <column name="ADDED_DATE">2025-02-02 18:02:58</column>
+        </table>
+        <table name="cart">
+            <column name="serial">181</column>
+            <column name="C_USERNAME">trino10</column>
+            <column name="PRODUCT_ID">CONSL002</column>
+            <column name="QUANTITY">1</column>
+            <column name="ADDED_DATE">2025-02-04 19:28:15</column>
+        </table>
+        <table name="cart">
+            <column name="serial">182</column>
+            <column name="C_USERNAME">trino10</column>
+            <column name="PRODUCT_ID">CONSL004</column>
+            <column name="QUANTITY">1</column>
+            <column name="ADDED_DATE">2025-02-04 19:28:16</column>
+        </table>
+        <table name="cart">
+            <column name="serial">183</column>
+            <column name="C_USERNAME">trino10</column>
+            <column name="PRODUCT_ID">CPU004</column>
+            <column name="QUANTITY">1</column>
+            <column name="ADDED_DATE">2025-02-04 19:30:22</column>
+        </table>
+        <table name="cart">
+            <column name="serial">184</column>
+            <column name="C_USERNAME">trino10</column>
+            <column name="PRODUCT_ID">COL003</column>
+            <column name="QUANTITY">1</column>
+            <column name="ADDED_DATE">2025-02-04 19:30:22</column>
+        </table>
+        <table name="cart">
+            <column name="serial">185</column>
+            <column name="C_USERNAME">trino10</column>
+            <column name="PRODUCT_ID">MEM003</column>
+            <column name="QUANTITY">4</column>
+            <column name="ADDED_DATE">2025-02-04 19:30:22</column>
+        </table>
+        <table name="cart">
+            <column name="serial">187</column>
+            <column name="C_USERNAME">trino10</column>
+            <column name="PRODUCT_ID">PSU003</column>
+            <column name="QUANTITY">1</column>
+            <column name="ADDED_DATE">2025-02-04 19:30:22</column>
+        </table>
+        <table name="cart">
+            <column name="serial">188</column>
+            <column name="C_USERNAME">trino10</column>
+            <column name="PRODUCT_ID">CASE001</column>
+            <column name="QUANTITY">1</column>
+            <column name="ADDED_DATE">2025-02-04 19:30:22</column>
+        </table>
+        <table name="cart">
+            <column name="serial">221</column>
+            <column name="C_USERNAME">zubayer369</column>
+            <column name="PRODUCT_ID">CONSL002</column>
+            <column name="QUANTITY">1</column>
+            <column name="ADDED_DATE">2025-02-05 13:03:35</column>
+        </table>
+        <!-- Table customer -->
+        <table name="customer">
+            <column name="C_USERNAME">001</column>
+            <column name="CUSTOMER_NAME">Anik</column>
+            <column name="PHONE_NO">1842823300</column>
+            <column name="EMAIL">anik@gmail.com</column>
+            <column name="ADDRESS">dhaka</column>
+            <column name="PASSWORD">1234</column>
+            <column name="DATE_REGISTERED">2025-01-15</column>
+        </table>
+        <table name="customer">
+            <column name="C_USERNAME">002</column>
+            <column name="CUSTOMER_NAME">Zubayer</column>
+            <column name="PHONE_NO">1842823300</column>
+            <column name="EMAIL">mahin@gmail.com</column>
+            <column name="ADDRESS">Dhaka</column>
+            <column name="PASSWORD">Dhaka</column>
+            <column name="DATE_REGISTERED">2025-01-15</column>
+        </table>
+        <table name="customer">
+            <column name="C_USERNAME">005</column>
+            <column name="CUSTOMER_NAME">Naveed</column>
+            <column name="PHONE_NO">176969669</column>
+            <column name="EMAIL">naveed@gmail</column>
+            <column name="ADDRESS">mirpur</column>
+            <column name="PASSWORD">123</column>
+            <column name="DATE_REGISTERED">2025-01-15</column>
+        </table>
+        <table name="customer">
+            <column name="C_USERNAME">007</column>
+            <column name="CUSTOMER_NAME">45</column>
+            <column name="PHONE_NO">1234567891</column>
+            <column name="EMAIL">s@s.s</column>
+            <column name="ADDRESS">45</column>
+            <column name="PASSWORD">45</column>
+            <column name="DATE_REGISTERED">2025-01-18</column>
+        </table>
+        <table name="customer">
+            <column name="C_USERNAME">009</column>
+            <column name="CUSTOMER_NAME">wahid</column>
+            <column name="PHONE_NO">1234567899</column>
+            <column name="EMAIL">a@a.a</column>
+            <column name="ADDRESS">12</column>
+            <column name="PASSWORD">11</column>
+            <column name="DATE_REGISTERED">2025-01-19</column>
+        </table>
+        <table name="customer">
+            <column name="C_USERNAME">069</column>
+            <column name="CUSTOMER_NAME">Anik</column>
+            <column name="PHONE_NO">1234467899</column>
+            <column name="EMAIL">a@s.s</column>
+            <column name="ADDRESS">123</column>
+            <column name="PASSWORD">12</column>
+            <column name="DATE_REGISTERED">2025-02-02</column>
+        </table>
+        <table name="customer">
+            <column name="C_USERNAME">333</column>
+            <column name="CUSTOMER_NAME">disha</column>
+            <column name="PHONE_NO">1234567898</column>
+            <column name="EMAIL">w@w.w</column>
+            <column name="ADDRESS">dhaka</column>
+            <column name="PASSWORD">12</column>
+            <column name="DATE_REGISTERED">2025-01-19</column>
+        </table>
+        <table name="customer">
+            <column name="C_USERNAME">hello</column>
+            <column name="CUSTOMER_NAME">hello</column>
+            <column name="PHONE_NO">1234567890</column>
+            <column name="EMAIL">hello@aiub.edu</column>
+            <column name="ADDRESS">dhaka</column>
+            <column name="PASSWORD">121</column>
+            <column name="DATE_REGISTERED">2025-01-15</column>
+        </table>
+        <table name="customer">
+            <column name="C_USERNAME">labib001</column>
+            <column name="CUSTOMER_NAME">labib</column>
+            <column name="PHONE_NO">1234569899</column>
+            <column name="EMAIL">labib@l.com</column>
+            <column name="ADDRESS">dhaka</column>
+            <column name="PASSWORD">11</column>
+            <column name="DATE_REGISTERED">2025-02-04</column>
+        </table>
+        <table name="customer">
+            <column name="C_USERNAME">niloy001</column>
+            <column name="CUSTOMER_NAME">Niloy</column>
+            <column name="PHONE_NO">1986277963</column>
+            <column name="EMAIL">niloy@m.mail</column>
+            <column name="ADDRESS">dhaka</column>
+            <column name="PASSWORD">000</column>
+            <column name="DATE_REGISTERED">2025-02-04</column>
+        </table>
+        <table name="customer">
+            <column name="C_USERNAME">t3</column>
+            <column name="CUSTOMER_NAME">t3</column>
+            <column name="PHONE_NO">1234567894</column>
+            <column name="EMAIL">e@e.e</column>
+            <column name="ADDRESS">1</column>
+            <column name="PASSWORD">1</column>
+            <column name="DATE_REGISTERED">2025-02-04</column>
+        </table>
+        <table name="customer">
+            <column name="C_USERNAME">test</column>
+            <column name="CUSTOMER_NAME">test</column>
+            <column name="PHONE_NO">1534833131</column>
+            <column name="EMAIL">t@t.t</column>
+            <column name="ADDRESS">test</column>
+            <column name="PASSWORD">1</column>
+            <column name="DATE_REGISTERED">2025-02-04</column>
+        </table>
+        <table name="customer">
+            <column name="C_USERNAME">test2</column>
+            <column name="CUSTOMER_NAME">test2</column>
+            <column name="PHONE_NO">1717757777</column>
+            <column name="EMAIL">2@2.2</column>
+            <column name="ADDRESS">test2</column>
+            <column name="PASSWORD">2</column>
+            <column name="DATE_REGISTERED">2025-02-04</column>
+        </table>
+        <table name="customer">
+            <column name="C_USERNAME">trino10</column>
+            <column name="CUSTOMER_NAME">trino</column>
+            <column name="PHONE_NO">1234567896</column>
+            <column name="EMAIL">tt@t.t</column>
+            <column name="ADDRESS">dhaka</column>
+            <column name="PASSWORD">11</column>
+            <column name="DATE_REGISTERED">2025-02-04</column>
+        </table>
+        <table name="customer">
+            <column name="C_USERNAME">wahid99</column>
+            <column name="CUSTOMER_NAME">wahid</column>
+            <column name="PHONE_NO">1234587891</column>
+            <column name="EMAIL">f@f.f</column>
+            <column name="ADDRESS">Dhaka</column>
+            <column name="PASSWORD">11</column>
+            <column name="DATE_REGISTERED">2025-02-05</column>
+        </table>
+        <table name="customer">
+            <column name="C_USERNAME">zubayer369</column>
+            <column name="CUSTOMER_NAME">AhmadZubayer</column>
+            <column name="PHONE_NO">1842823300</column>
+            <column name="EMAIL">hello@gmail.com</column>
+            <column name="ADDRESS">dhaka</column>
+            <column name="PASSWORD">1234</column>
+            <column name="DATE_REGISTERED">2025-01-15</column>
+        </table>
+        <table name="customer">
+            <column name="C_USERNAME">zubayer399</column>
+            <column name="CUSTOMER_NAME">zubayer</column>
+            <column name="PHONE_NO">1234567895</column>
+            <column name="EMAIL">h@h.h</column>
+            <column name="ADDRESS">gg</column>
+            <column name="PASSWORD">123</column>
+            <column name="DATE_REGISTERED">2025-02-05</column>
+        </table>
+        <!-- Table discounts -->
+        <table name="discounts">
+            <column name="discount_code">IDBQ</column>
+            <column name="discount_percentage">0.20</column>
+        </table>
+        <!-- Table employee -->
+        <table name="employee">
+            <column name="empID">54734</column>
+            <column name="empEmail">ahmadzubayer007@gmail.com</column>
+            <column name="empPhone">01404183980</column>
+            <column name="empName">Ahmad Zubayer</column>
+            <column name="empPassword">007</column>
+        </table>
+        <!-- Table orderlist -->
+        <table name="orderlist">
+            <column name="orderID">8</column>
+            <column name="paymentID">37</column>
+            <column name="C_USERNAME">001</column>
+            <column name="orderDate">2025-02-04</column>
+            <column name="product_list">CONSL002(1), CONSL008(1), CONSL007(1), CONSL003(3)</column>
+            <column name="total_price">2920.42</column>
+        </table>
+        <table name="orderlist">
+            <column name="orderID">9</column>
+            <column name="paymentID">39</column>
+            <column name="C_USERNAME">001</column>
+            <column name="orderDate">2025-02-04</column>
+            <column name="product_list">CONSL002(1), CONSL004(1), CONSL007(2), GAME003(1), GAME004(1)</column>
+            <column name="total_price">2451.12</column>
+        </table>
+        <table name="orderlist">
+            <column name="orderID">10</column>
+            <column name="paymentID">41</column>
+            <column name="C_USERNAME">zubayer369</column>
+            <column name="orderDate">2025-02-04</column>
+            <column name="product_list">CONSL003(1), CONSL008(1), GACC003(1), GACC006(1), GACC005(1)</column>
+            <column name="total_price">1972.19</column>
+        </table>
+        <table name="orderlist">
+            <column name="orderID">15</column>
+            <column name="paymentID">46</column>
+            <column name="C_USERNAME">001</column>
+            <column name="orderDate">2025-02-04</column>
+            <column name="product_list">CONSL002(1), GAME003(1), GAME005(1)</column>
+            <column name="total_price">636.73</column>
+        </table>
+        <table name="orderlist">
+            <column name="orderID">17</column>
+            <column name="paymentID">48</column>
+            <column name="C_USERNAME">zubayer369</column>
+            <column name="orderDate">2025-02-04</column>
+            <column name="product_list">CONSL002(1), GAME003(1)</column>
+            <column name="total_price">570.74</column>
+        </table>
+        <table name="orderlist">
+            <column name="orderID">18</column>
+            <column name="paymentID">49</column>
+            <column name="C_USERNAME">001</column>
+            <column name="orderDate">2025-02-04</column>
+            <column name="product_list">CONSL004(1)</column>
+            <column name="total_price">230.10</column>
+        </table>
+        <table name="orderlist">
+            <column name="orderID">19</column>
+            <column name="paymentID">50</column>
+            <column name="C_USERNAME">001</column>
+            <column name="orderDate">2025-02-04</column>
+            <column name="product_list">CONSL003(1), GACC003(1), COL003(1), SSD004(1)</column>
+            <column name="total_price">1225.70</column>
+        </table>
+        <table name="orderlist">
+            <column name="orderID">21</column>
+            <column name="paymentID">52</column>
+            <column name="C_USERNAME">zubayer369</column>
+            <column name="orderDate">2025-02-05</column>
+            <column name="product_list">CPU003(1), COL004(1), MBD004(1), MEM004(3), GPU003(1), SSD002(1), PSU003(1), CASE004(1)</column>
+            <column name="total_price">4609.1</column>
+        </table>
+        <table name="orderlist">
+            <column name="orderID">22</column>
+            <column name="paymentID">53</column>
+            <column name="C_USERNAME">zubayer369</column>
+            <column name="orderDate">2025-02-05</column>
+            <column name="product_list">CONSL002(2), CONSL004(3), CONSL007(2), CONSL008(1), CONSL001(1), CPU003(1), COL003(1), MBD003(1), MEM004(1), SSD003(1), PSU003(1), CONSL003(1)</column>
+            <column name="total_price">7036.76</column>
+        </table>
+        <table name="orderlist">
+            <column name="orderID">24</column>
+            <column name="paymentID">55</column>
+            <column name="C_USERNAME">zubayer369</column>
+            <column name="orderDate">2025-02-05</column>
+            <column name="product_list">CONSL002(2)</column>
+            <column name="total_price">998.5</column>
+        </table>
+        <table name="orderlist">
+            <column name="orderID">25</column>
+            <column name="paymentID">56</column>
+            <column name="C_USERNAME">zubayer369</column>
+            <column name="orderDate">2025-02-05</column>
+            <column name="product_list">CONSL002(2)</column>
+            <column name="total_price">998.5</column>
+        </table>
+        <table name="orderlist">
+            <column name="orderID">26</column>
+            <column name="paymentID">57</column>
+            <column name="C_USERNAME">zubayer369</column>
+            <column name="orderDate">2025-02-05</column>
+            <column name="product_list">CONSL002(3)</column>
+            <column name="total_price">1497.75</column>
+        </table>
+        <table name="orderlist">
+            <column name="orderID">27</column>
+            <column name="paymentID">58</column>
+            <column name="C_USERNAME">zubayer369</column>
+            <column name="orderDate">2025-02-05</column>
+            <column name="product_list">CONSL002(2)</column>
+            <column name="total_price">998.5</column>
+        </table>
+        <table name="orderlist">
+            <column name="orderID">28</column>
+            <column name="paymentID">59</column>
+            <column name="C_USERNAME">zubayer399</column>
+            <column name="orderDate">2025-02-05</column>
+            <column name="product_list">CONSL003(1)</column>
+            <column name="total_price">450.21</column>
+        </table>
+        <table name="orderlist">
+            <column name="orderID">29</column>
+            <column name="paymentID">60</column>
+            <column name="C_USERNAME">wahid99</column>
+            <column name="orderDate">2025-02-05</column>
+            <column name="product_list">CONSL001(1), CPU002(1), COL003(1), MBD004(1), MEM004(4), GPU003(1), SSD003(1), PSU004(1), CASE003(1)</column>
+            <column name="total_price">5679.62</column>
+        </table>
+        <table name="orderlist">
+            <column name="orderID">30</column>
+            <column name="paymentID">61</column>
+            <column name="C_USERNAME">001</column>
+            <column name="orderDate">2025-02-05</column>
+            <column name="product_list">CONSL003(2), CONSL004(5), CONSL002(2), CONSL008(2), CONSL007(1), CONSL001(1)</column>
+            <column name="total_price">6390.11</column>
+        </table>
+        <table name="orderlist">
+            <column name="orderID">31</column>
+            <column name="paymentID">62</column>
+            <column name="C_USERNAME">001</column>
+            <column name="orderDate">2025-02-05</column>
+            <column name="product_list">CONSL002(1), CONSL003(1), CONSL004(1)</column>
+            <column name="total_price">1179.57</column>
+        </table>
+        <table name="orderlist">
+            <column name="orderID">32</column>
+            <column name="paymentID">63</column>
+            <column name="C_USERNAME">001</column>
+            <column name="orderDate">2025-02-05</column>
+            <column name="product_list">CONSL004(1)</column>
+            <column name="total_price">230.1</column>
+        </table>
+        <table name="orderlist">
+            <column name="orderID">33</column>
+            <column name="paymentID">64</column>
+            <column name="C_USERNAME">001</column>
+            <column name="orderDate">2025-02-05</column>
+            <column name="product_list">CONSL004(1)</column>
+            <column name="total_price">229.64</column>
+        </table>
+        <table name="orderlist">
+            <column name="orderID">34</column>
+            <column name="paymentID">65</column>
+            <column name="C_USERNAME">001</column>
+            <column name="orderDate">2025-02-05</column>
+            <column name="product_list"></column>
+            <column name="total_price">0.0</column>
+        </table>
+        <!-- Table payment -->
+        <table name="payment">
+            <column name="paymentID">10</column>
+            <column name="cartID">0</column>
+            <column name="c_username">001</column>
+            <column name="payment_date">2025-02-03</column>
+            <column name="payment_method">bkash</column>
+            <column name="totalPaid">NULL</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">11</column>
+            <column name="cartID">0</column>
+            <column name="c_username">001</column>
+            <column name="payment_date">2025-02-03</column>
+            <column name="payment_method">bkash</column>
+            <column name="totalPaid">NULL</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">12</column>
+            <column name="cartID">0</column>
+            <column name="c_username">001</column>
+            <column name="payment_date">2025-02-03</column>
+            <column name="payment_method">bkash</column>
+            <column name="totalPaid">NULL</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">13</column>
+            <column name="cartID">0</column>
+            <column name="c_username">001</column>
+            <column name="payment_date">2025-02-03</column>
+            <column name="payment_method">bkash</column>
+            <column name="totalPaid">NULL</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">14</column>
+            <column name="cartID">0</column>
+            <column name="c_username">001</column>
+            <column name="payment_date">2025-02-03</column>
+            <column name="payment_method">bkash</column>
+            <column name="totalPaid">0.00</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">15</column>
+            <column name="cartID">0</column>
+            <column name="c_username">001</column>
+            <column name="payment_date">2025-02-03</column>
+            <column name="payment_method">bkash</column>
+            <column name="totalPaid">0.00</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">16</column>
+            <column name="cartID">0</column>
+            <column name="c_username">001</column>
+            <column name="payment_date">2025-02-03</column>
+            <column name="payment_method">bkash</column>
+            <column name="totalPaid">NULL</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">17</column>
+            <column name="cartID">0</column>
+            <column name="c_username">001</column>
+            <column name="payment_date">2025-02-03</column>
+            <column name="payment_method">bkash</column>
+            <column name="totalPaid">NULL</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">18</column>
+            <column name="cartID">0</column>
+            <column name="c_username">001</column>
+            <column name="payment_date">2025-02-03</column>
+            <column name="payment_method">bkash</column>
+            <column name="totalPaid">729.35</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">19</column>
+            <column name="cartID">0</column>
+            <column name="c_username">001</column>
+            <column name="payment_date">2025-02-03</column>
+            <column name="payment_method">bkash</column>
+            <column name="totalPaid">729.35</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">20</column>
+            <column name="cartID">0</column>
+            <column name="c_username">001</column>
+            <column name="payment_date">2025-02-03</column>
+            <column name="payment_method">bkash</column>
+            <column name="totalPaid">729.35</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">21</column>
+            <column name="cartID">0</column>
+            <column name="c_username">001</column>
+            <column name="payment_date">2025-02-03</column>
+            <column name="payment_method">bkash</column>
+            <column name="totalPaid">729.35</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">22</column>
+            <column name="cartID">0</column>
+            <column name="c_username">001</column>
+            <column name="payment_date">2025-02-03</column>
+            <column name="payment_method">bkash</column>
+            <column name="totalPaid">686.22</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">23</column>
+            <column name="cartID">0</column>
+            <column name="c_username">001</column>
+            <column name="payment_date">2025-02-03</column>
+            <column name="payment_method">bkash</column>
+            <column name="totalPaid">686.22</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">24</column>
+            <column name="cartID">0</column>
+            <column name="c_username">001</column>
+            <column name="payment_date">2025-02-04</column>
+            <column name="payment_method">card</column>
+            <column name="totalPaid">1980.41</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">25</column>
+            <column name="cartID">0</column>
+            <column name="c_username">001</column>
+            <column name="payment_date">2025-02-04</column>
+            <column name="payment_method">card</column>
+            <column name="totalPaid">1980.41</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">26</column>
+            <column name="cartID">0</column>
+            <column name="c_username">labib001</column>
+            <column name="payment_date">2025-02-04</column>
+            <column name="payment_method">cash on delivery</column>
+            <column name="totalPaid">2453.64</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">27</column>
+            <column name="cartID">0</column>
+            <column name="c_username">labib001</column>
+            <column name="payment_date">2025-02-04</column>
+            <column name="payment_method">cash on delivery</column>
+            <column name="totalPaid">2453.64</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">28</column>
+            <column name="cartID">0</column>
+            <column name="c_username">labib001</column>
+            <column name="payment_date">2025-02-04</column>
+            <column name="payment_method">bkash</column>
+            <column name="totalPaid">0.00</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">29</column>
+            <column name="cartID">0</column>
+            <column name="c_username">labib001</column>
+            <column name="payment_date">2025-02-04</column>
+            <column name="payment_method">bkash</column>
+            <column name="totalPaid">0.00</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">30</column>
+            <column name="cartID">0</column>
+            <column name="c_username">001</column>
+            <column name="payment_date">2025-02-04</column>
+            <column name="payment_method">bkash</column>
+            <column name="totalPaid">1552.20</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">31</column>
+            <column name="cartID">0</column>
+            <column name="c_username">001</column>
+            <column name="payment_date">2025-02-04</column>
+            <column name="payment_method">bkash</column>
+            <column name="totalPaid">1552.20</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">32</column>
+            <column name="cartID">0</column>
+            <column name="c_username">001</column>
+            <column name="payment_date">2025-02-04</column>
+            <column name="payment_method">bkash</column>
+            <column name="totalPaid">680.32</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">33</column>
+            <column name="cartID">0</column>
+            <column name="c_username">001</column>
+            <column name="payment_date">2025-02-04</column>
+            <column name="payment_method">bkash</column>
+            <column name="totalPaid">680.32</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">34</column>
+            <column name="cartID">0</column>
+            <column name="c_username">001</column>
+            <column name="payment_date">2025-02-04</column>
+            <column name="payment_method">card</column>
+            <column name="totalPaid">499.25</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">35</column>
+            <column name="cartID">0</column>
+            <column name="c_username">001</column>
+            <column name="payment_date">2025-02-04</column>
+            <column name="payment_method">card</column>
+            <column name="totalPaid">499.25</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">36</column>
+            <column name="cartID">0</column>
+            <column name="c_username">001</column>
+            <column name="payment_date">2025-02-04</column>
+            <column name="payment_method">bkash</column>
+            <column name="totalPaid">2920.42</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">37</column>
+            <column name="cartID">0</column>
+            <column name="c_username">001</column>
+            <column name="payment_date">2025-02-04</column>
+            <column name="payment_method">bkash</column>
+            <column name="totalPaid">2920.42</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">38</column>
+            <column name="cartID">0</column>
+            <column name="c_username">001</column>
+            <column name="payment_date">2025-02-04</column>
+            <column name="payment_method">cash on delivery</column>
+            <column name="totalPaid">2451.12</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">39</column>
+            <column name="cartID">0</column>
+            <column name="c_username">001</column>
+            <column name="payment_date">2025-02-04</column>
+            <column name="payment_method">cash on delivery</column>
+            <column name="totalPaid">2451.12</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">40</column>
+            <column name="cartID">0</column>
+            <column name="c_username">zubayer369</column>
+            <column name="payment_date">2025-02-04</column>
+            <column name="payment_method">bkash</column>
+            <column name="totalPaid">1972.19</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">41</column>
+            <column name="cartID">0</column>
+            <column name="c_username">zubayer369</column>
+            <column name="payment_date">2025-02-04</column>
+            <column name="payment_method">bkash</column>
+            <column name="totalPaid">1972.19</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">42</column>
+            <column name="cartID">1</column>
+            <column name="c_username">001</column>
+            <column name="payment_date">2025-02-04</column>
+            <column name="payment_method">card</column>
+            <column name="totalPaid">729.35</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">43</column>
+            <column name="cartID">2</column>
+            <column name="c_username">zubayer369</column>
+            <column name="payment_date">2025-02-04</column>
+            <column name="payment_method">card</column>
+            <column name="totalPaid">1480.71</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">44</column>
+            <column name="cartID">3</column>
+            <column name="c_username">labib001</column>
+            <column name="payment_date">2025-02-04</column>
+            <column name="payment_method">card</column>
+            <column name="totalPaid">2303.40</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">45</column>
+            <column name="cartID">4</column>
+            <column name="c_username">001</column>
+            <column name="payment_date">2025-02-04</column>
+            <column name="payment_method">card</column>
+            <column name="totalPaid">230.10</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">46</column>
+            <column name="cartID">5</column>
+            <column name="c_username">001</column>
+            <column name="payment_date">2025-02-04</column>
+            <column name="payment_method">bkash</column>
+            <column name="totalPaid">636.73</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">47</column>
+            <column name="cartID">6</column>
+            <column name="c_username">zubayer369</column>
+            <column name="payment_date">2025-02-04</column>
+            <column name="payment_method">cash on delivery</column>
+            <column name="totalPaid">4011.90</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">48</column>
+            <column name="cartID">7</column>
+            <column name="c_username">zubayer369</column>
+            <column name="payment_date">2025-02-04</column>
+            <column name="payment_method">card</column>
+            <column name="totalPaid">570.74</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">49</column>
+            <column name="cartID">8</column>
+            <column name="c_username">001</column>
+            <column name="payment_date">2025-02-04</column>
+            <column name="payment_method">bkash</column>
+            <column name="totalPaid">230.10</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">50</column>
+            <column name="cartID">9</column>
+            <column name="c_username">001</column>
+            <column name="payment_date">2025-02-04</column>
+            <column name="payment_method">card</column>
+            <column name="totalPaid">1225.70</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">51</column>
+            <column name="cartID">10</column>
+            <column name="c_username">niloy001</column>
+            <column name="payment_date">2025-02-04</column>
+            <column name="payment_method">card</column>
+            <column name="totalPaid">230.10</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">52</column>
+            <column name="cartID">11</column>
+            <column name="c_username">zubayer369</column>
+            <column name="payment_date">2025-02-05</column>
+            <column name="payment_method">card</column>
+            <column name="totalPaid">4609.10</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">53</column>
+            <column name="cartID">12</column>
+            <column name="c_username">zubayer369</column>
+            <column name="payment_date">2025-02-05</column>
+            <column name="payment_method">bkash</column>
+            <column name="totalPaid">7036.76</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">54</column>
+            <column name="cartID">13</column>
+            <column name="c_username">zubayer369</column>
+            <column name="payment_date">2025-02-05</column>
+            <column name="payment_method">bkash</column>
+            <column name="totalPaid">998.50</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">55</column>
+            <column name="cartID">14</column>
+            <column name="c_username">zubayer369</column>
+            <column name="payment_date">2025-02-05</column>
+            <column name="payment_method">bkash</column>
+            <column name="totalPaid">998.50</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">56</column>
+            <column name="cartID">15</column>
+            <column name="c_username">zubayer369</column>
+            <column name="payment_date">2025-02-05</column>
+            <column name="payment_method">bkash</column>
+            <column name="totalPaid">998.50</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">57</column>
+            <column name="cartID">16</column>
+            <column name="c_username">zubayer369</column>
+            <column name="payment_date">2025-02-05</column>
+            <column name="payment_method">card</column>
+            <column name="totalPaid">1497.75</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">58</column>
+            <column name="cartID">17</column>
+            <column name="c_username">zubayer369</column>
+            <column name="payment_date">2025-02-05</column>
+            <column name="payment_method">bkash</column>
+            <column name="totalPaid">998.50</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">59</column>
+            <column name="cartID">18</column>
+            <column name="c_username">zubayer399</column>
+            <column name="payment_date">2025-02-05</column>
+            <column name="payment_method">bkash</column>
+            <column name="totalPaid">450.21</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">60</column>
+            <column name="cartID">19</column>
+            <column name="c_username">wahid99</column>
+            <column name="payment_date">2025-02-05</column>
+            <column name="payment_method">bkash</column>
+            <column name="totalPaid">5679.62</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">61</column>
+            <column name="cartID">20</column>
+            <column name="c_username">001</column>
+            <column name="payment_date">2025-02-05</column>
+            <column name="payment_method">bkash</column>
+            <column name="totalPaid">6390.11</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">62</column>
+            <column name="cartID">21</column>
+            <column name="c_username">001</column>
+            <column name="payment_date">2025-02-05</column>
+            <column name="payment_method">bkash</column>
+            <column name="totalPaid">1179.57</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">63</column>
+            <column name="cartID">22</column>
+            <column name="c_username">001</column>
+            <column name="payment_date">2025-02-05</column>
+            <column name="payment_method">bkash</column>
+            <column name="totalPaid">230.10</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">64</column>
+            <column name="cartID">23</column>
+            <column name="c_username">001</column>
+            <column name="payment_date">2025-02-05</column>
+            <column name="payment_method">card</column>
+            <column name="totalPaid">229.64</column>
+        </table>
+        <table name="payment">
+            <column name="paymentID">65</column>
+            <column name="cartID">24</column>
+            <column name="c_username">001</column>
+            <column name="payment_date">2025-02-05</column>
+            <column name="payment_method">card</column>
+            <column name="totalPaid">0.00</column>
+        </table>
+        <!-- Table products -->
+        <table name="products">
+            <column name="PRODUCT_ID">CASE001</column>
+            <column name="PRODUCT_NAME">CORSAIR iCUE 5000T RGB Mid-Tower ATX PC</column>
+            <column name="BRAND">CORSAIR</column>
+            <column name="CATEGORY">CASE</column>
+            <column name="PRICE">129.99</column>
+            <column name="VAT">3.20</column>
+            <column name="AVAILABLE_QUANTITY">35</column>
+            <column name="SOLD">55</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">CASE002</column>
+            <column name="PRODUCT_NAME">Cooler Master TD500 MAX ATX Mid-Tower Case</column>
+            <column name="BRAND">Cooler Master</column>
+            <column name="CATEGORY">CASE</column>
+            <column name="PRICE">149.99</column>
+            <column name="VAT">0.50</column>
+            <column name="AVAILABLE_QUANTITY">40</column>
+            <column name="SOLD">60</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">CASE003</column>
+            <column name="PRODUCT_NAME">ASUS ROG Strix Helios GX601 White Edition RGB</column>
+            <column name="BRAND">ASUS</column>
+            <column name="CATEGORY">CASE</column>
+            <column name="PRICE">329.99</column>
+            <column name="VAT">1.20</column>
+            <column name="AVAILABLE_QUANTITY">45</column>
+            <column name="SOLD">35</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">CASE004</column>
+            <column name="PRODUCT_NAME">CORSAIR iCUE 5000T RGB</column>
+            <column name="BRAND">CORSAIR</column>
+            <column name="CATEGORY">CASE</column>
+            <column name="PRICE">199.99</column>
+            <column name="VAT">3.20</column>
+            <column name="AVAILABLE_QUANTITY">50</column>
+            <column name="SOLD">40</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">COL001</column>
+            <column name="PRODUCT_NAME">CORSAIR iCUE Link H150i LCD Liquid CPU Cooler</column>
+            <column name="BRAND">CORSAIR</column>
+            <column name="CATEGORY">COOLER</column>
+            <column name="PRICE">229.99</column>
+            <column name="VAT">0.50</column>
+            <column name="AVAILABLE_QUANTITY">55</column>
+            <column name="SOLD">45</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">COL002</column>
+            <column name="PRODUCT_NAME">CORSAIR iCUE Link H100X LCD Liquid CPU Cooler</column>
+            <column name="BRAND">CORSAIR</column>
+            <column name="CATEGORY">COOLER</column>
+            <column name="PRICE">249.99</column>
+            <column name="VAT">1.20</column>
+            <column name="AVAILABLE_QUANTITY">60</column>
+            <column name="SOLD">50</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">COL003</column>
+            <column name="PRODUCT_NAME">Corsair H100x RGB Elite Liquid CPU Cooler</column>
+            <column name="BRAND">Corsair</column>
+            <column name="CATEGORY">COOLER</column>
+            <column name="PRICE">119.99</column>
+            <column name="VAT">3.20</column>
+            <column name="AVAILABLE_QUANTITY">30</column>
+            <column name="SOLD">35</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">COL004</column>
+            <column name="PRODUCT_NAME">MSI MAG CORELIQUID I360 White</column>
+            <column name="BRAND">MSI</column>
+            <column name="CATEGORY">COOLER</column>
+            <column name="PRICE">296.99</column>
+            <column name="VAT">0.50</column>
+            <column name="AVAILABLE_QUANTITY">35</column>
+            <column name="SOLD">40</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">CONSL001</column>
+            <column name="PRODUCT_NAME">PlayStation 5 </column>
+            <column name="BRAND">Sony</column>
+            <column name="CATEGORY">Gaming Consoles</column>
+            <column name="PRICE">1999.00</column>
+            <column name="VAT">0.05</column>
+            <column name="AVAILABLE_QUANTITY">20</column>
+            <column name="SOLD">150</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">CONSL002</column>
+            <column name="PRODUCT_NAME">PlayStation 5</column>
+            <column name="BRAND">Sony</column>
+            <column name="CATEGORY">Gaming Consoles</column>
+            <column name="PRICE">499.00</column>
+            <column name="VAT">0.05</column>
+            <column name="AVAILABLE_QUANTITY">20</column>
+            <column name="SOLD">150</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">CONSL003</column>
+            <column name="PRODUCT_NAME">XBOX Series X</column>
+            <column name="BRAND">Microsoft</column>
+            <column name="CATEGORY">Gaming Consoles</column>
+            <column name="PRICE">449.99</column>
+            <column name="VAT">0.05</column>
+            <column name="AVAILABLE_QUANTITY">20</column>
+            <column name="SOLD">150</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">CONSL004</column>
+            <column name="PRODUCT_NAME">XBOX Series S</column>
+            <column name="BRAND">Microsoft</column>
+            <column name="CATEGORY">Gaming Consoles</column>
+            <column name="PRICE">229.99</column>
+            <column name="VAT">0.05</column>
+            <column name="AVAILABLE_QUANTITY">20</column>
+            <column name="SOLD">150</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">CONSL005</column>
+            <column name="PRODUCT_NAME">Valve Steam Deck</column>
+            <column name="BRAND">Valve</column>
+            <column name="CATEGORY">Gaming Consoles</column>
+            <column name="PRICE">396.00</column>
+            <column name="VAT">0.05</column>
+            <column name="AVAILABLE_QUANTITY">20</column>
+            <column name="SOLD">150</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">CONSL006</column>
+            <column name="PRODUCT_NAME">Nintendo Switch</column>
+            <column name="BRAND">Nintendo</column>
+            <column name="CATEGORY">Gaming Consoles</column>
+            <column name="PRICE">299.99</column>
+            <column name="VAT">0.05</column>
+            <column name="AVAILABLE_QUANTITY">20</column>
+            <column name="SOLD">150</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">CONSL007</column>
+            <column name="PRODUCT_NAME">ROG Ally X</column>
+            <column name="BRAND">ASUS</column>
+            <column name="CATEGORY">Gaming Consoles</column>
+            <column name="PRICE">799.99</column>
+            <column name="VAT">0.05</column>
+            <column name="AVAILABLE_QUANTITY">20</column>
+            <column name="SOLD">150</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">CONSL008</column>
+            <column name="PRODUCT_NAME">PlayStation 4</column>
+            <column name="BRAND">Sony</column>
+            <column name="CATEGORY">Gaming Consoles</column>
+            <column name="PRICE">270.00</column>
+            <column name="VAT">0.05</column>
+            <column name="AVAILABLE_QUANTITY">20</column>
+            <column name="SOLD">150</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">CPU001</column>
+            <column name="PRODUCT_NAME">AMD Threadripper Pro 7995WX</column>
+            <column name="BRAND">AMD</column>
+            <column name="CATEGORY">CPU</column>
+            <column name="PRICE">9999.00</column>
+            <column name="VAT">0.50</column>
+            <column name="AVAILABLE_QUANTITY">45</column>
+            <column name="SOLD">30</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">CPU002</column>
+            <column name="PRODUCT_NAME">AMD Ryzen 9 9950X</column>
+            <column name="BRAND">AMD</column>
+            <column name="CATEGORY">CPU</column>
+            <column name="PRICE">629.99</column>
+            <column name="VAT">1.20</column>
+            <column name="AVAILABLE_QUANTITY">50</column>
+            <column name="SOLD">40</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">CPU003</column>
+            <column name="PRODUCT_NAME">Intel® Core™ i9-14900KS</column>
+            <column name="BRAND">Intel</column>
+            <column name="CATEGORY">CPU</column>
+            <column name="PRICE">750.99</column>
+            <column name="VAT">3.20</column>
+            <column name="AVAILABLE_QUANTITY">35</column>
+            <column name="SOLD">60</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">CPU004</column>
+            <column name="PRODUCT_NAME">Intel Core-i7-14700K</column>
+            <column name="BRAND">Intel</column>
+            <column name="CATEGORY">CPU</column>
+            <column name="PRICE">389.00</column>
+            <column name="VAT">0.50</column>
+            <column name="AVAILABLE_QUANTITY">40</column>
+            <column name="SOLD">50</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">GACC001</column>
+            <column name="PRODUCT_NAME">55&quot; SAMSUNG Odyssey Ark</column>
+            <column name="BRAND">SAMSUNG</column>
+            <column name="CATEGORY">Accessories</column>
+            <column name="PRICE">1799.99</column>
+            <column name="VAT">0.15</column>
+            <column name="AVAILABLE_QUANTITY">10</column>
+            <column name="SOLD">0</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">GACC002</column>
+            <column name="PRODUCT_NAME">Thrustmaster T-GT II Racing Wheel</column>
+            <column name="BRAND">Thrustmaster</column>
+            <column name="CATEGORY">Accessories</column>
+            <column name="PRICE">799.99</column>
+            <column name="VAT">0.15</column>
+            <column name="AVAILABLE_QUANTITY">10</column>
+            <column name="SOLD">0</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">GACC003</column>
+            <column name="PRODUCT_NAME">SONY WH-1000XM5 Wireless</column>
+            <column name="BRAND">SONY</column>
+            <column name="CATEGORY">Accessories</column>
+            <column name="PRICE">449.99</column>
+            <column name="VAT">0.15</column>
+            <column name="AVAILABLE_QUANTITY">10</column>
+            <column name="SOLD">0</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">GACC004</column>
+            <column name="PRODUCT_NAME">RAZER Barracuda Pro</column>
+            <column name="BRAND">RAZER</column>
+            <column name="CATEGORY">Accessories</column>
+            <column name="PRICE">249.99</column>
+            <column name="VAT">0.15</column>
+            <column name="AVAILABLE_QUANTITY">10</column>
+            <column name="SOLD">0</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">GACC005</column>
+            <column name="PRODUCT_NAME">SteelSeries Arctis Pro</column>
+            <column name="BRAND">SteelSeries</column>
+            <column name="CATEGORY">Accessories</column>
+            <column name="PRICE">399.99</column>
+            <column name="VAT">0.15</column>
+            <column name="AVAILABLE_QUANTITY">10</column>
+            <column name="SOLD">0</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">GACC006</column>
+            <column name="PRODUCT_NAME">RAZER Naga V2 Pro</column>
+            <column name="BRAND">RAZER</column>
+            <column name="CATEGORY">Accessories</column>
+            <column name="PRICE">399.99</column>
+            <column name="VAT">0.15</column>
+            <column name="AVAILABLE_QUANTITY">10</column>
+            <column name="SOLD">0</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">GACC007</column>
+            <column name="PRODUCT_NAME">RAZER Blackwidow V4 Pro</column>
+            <column name="BRAND">RAZER</column>
+            <column name="CATEGORY">Accessories</column>
+            <column name="PRICE">399.99</column>
+            <column name="VAT">0.15</column>
+            <column name="AVAILABLE_QUANTITY">10</column>
+            <column name="SOLD">0</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">GACC008</column>
+            <column name="PRODUCT_NAME">RAZER Wolverine V3 Pro</column>
+            <column name="BRAND">RAZER</column>
+            <column name="CATEGORY">Accessories</column>
+            <column name="PRICE">199.99</column>
+            <column name="VAT">0.15</column>
+            <column name="AVAILABLE_QUANTITY">10</column>
+            <column name="SOLD">0</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">GAME001</column>
+            <column name="PRODUCT_NAME">Grand Theft Auto VI</column>
+            <column name="BRAND">Rockstar Games</column>
+            <column name="CATEGORY">GAMES</column>
+            <column name="PRICE">0.00</column>
+            <column name="VAT">9.99</column>
+            <column name="AVAILABLE_QUANTITY">100</column>
+            <column name="SOLD">0</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">GAME002</column>
+            <column name="PRODUCT_NAME">Forza Horizon 5</column>
+            <column name="BRAND">Playground Games</column>
+            <column name="CATEGORY">GAMES</column>
+            <column name="PRICE">55.00</column>
+            <column name="VAT">9.99</column>
+            <column name="AVAILABLE_QUANTITY">200</column>
+            <column name="SOLD">50</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">GAME003</column>
+            <column name="PRODUCT_NAME">Microsoft Flight Simulator</column>
+            <column name="BRAND">Microsoft</column>
+            <column name="CATEGORY">GAMES</column>
+            <column name="PRICE">65.00</column>
+            <column name="VAT">9.99</column>
+            <column name="AVAILABLE_QUANTITY">150</column>
+            <column name="SOLD">40</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">GAME004</column>
+            <column name="PRODUCT_NAME">Call of Duty: Infinite Warfare</column>
+            <column name="BRAND">Activision</column>
+            <column name="CATEGORY">GAMES</column>
+            <column name="PRICE">45.00</column>
+            <column name="VAT">9.99</column>
+            <column name="AVAILABLE_QUANTITY">300</column>
+            <column name="SOLD">120</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">GAME005</column>
+            <column name="PRODUCT_NAME">Red Dead Redemption 2</column>
+            <column name="BRAND">Rockstar Games</column>
+            <column name="CATEGORY">GAMES</column>
+            <column name="PRICE">59.99</column>
+            <column name="VAT">9.99</column>
+            <column name="AVAILABLE_QUANTITY">180</column>
+            <column name="SOLD">70</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">GAME006</column>
+            <column name="PRODUCT_NAME">Cyberpunk 2077</column>
+            <column name="BRAND">CD Projekt Red</column>
+            <column name="CATEGORY">GAMES</column>
+            <column name="PRICE">69.99</column>
+            <column name="VAT">9.99</column>
+            <column name="AVAILABLE_QUANTITY">160</column>
+            <column name="SOLD">90</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">GAME007</column>
+            <column name="PRODUCT_NAME">Halo Infinite</column>
+            <column name="BRAND">343 Industries</column>
+            <column name="CATEGORY">GAMES</column>
+            <column name="PRICE">45.00</column>
+            <column name="VAT">9.99</column>
+            <column name="AVAILABLE_QUANTITY">250</column>
+            <column name="SOLD">100</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">GAME008</column>
+            <column name="PRODUCT_NAME">Elder Ring</column>
+            <column name="BRAND">FromSoftware</column>
+            <column name="CATEGORY">GAMES</column>
+            <column name="PRICE">59.99</column>
+            <column name="VAT">9.99</column>
+            <column name="AVAILABLE_QUANTITY">140</column>
+            <column name="SOLD">60</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">GPU001</column>
+            <column name="PRODUCT_NAME">NVIDIA RTX A6000</column>
+            <column name="BRAND">NVIDIA</column>
+            <column name="CATEGORY">GPU</column>
+            <column name="PRICE">4999.99</column>
+            <column name="VAT">1.20</column>
+            <column name="AVAILABLE_QUANTITY">30</column>
+            <column name="SOLD">55</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">GPU002</column>
+            <column name="PRODUCT_NAME">ASUS ROG STRIX GEFORCE RTX 4090</column>
+            <column name="BRAND">ASUS</column>
+            <column name="CATEGORY">GPU</column>
+            <column name="PRICE">1999.99</column>
+            <column name="VAT">3.20</column>
+            <column name="AVAILABLE_QUANTITY">45</column>
+            <column name="SOLD">60</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">GPU003</column>
+            <column name="PRODUCT_NAME">ASUS ROG STRIX GEFORCE RTX 4080 Super</column>
+            <column name="BRAND">ASUS</column>
+            <column name="CATEGORY">GPU</column>
+            <column name="PRICE">1699.99</column>
+            <column name="VAT">0.50</column>
+            <column name="AVAILABLE_QUANTITY">50</column>
+            <column name="SOLD">40</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">GPU004</column>
+            <column name="PRODUCT_NAME">ASUS ROG STRIX GEFORCE RTX 4080 Super WHITE</column>
+            <column name="BRAND">ASUS</column>
+            <column name="CATEGORY">GPU</column>
+            <column name="PRICE">1899.99</column>
+            <column name="VAT">1.20</column>
+            <column name="AVAILABLE_QUANTITY">55</column>
+            <column name="SOLD">35</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">MBD001</column>
+            <column name="PRODUCT_NAME">ASUS ROG Maximus XII Formula Z490</column>
+            <column name="BRAND">ASUS</column>
+            <column name="CATEGORY">MOTHERBOARD</column>
+            <column name="PRICE">579.99</column>
+            <column name="VAT">1.20</column>
+            <column name="AVAILABLE_QUANTITY">50</column>
+            <column name="SOLD">35</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">MBD002</column>
+            <column name="PRODUCT_NAME">ASUS ROG Strix B650-A Gaming WiFi 6E AM5 (LGA1718)</column>
+            <column name="BRAND">ASUS</column>
+            <column name="CATEGORY">MOTHERBOARD</column>
+            <column name="PRICE">549.99</column>
+            <column name="VAT">3.20</column>
+            <column name="AVAILABLE_QUANTITY">55</column>
+            <column name="SOLD">40</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">MBD003</column>
+            <column name="PRODUCT_NAME">GIGABYTE B650E AORUS Elite X</column>
+            <column name="BRAND">GIGABYTE</column>
+            <column name="CATEGORY">MOTHERBOARD</column>
+            <column name="PRICE">329.99</column>
+            <column name="VAT">0.50</column>
+            <column name="AVAILABLE_QUANTITY">60</column>
+            <column name="SOLD">45</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">MBD004</column>
+            <column name="PRODUCT_NAME">MSI MPG Z790 Carbon MAX WiFi II Gaming Motherboard</column>
+            <column name="BRAND">MSI</column>
+            <column name="CATEGORY">MOTHERBOARD</column>
+            <column name="PRICE">449.99</column>
+            <column name="VAT">1.20</column>
+            <column name="AVAILABLE_QUANTITY">30</column>
+            <column name="SOLD">50</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">MEM001</column>
+            <column name="PRODUCT_NAME">CORSAIR VENGEANCE RGB DDR5 RAM 64GB</column>
+            <column name="BRAND">CORSAIR</column>
+            <column name="CATEGORY">MEMORY</column>
+            <column name="PRICE">229.99</column>
+            <column name="VAT">3.20</column>
+            <column name="AVAILABLE_QUANTITY">40</column>
+            <column name="SOLD">45</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">MEM002</column>
+            <column name="PRODUCT_NAME">CORSAIR VENGEANCE RGB DDR5 RAM 96GB</column>
+            <column name="BRAND">CORSAIR</column>
+            <column name="CATEGORY">MEMORY</column>
+            <column name="PRICE">449.99</column>
+            <column name="VAT">0.50</column>
+            <column name="AVAILABLE_QUANTITY">50</column>
+            <column name="SOLD">50</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">MEM003</column>
+            <column name="PRODUCT_NAME">CORSAIR VENGEANCE RGB DDR5 RAM 128GB</column>
+            <column name="BRAND">CORSAIR</column>
+            <column name="CATEGORY">MEMORY</column>
+            <column name="PRICE">629.99</column>
+            <column name="VAT">1.20</column>
+            <column name="AVAILABLE_QUANTITY">35</column>
+            <column name="SOLD">45</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">MEM004</column>
+            <column name="PRODUCT_NAME">CORSAIR Dominator Titanium RGB DDR5 RAM 64GB</column>
+            <column name="BRAND">CORSAIR</column>
+            <column name="CATEGORY">MEMORY</column>
+            <column name="PRICE">229.99</column>
+            <column name="VAT">3.20</column>
+            <column name="AVAILABLE_QUANTITY">40</column>
+            <column name="SOLD">40</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">PCOMP001</column>
+            <column name="PRODUCT_NAME">GEFORCE RTX 3080</column>
+            <column name="BRAND">NVIDIA</column>
+            <column name="CATEGORY">GPU</column>
+            <column name="PRICE">699.00</column>
+            <column name="VAT">1.20</column>
+            <column name="AVAILABLE_QUANTITY">10</column>
+            <column name="SOLD">50</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">PCOMP002</column>
+            <column name="PRODUCT_NAME">AMD Ryzen 9</column>
+            <column name="BRAND">AMD</column>
+            <column name="CATEGORY">CPU</column>
+            <column name="PRICE">499.00</column>
+            <column name="VAT">3.20</column>
+            <column name="AVAILABLE_QUANTITY">25</column>
+            <column name="SOLD">80</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">PCOMP003</column>
+            <column name="PRODUCT_NAME">Corsair RAM</column>
+            <column name="BRAND">Corsair</column>
+            <column name="CATEGORY">MEMORY</column>
+            <column name="PRICE">79.00</column>
+            <column name="VAT">0.50</column>
+            <column name="AVAILABLE_QUANTITY">50</column>
+            <column name="SOLD">150</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">PCOMP004</column>
+            <column name="PRODUCT_NAME">Intel i9 11900K</column>
+            <column name="BRAND">Intel</column>
+            <column name="CATEGORY">CPU</column>
+            <column name="PRICE">549.00</column>
+            <column name="VAT">3.20</column>
+            <column name="AVAILABLE_QUANTITY">12</column>
+            <column name="SOLD">75</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">PCOMP005</column>
+            <column name="PRODUCT_NAME">ASUS TUF Z490</column>
+            <column name="BRAND">ASUS</column>
+            <column name="CATEGORY">MOTHERBOARD</column>
+            <column name="PRICE">229.00</column>
+            <column name="VAT">0.50</column>
+            <column name="AVAILABLE_QUANTITY">15</column>
+            <column name="SOLD">90</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">PCOMP006</column>
+            <column name="PRODUCT_NAME">NZXT H510 Case</column>
+            <column name="BRAND">NZXT</column>
+            <column name="CATEGORY">CASE</column>
+            <column name="PRICE">99.00</column>
+            <column name="VAT">1.20</column>
+            <column name="AVAILABLE_QUANTITY">30</column>
+            <column name="SOLD">250</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">PCOMP007</column>
+            <column name="PRODUCT_NAME">Cooler Master Hyper 212</column>
+            <column name="BRAND">Cooler Master</column>
+            <column name="CATEGORY">COOLER</column>
+            <column name="PRICE">35.00</column>
+            <column name="VAT">3.20</column>
+            <column name="AVAILABLE_QUANTITY">40</column>
+            <column name="SOLD">320</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">PCOMP008</column>
+            <column name="PRODUCT_NAME">Crucial MX500 SSD 1TB</column>
+            <column name="BRAND">Crucial</column>
+            <column name="CATEGORY">SSD</column>
+            <column name="PRICE">129.00</column>
+            <column name="VAT">0.50</column>
+            <column name="AVAILABLE_QUANTITY">50</column>
+            <column name="SOLD">400</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">PCOMP009</column>
+            <column name="PRODUCT_NAME">Samsung 970 EVO 1TB</column>
+            <column name="BRAND">Samsung</column>
+            <column name="CATEGORY">SSD</column>
+            <column name="PRICE">149.00</column>
+            <column name="VAT">1.20</column>
+            <column name="AVAILABLE_QUANTITY">30</column>
+            <column name="SOLD">260</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">PCOMP010</column>
+            <column name="PRODUCT_NAME">MSI B550 Tomahawk</column>
+            <column name="BRAND">MSI</column>
+            <column name="CATEGORY">MOTHERBOARD</column>
+            <column name="PRICE">189.00</column>
+            <column name="VAT">3.20</column>
+            <column name="AVAILABLE_QUANTITY">15</column>
+            <column name="SOLD">120</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">PCOMP011</column>
+            <column name="PRODUCT_NAME">EVGA 750W Power Supply</column>
+            <column name="BRAND">EVGA</column>
+            <column name="CATEGORY">PSU</column>
+            <column name="PRICE">109.00</column>
+            <column name="VAT">0.50</column>
+            <column name="AVAILABLE_QUANTITY">20</column>
+            <column name="SOLD">150</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">PCOMP012</column>
+            <column name="PRODUCT_NAME">G.Skill Trident Z 16GB</column>
+            <column name="BRAND">G.Skill</column>
+            <column name="CATEGORY">MEMORY</column>
+            <column name="PRICE">89.00</column>
+            <column name="VAT">1.20</column>
+            <column name="AVAILABLE_QUANTITY">30</column>
+            <column name="SOLD">260</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">PCOMP013</column>
+            <column name="PRODUCT_NAME">Corsair RM850 Power Supply</column>
+            <column name="BRAND">Corsair</column>
+            <column name="CATEGORY">PSU</column>
+            <column name="PRICE">129.00</column>
+            <column name="VAT">3.20</column>
+            <column name="AVAILABLE_QUANTITY">25</column>
+            <column name="SOLD">180</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">PCOMP014</column>
+            <column name="PRODUCT_NAME">AMD Radeon RX 6800</column>
+            <column name="BRAND">AMD</column>
+            <column name="CATEGORY">GPU</column>
+            <column name="PRICE">579.00</column>
+            <column name="VAT">0.50</column>
+            <column name="AVAILABLE_QUANTITY">10</column>
+            <column name="SOLD">75</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">PSU001</column>
+            <column name="PRODUCT_NAME">Corsair HX1500i 1500W Platinum</column>
+            <column name="BRAND">Corsair</column>
+            <column name="CATEGORY">PSU</column>
+            <column name="PRICE">396.99</column>
+            <column name="VAT">1.20</column>
+            <column name="AVAILABLE_QUANTITY">40</column>
+            <column name="SOLD">45</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">PSU002</column>
+            <column name="PRODUCT_NAME">ROG Thor 1200W Platinum</column>
+            <column name="BRAND">ASUS</column>
+            <column name="CATEGORY">PSU</column>
+            <column name="PRICE">326.99</column>
+            <column name="VAT">3.20</column>
+            <column name="AVAILABLE_QUANTITY">45</column>
+            <column name="SOLD">50</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">PSU003</column>
+            <column name="PRODUCT_NAME">ASUS ROG STRIX 1000W Gold</column>
+            <column name="BRAND">ASUS</column>
+            <column name="CATEGORY">PSU</column>
+            <column name="PRICE">299.99</column>
+            <column name="VAT">0.50</column>
+            <column name="AVAILABLE_QUANTITY">50</column>
+            <column name="SOLD">55</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">PSU004</column>
+            <column name="PRODUCT_NAME">ASUS ROG Strix 1000W Gold Aura White Edition</column>
+            <column name="BRAND">ASUS</column>
+            <column name="CATEGORY">PSU</column>
+            <column name="PRICE">210.99</column>
+            <column name="VAT">1.20</column>
+            <column name="AVAILABLE_QUANTITY">55</column>
+            <column name="SOLD">60</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">SSD001</column>
+            <column name="PRODUCT_NAME">SABRENT 8TB Rocket 4 PLUS NVMe 4.0 Gen4</column>
+            <column name="BRAND">SABRENT</column>
+            <column name="CATEGORY">SSD</column>
+            <column name="PRICE">299.99</column>
+            <column name="VAT">0.50</column>
+            <column name="AVAILABLE_QUANTITY">30</column>
+            <column name="SOLD">45</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">SSD002</column>
+            <column name="PRODUCT_NAME">SAMSUNG 980 PRO SSD 1TB PCIe 4.0 NVMe Gen 4 Gaming</column>
+            <column name="BRAND">SAMSUNG</column>
+            <column name="CATEGORY">SSD</column>
+            <column name="PRICE">149.99</column>
+            <column name="VAT">1.20</column>
+            <column name="AVAILABLE_QUANTITY">35</column>
+            <column name="SOLD">50</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">SSD003</column>
+            <column name="PRODUCT_NAME">Corsair MP600 PRO LPX 8TB M.2 NVMe PCIe x4 Gen4</column>
+            <column name="BRAND">Corsair</column>
+            <column name="CATEGORY">SSD</column>
+            <column name="PRICE">249.99</column>
+            <column name="VAT">3.20</column>
+            <column name="AVAILABLE_QUANTITY">40</column>
+            <column name="SOLD">55</column>
+        </table>
+        <table name="products">
+            <column name="PRODUCT_ID">SSD004</column>
+            <column name="PRODUCT_NAME">MSI SPATIUM M480 PRO PCIe 4.0 NVMe M.2 4TB</column>
+            <column name="BRAND">MSI</column>
+            <column name="CATEGORY">SSD</column>
+            <column name="PRICE">199.99</column>
+            <column name="VAT">0.50</column>
+            <column name="AVAILABLE_QUANTITY">45</column>
+            <column name="SOLD">60</column>
+        </table>
+        <!-- Table supplier -->
+        <table name="supplier">
+            <column name="supplierid">1</column>
+            <column name="suppliername">CORSAIR</column>
+            <column name="supplieremail">contact@corsair.com</column>
+            <column name="supplierbrand">CORSAIR</column>
+            <column name="productId">CASE001</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">2</column>
+            <column name="suppliername">Cooler Master</column>
+            <column name="supplieremail">contact@coolermaster.com</column>
+            <column name="supplierbrand">Cooler Master</column>
+            <column name="productId">CASE002</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">3</column>
+            <column name="suppliername">ASUS</column>
+            <column name="supplieremail">contact@asus.com</column>
+            <column name="supplierbrand">ASUS</column>
+            <column name="productId">CASE003</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">4</column>
+            <column name="suppliername">CORSAIR</column>
+            <column name="supplieremail">contact@corsair.com</column>
+            <column name="supplierbrand">CORSAIR</column>
+            <column name="productId">CASE004</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">5</column>
+            <column name="suppliername">CORSAIR</column>
+            <column name="supplieremail">contact@corsair.com</column>
+            <column name="supplierbrand">CORSAIR</column>
+            <column name="productId">COL001</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">6</column>
+            <column name="suppliername">CORSAIR</column>
+            <column name="supplieremail">contact@corsair.com</column>
+            <column name="supplierbrand">CORSAIR</column>
+            <column name="productId">COL002</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">7</column>
+            <column name="suppliername">Corsair</column>
+            <column name="supplieremail">contact@corsair.com</column>
+            <column name="supplierbrand">Corsair</column>
+            <column name="productId">COL003</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">8</column>
+            <column name="suppliername">MSI</column>
+            <column name="supplieremail">contact@msi.com</column>
+            <column name="supplierbrand">MSI</column>
+            <column name="productId">COL004</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">9</column>
+            <column name="suppliername">Sony</column>
+            <column name="supplieremail">contact@sony.com</column>
+            <column name="supplierbrand">Sony</column>
+            <column name="productId">CONSL001</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">10</column>
+            <column name="suppliername">Sony</column>
+            <column name="supplieremail">contact@sony.com</column>
+            <column name="supplierbrand">Sony</column>
+            <column name="productId">CONSL002</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">11</column>
+            <column name="suppliername">Microsoft</column>
+            <column name="supplieremail">contact@microsoft.com</column>
+            <column name="supplierbrand">Microsoft</column>
+            <column name="productId">CONSL003</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">12</column>
+            <column name="suppliername">Microsoft</column>
+            <column name="supplieremail">contact@microsoft.com</column>
+            <column name="supplierbrand">Microsoft</column>
+            <column name="productId">CONSL004</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">13</column>
+            <column name="suppliername">Valve</column>
+            <column name="supplieremail">contact@valve.com</column>
+            <column name="supplierbrand">Valve</column>
+            <column name="productId">CONSL005</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">14</column>
+            <column name="suppliername">Nintendo</column>
+            <column name="supplieremail">contact@nintendo.com</column>
+            <column name="supplierbrand">Nintendo</column>
+            <column name="productId">CONSL006</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">15</column>
+            <column name="suppliername">ASUS</column>
+            <column name="supplieremail">contact@asus.com</column>
+            <column name="supplierbrand">ASUS</column>
+            <column name="productId">CONSL007</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">16</column>
+            <column name="suppliername">Sony</column>
+            <column name="supplieremail">contact@sony.com</column>
+            <column name="supplierbrand">Sony</column>
+            <column name="productId">CONSL008</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">17</column>
+            <column name="suppliername">AMD</column>
+            <column name="supplieremail">contact@amd.com</column>
+            <column name="supplierbrand">AMD</column>
+            <column name="productId">CPU001</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">18</column>
+            <column name="suppliername">AMD</column>
+            <column name="supplieremail">contact@amd.com</column>
+            <column name="supplierbrand">AMD</column>
+            <column name="productId">CPU002</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">19</column>
+            <column name="suppliername">Intel</column>
+            <column name="supplieremail">contact@intel.com</column>
+            <column name="supplierbrand">Intel</column>
+            <column name="productId">CPU003</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">20</column>
+            <column name="suppliername">Intel</column>
+            <column name="supplieremail">contact@intel.com</column>
+            <column name="supplierbrand">Intel</column>
+            <column name="productId">CPU004</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">21</column>
+            <column name="suppliername">SAMSUNG</column>
+            <column name="supplieremail">contact@samsung.com</column>
+            <column name="supplierbrand">SAMSUNG</column>
+            <column name="productId">GACC001</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">22</column>
+            <column name="suppliername">Thrustmaster</column>
+            <column name="supplieremail">contact@thrustmaster.com</column>
+            <column name="supplierbrand">Thrustmaster</column>
+            <column name="productId">GACC002</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">23</column>
+            <column name="suppliername">SONY</column>
+            <column name="supplieremail">contact@sony.com</column>
+            <column name="supplierbrand">SONY</column>
+            <column name="productId">GACC003</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">24</column>
+            <column name="suppliername">RAZER</column>
+            <column name="supplieremail">contact@razer.com</column>
+            <column name="supplierbrand">RAZER</column>
+            <column name="productId">GACC004</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">25</column>
+            <column name="suppliername">SteelSeries</column>
+            <column name="supplieremail">contact@steelseries.com</column>
+            <column name="supplierbrand">SteelSeries</column>
+            <column name="productId">GACC005</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">26</column>
+            <column name="suppliername">RAZER</column>
+            <column name="supplieremail">contact@razer.com</column>
+            <column name="supplierbrand">RAZER</column>
+            <column name="productId">GACC006</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">27</column>
+            <column name="suppliername">RAZER</column>
+            <column name="supplieremail">contact@razer.com</column>
+            <column name="supplierbrand">RAZER</column>
+            <column name="productId">GACC007</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">28</column>
+            <column name="suppliername">RAZER</column>
+            <column name="supplieremail">contact@razer.com</column>
+            <column name="supplierbrand">RAZER</column>
+            <column name="productId">GACC008</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">29</column>
+            <column name="suppliername">Rockstar Games</column>
+            <column name="supplieremail">contact@rockstargames.com</column>
+            <column name="supplierbrand">Rockstar Games</column>
+            <column name="productId">GAME001</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">30</column>
+            <column name="suppliername">Playground Games</column>
+            <column name="supplieremail">contact@playgroundgames.com</column>
+            <column name="supplierbrand">Playground Games</column>
+            <column name="productId">GAME002</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">31</column>
+            <column name="suppliername">Microsoft</column>
+            <column name="supplieremail">contact@microsoft.com</column>
+            <column name="supplierbrand">Microsoft</column>
+            <column name="productId">GAME003</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">32</column>
+            <column name="suppliername">Activision</column>
+            <column name="supplieremail">contact@activision.com</column>
+            <column name="supplierbrand">Activision</column>
+            <column name="productId">GAME004</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">33</column>
+            <column name="suppliername">Rockstar Games</column>
+            <column name="supplieremail">contact@rockstargames.com</column>
+            <column name="supplierbrand">Rockstar Games</column>
+            <column name="productId">GAME005</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">34</column>
+            <column name="suppliername">CD Projekt Red</column>
+            <column name="supplieremail">contact@cdprojektred.com</column>
+            <column name="supplierbrand">CD Projekt Red</column>
+            <column name="productId">GAME006</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">35</column>
+            <column name="suppliername">343 Industries</column>
+            <column name="supplieremail">contact@343industries.com</column>
+            <column name="supplierbrand">343 Industries</column>
+            <column name="productId">GAME007</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">36</column>
+            <column name="suppliername">FromSoftware</column>
+            <column name="supplieremail">contact@fromsoftware.com</column>
+            <column name="supplierbrand">FromSoftware</column>
+            <column name="productId">GAME008</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">37</column>
+            <column name="suppliername">NVIDIA</column>
+            <column name="supplieremail">contact@nvidia.com</column>
+            <column name="supplierbrand">NVIDIA</column>
+            <column name="productId">GPU001</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">38</column>
+            <column name="suppliername">ASUS</column>
+            <column name="supplieremail">contact@asus.com</column>
+            <column name="supplierbrand">ASUS</column>
+            <column name="productId">GPU002</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">39</column>
+            <column name="suppliername">ASUS</column>
+            <column name="supplieremail">contact@asus.com</column>
+            <column name="supplierbrand">ASUS</column>
+            <column name="productId">GPU003</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">40</column>
+            <column name="suppliername">ASUS</column>
+            <column name="supplieremail">contact@asus.com</column>
+            <column name="supplierbrand">ASUS</column>
+            <column name="productId">GPU004</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">41</column>
+            <column name="suppliername">ASUS</column>
+            <column name="supplieremail">contact@asus.com</column>
+            <column name="supplierbrand">ASUS</column>
+            <column name="productId">MBD001</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">42</column>
+            <column name="suppliername">ASUS</column>
+            <column name="supplieremail">contact@asus.com</column>
+            <column name="supplierbrand">ASUS</column>
+            <column name="productId">MBD002</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">43</column>
+            <column name="suppliername">GIGABYTE</column>
+            <column name="supplieremail">contact@gigabyte.com</column>
+            <column name="supplierbrand">GIGABYTE</column>
+            <column name="productId">MBD003</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">44</column>
+            <column name="suppliername">MSI</column>
+            <column name="supplieremail">contact@msi.com</column>
+            <column name="supplierbrand">MSI</column>
+            <column name="productId">MBD004</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">45</column>
+            <column name="suppliername">CORSAIR</column>
+            <column name="supplieremail">contact@corsair.com</column>
+            <column name="supplierbrand">CORSAIR</column>
+            <column name="productId">MEM001</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">46</column>
+            <column name="suppliername">CORSAIR</column>
+            <column name="supplieremail">contact@corsair.com</column>
+            <column name="supplierbrand">CORSAIR</column>
+            <column name="productId">MEM002</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">47</column>
+            <column name="suppliername">CORSAIR</column>
+            <column name="supplieremail">contact@corsair.com</column>
+            <column name="supplierbrand">CORSAIR</column>
+            <column name="productId">MEM003</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">48</column>
+            <column name="suppliername">CORSAIR</column>
+            <column name="supplieremail">contact@corsair.com</column>
+            <column name="supplierbrand">CORSAIR</column>
+            <column name="productId">MEM004</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">49</column>
+            <column name="suppliername">NVIDIA</column>
+            <column name="supplieremail">contact@nvidia.com</column>
+            <column name="supplierbrand">NVIDIA</column>
+            <column name="productId">PCOMP001</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">50</column>
+            <column name="suppliername">AMD</column>
+            <column name="supplieremail">contact@amd.com</column>
+            <column name="supplierbrand">AMD</column>
+            <column name="productId">PCOMP002</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">51</column>
+            <column name="suppliername">Corsair</column>
+            <column name="supplieremail">contact@corsair.com</column>
+            <column name="supplierbrand">Corsair</column>
+            <column name="productId">PCOMP003</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">52</column>
+            <column name="suppliername">Intel</column>
+            <column name="supplieremail">contact@intel.com</column>
+            <column name="supplierbrand">Intel</column>
+            <column name="productId">PCOMP004</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">53</column>
+            <column name="suppliername">ASUS</column>
+            <column name="supplieremail">contact@asus.com</column>
+            <column name="supplierbrand">ASUS</column>
+            <column name="productId">PCOMP005</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">54</column>
+            <column name="suppliername">NZXT</column>
+            <column name="supplieremail">contact@nzxt.com</column>
+            <column name="supplierbrand">NZXT</column>
+            <column name="productId">PCOMP006</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">55</column>
+            <column name="suppliername">Cooler Master</column>
+            <column name="supplieremail">contact@coolermaster.com</column>
+            <column name="supplierbrand">Cooler Master</column>
+            <column name="productId">PCOMP007</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">56</column>
+            <column name="suppliername">Crucial</column>
+            <column name="supplieremail">contact@crucial.com</column>
+            <column name="supplierbrand">Crucial</column>
+            <column name="productId">PCOMP008</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">57</column>
+            <column name="suppliername">Samsung</column>
+            <column name="supplieremail">contact@samsung.com</column>
+            <column name="supplierbrand">Samsung</column>
+            <column name="productId">PCOMP009</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">58</column>
+            <column name="suppliername">MSI</column>
+            <column name="supplieremail">contact@msi.com</column>
+            <column name="supplierbrand">MSI</column>
+            <column name="productId">PCOMP010</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">59</column>
+            <column name="suppliername">EVGA</column>
+            <column name="supplieremail">contact@evga.com</column>
+            <column name="supplierbrand">EVGA</column>
+            <column name="productId">PCOMP011</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">60</column>
+            <column name="suppliername">G.Skill</column>
+            <column name="supplieremail">contact@gskill.com</column>
+            <column name="supplierbrand">G.Skill</column>
+            <column name="productId">PCOMP012</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">61</column>
+            <column name="suppliername">Corsair</column>
+            <column name="supplieremail">contact@corsair.com</column>
+            <column name="supplierbrand">Corsair</column>
+            <column name="productId">PCOMP013</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">62</column>
+            <column name="suppliername">AMD</column>
+            <column name="supplieremail">contact@amd.com</column>
+            <column name="supplierbrand">AMD</column>
+            <column name="productId">PCOMP014</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">63</column>
+            <column name="suppliername">Corsair</column>
+            <column name="supplieremail">contact@corsair.com</column>
+            <column name="supplierbrand">Corsair</column>
+            <column name="productId">PSU001</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">64</column>
+            <column name="suppliername">ASUS</column>
+            <column name="supplieremail">contact@asus.com</column>
+            <column name="supplierbrand">ASUS</column>
+            <column name="productId">PSU002</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">65</column>
+            <column name="suppliername">ASUS</column>
+            <column name="supplieremail">contact@asus.com</column>
+            <column name="supplierbrand">ASUS</column>
+            <column name="productId">PSU003</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">66</column>
+            <column name="suppliername">ASUS</column>
+            <column name="supplieremail">contact@asus.com</column>
+            <column name="supplierbrand">ASUS</column>
+            <column name="productId">PSU004</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">67</column>
+            <column name="suppliername">SABRENT</column>
+            <column name="supplieremail">contact@sabrent.com</column>
+            <column name="supplierbrand">SABRENT</column>
+            <column name="productId">SSD001</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">68</column>
+            <column name="suppliername">SAMSUNG</column>
+            <column name="supplieremail">contact@samsung.com</column>
+            <column name="supplierbrand">SAMSUNG</column>
+            <column name="productId">SSD002</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">69</column>
+            <column name="suppliername">Corsair</column>
+            <column name="supplieremail">contact@corsair.com</column>
+            <column name="supplierbrand">Corsair</column>
+            <column name="productId">SSD003</column>
+        </table>
+        <table name="supplier">
+            <column name="supplierid">70</column>
+            <column name="suppliername">MSI</column>
+            <column name="supplieremail">contact@msi.com</column>
+            <column name="supplierbrand">MSI</column>
+            <column name="productId">SSD004</column>
+        </table>
+    </database>
+</pma_xml_export>
