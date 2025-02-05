@@ -244,6 +244,7 @@ public class SignupPage implements ActionListener {
             String password = new String(txtPass.getPassword());
             String retypePassword = new String(txtRetypePass.getPassword());
 
+            System.out.println("Phone number entered: " + phone);
 
             if (customerId.isEmpty() || customerName.isEmpty() || phone.isEmpty() || email.isEmpty() || address.isEmpty() || password.isEmpty()) {
                 PopUp.showBlankFieldError(p1);
@@ -251,13 +252,11 @@ public class SignupPage implements ActionListener {
                 return;
             }
 
-
-            if (!phone.matches("\\d{10}")) {
+            if (!phone.matches("\\d{11}")) {
                 PopUp.showInvalidPhoneNoError(p1);
                 addErrors();
                 return;
             }
-
 
             if (!email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
                 PopUp.showInvalidEmailError(p1);
@@ -265,14 +264,11 @@ public class SignupPage implements ActionListener {
                 return;
             }
 
-
             if (!password.equals(retypePassword)) {
                 PopUp.showPassDoesNotMatchError(p1);
                 addErrors();
                 return;
             }
-
-
 
             try (Connection connection = DatabaseConfig.getConnection()) {
                 String checkCustomerIdQuery = "SELECT * FROM customer WHERE C_USERNAME = ?";
@@ -284,7 +280,6 @@ public class SignupPage implements ActionListener {
                     return;
                 }
 
-
                 String checkPhoneQuery = "SELECT * FROM customer WHERE PHONE_NO = ?";
                 PreparedStatement checkPhoneStmt = connection.prepareStatement(checkPhoneQuery);
                 checkPhoneStmt.setString(1, phone);
@@ -294,7 +289,6 @@ public class SignupPage implements ActionListener {
                     return;
                 }
 
-                // Check if email already exists
                 String checkQuery = "SELECT * FROM customer WHERE EMAIL = ?";
                 PreparedStatement checkStmt = connection.prepareStatement(checkQuery);
                 checkStmt.setString(1, email);
@@ -304,7 +298,9 @@ public class SignupPage implements ActionListener {
                     return;
                 }
 
-                // Insert new customer into the database
+
+                System.out.println("Phone number to be stored: " + phone);
+
                 String insertQuery = "INSERT INTO customer (C_USERNAME, CUSTOMER_NAME, PHONE_NO, EMAIL, ADDRESS, PASSWORD, DATE_REGISTERED) VALUES (?, ?, ?, ?, ?, ?, ?)";
                 PreparedStatement insertStmt = connection.prepareStatement(insertQuery);
                 insertStmt.setString(1, customerId);

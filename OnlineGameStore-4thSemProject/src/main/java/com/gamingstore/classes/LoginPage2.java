@@ -46,7 +46,6 @@ public class LoginPage2 implements ActionListener {
         pnlRight.setBounds(550, 0, 430, 650);
         frm.add(pnlRight);
 
-        // Load the image using the class loader
         ImageIcon icon = new ImageIcon("Files/Untitled design.gif");
         JLabel lblImage = new JLabel(icon);
         lblImage.setBounds(0, 0, 550, 315);
@@ -55,13 +54,13 @@ public class LoginPage2 implements ActionListener {
         lbl1 = new JLabel("Hello Customer");
         lbl1.setFont(new Font("Roboto", Font.BOLD, 28));
         lbl1.setForeground(Color.LIGHT_GRAY);
-        lbl1.setBounds(30, 350, 360, 30);
+        lbl1.setBounds(30, 300, 360, 30);
         pnlLeft.add(lbl1);
 
-        lbl2 = new JLabel("<html>Welcome to <br/>Online Departmental Store </html>");
+        lbl2 = new JLabel("<html>Welcome to <br/>Online Tech Shop </br> & Management System </html>");
         lbl2.setFont(new Font("Roboto", Font.BOLD, 25));
         lbl2.setForeground(Color.LIGHT_GRAY);
-        lbl2.setBounds(30, 390, 360, 70);
+        lbl2.setBounds(30, 350, 360, 150);
         pnlLeft.add(lbl2);
 
         lbl3 = new JLabel("Please Log in to Continue >>> ");
@@ -77,7 +76,7 @@ public class LoginPage2 implements ActionListener {
         btnAboutUs.setContentAreaFilled(true);
         btnAboutUs.setBorderPainted(false);
         btnAboutUs.setBounds(30, 560, 125, 25);
-        //btnAboutUs.addActionListener(e -> aboutus());
+        btnAboutUs.addActionListener(this);
         pnlLeft.add(btnAboutUs);
 
         btnDarkMode = new JButton();
@@ -214,7 +213,6 @@ public class LoginPage2 implements ActionListener {
         isDarkMode = !isDarkMode;
 
         if (isDarkMode) {
-            // Set dark mode colors
             pnlBgColor = Color.decode("#212121");
             lblColor = Color.BLACK;
             lblPnlColor = Color.WHITE;
@@ -360,6 +358,8 @@ public class LoginPage2 implements ActionListener {
                     btnErrorClose.setVisible(true);
                     break;
             }
+        } else if (e.getSource() == btnAboutUs) {
+            new AboutUs();
         }
     }
 
@@ -372,7 +372,6 @@ public class LoginPage2 implements ActionListener {
         AuthenticationCustomer customerAuth = new AuthenticationCustomer();
 
         if (customerAuth.customerLogIn(username, password)) {
-            // Successful login
             System.out.println("Customer login successful!");
             CurrentUser.setCurrentUser(username);
             frm.dispose();

@@ -1194,6 +1194,6 @@ public class PcComponents implements ActionListener {
     }
 
     public void focusOnButton(JButton button) {
-        button.requestFocus(); // Request focus on the specified button
+        button.requestFocus();
     }
 }

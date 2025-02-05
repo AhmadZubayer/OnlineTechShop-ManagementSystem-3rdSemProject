@@ -10,6 +10,8 @@ public class AboutUs {
         JFrame frame = new JFrame("About Us");
         frame.setSize(1150, 800);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.getContentPane().setBackground(Color.decode("#1d2a35"));
+
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         ImageIcon imageIcon = new ImageIcon("Files\\About Us.png");

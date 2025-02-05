@@ -8,7 +8,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class AdminFrame implements ActionListener {
-    public JFrame adminFrm;
+    public static JFrame adminFrm;
     private JPanel pnl1,pnlTabs,pnlOthersTab, pnlTools;
     private JLabel lblUserBar;
     public JButton btnUser,btnPowerSupply, btnInventory, btnEmp, btnOthers;
@@ -39,14 +39,14 @@ public class AdminFrame implements ActionListener {
         pnl1.setBounds(0, 0, 1700, 85);
         adminFrm.add(pnl1);
 
-        ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("Files\\adminpanel.png"));
+        ImageIcon icon = new ImageIcon("Files\\adminpanel.png");
         JLabel lblGTitle = new JLabel(icon);
         lblGTitle.setBounds(0, 5,600, 80);
         pnl1.add(lblGTitle);
 
         // Accounts Button
         btnUser = new JButton();
-        btnUser.setIcon(new ImageIcon(getClass().getClassLoader().getResource("Files\\ACCOUNT.png")));
+        btnUser.setIcon(new ImageIcon("Files\\ACCOUNT.png"));
         btnUser.setContentAreaFilled(false);
         btnUser.setBorderPainted(false);
         btnUser.setBounds(1310, 3, 120, 70);
@@ -95,14 +95,14 @@ public class AdminFrame implements ActionListener {
         pnlTabs.add(btnInventory);
 
 
-        btnEmp = new JButton("EMPLOYEES");
+        btnEmp = new JButton("SUPPLIERS");
         btnEmp.setBounds(700, 10, 260, 35);
         tabBtnDesigns(btnEmp);
         btnEmp.addActionListener(this);
         pnlTabs.add(btnEmp);
 
 
-        btnOthers = new JButton("OTHERS");
+        btnOthers = new JButton("DASHBOARD");
         btnOthers.setBounds(960, 10, 200, 35);
         tabBtnDesigns(btnOthers);
         btnOthers.addActionListener(this);
@@ -422,6 +422,7 @@ public class AdminFrame implements ActionListener {
             pnlButtons.setVisible(false);
             pnlEmp.setVisible(true);
             pnlOthersTab.setVisible(false);
+            showTable("Supplier");
             pressedTabBtn(btnEmp, allTabBtns);
         } else if (e.getSource() == btnOthers) {
             pnlButtonsSales.setVisible(false);
@@ -429,6 +430,9 @@ public class AdminFrame implements ActionListener {
             pnlEmp.setVisible(false);
             pnlOthersTab.setVisible(true);
             pressedTabBtn(btnOthers, allTabBtns);
+        } else if (e.getSource() == btnUser) {
+            new AccountPreviewAdmin();
+
         }
     }
 
@@ -554,6 +558,9 @@ public class AdminFrame implements ActionListener {
             case "orderlist":
                 tableScrollPane = adminTableViews.viewOrderListTable();
                 break;
+            case "supplier":
+                tableScrollPane = adminTableViews.viewSupplierTable();
+                break;
             default:
                 throw new IllegalArgumentException("Unknown product category: " + productCategory);
         }
@@ -562,6 +569,10 @@ public class AdminFrame implements ActionListener {
         pnlDBTable.add(tableScrollPane, BorderLayout.CENTER);
         pnlDBTable.revalidate();
         pnlDBTable.repaint();
+    }
+
+    public static void closeAdminPanel() {
+        adminFrm.dispose();
     }
 
 

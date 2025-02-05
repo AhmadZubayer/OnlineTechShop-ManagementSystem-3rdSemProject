@@ -11,7 +11,8 @@ import java.awt.event.ActionListener;
 
 
 public class HomePage implements ActionListener {
-    public JFrame frm, frmCart;
+    public static JFrame frm;
+    public JFrame frmCart;
     public JPanel pnl1, pnlAccount, pnlCart, pnl4, pnl5, pnlConsoles, pnlPCParts ,pnlAccessories, pnlGames;
     public JLabel lblUser, lblAccDetails, lblNAME, lblUserAddress, lblADDRESS, lblUserPhone, lblPHONE, lblUserName, lblCART, lblCartBar, lblUserBar, lblTotalPrice;
     public JButton btnCart, btnUser, btnBack, btnEditDetails,btnProceedToCheckout, btnConsoles, btnPCComponents, btnAccessories, btnGames,  btnBackCart;
@@ -521,108 +522,9 @@ public class HomePage implements ActionListener {
             ProductsPreview.game7();
         } else if(e.getSource() == btnGames8 ) {
             ProductsPreview.game8();
-        }
-        /*else if(e.getSource() == btnCPU1) {
-            productDetails = "AMD RYZEN THREADRPPER PRO...$9999.99";
-            //addToCart(productDetails);
-        } else if(e.getSource() == btnCPU2) {
-            productDetails = "AMD RYZEN 9 9950X...$629.99";
-            //addToCart(productDetails);
-        } else if(e.getSource() == btnCPU3) {
-            productDetails = "INTEL i9 14900KS...$650.99";
-            //addToCart(productDetails);
-        }else if(e.getSource() == btnCPU4) {
-            productDetails = "INTEL i9 14900K...$389.99";
-            //addToCart(productDetails);
-        } else if(e.getSource() == btnGPU1) {
-            productDetails = "ASUS ROG RTX 4090...$1999.99";
-            //addToCart(productDetails);
-        } else if(e.getSource() == btnGPU2) {
-            productDetails = "ASUS ROG STRIX RTX 4080...$1299.99";
-            //addToCart(productDetails);
-        } else if(e.getSource() == btnGPU3) {
-            productDetails = "ASUS ROG STRIX RTX 4080 (WHITE)...$1299.99";
-            //addToCart(productDetails);
-        }else if(e.getSource() == btnGPU4) {
-            productDetails = "NVIDIA RTX A6000..$4999.99";
-           // addToCart(productDetails);
-        } else if(e.getSource() == btnMemory1) {
-            productDetails = "CORSAIR 64GB DDR5...$229.99";
-           // addToCart(productDetails);
-        } else if(e.getSource() == btnMemory2) {
-            productDetails = "CORSAIR 96GB DDR5...$379.99";
-            //addToCart(productDetails);
-        }else if(e.getSource() == btnMemory3) {
-            productDetails = "CORSAIR 128GB DDR5...$479.99";
-            //addToCart(productDetails);
-        }else if(e.getSource() == btnMemory4) {
-            productDetails = "CORSAIR 64GB DDR5 (WHITE)...$279.99";
-            //addToCart(productDetails);
-        }else if(e.getSource() == btnStorage1) {
-            productDetails = "SABRENT 8 TB SSD...$1199.99";
-            //addToCart(productDetails);
-        }else if(e.getSource() == btnStorage2) {
-            productDetails = "SAMSUNG 980 EVO PRO SSD 1 TB...$99.99";
-            //addToCart(productDetails);
-        }else if(e.getSource() == btnStorage3) {
-            productDetails = "CORSAIR MP600 8 TB ...$849.99";
-            //addToCart(productDetails);
-        }else if(e.getSource() == btnStorage4) {
-            productDetails = "MSI SPATIUM 4TB...$289.99";
-            //addToCart(productDetails);
-        }else if(e.getSource() == btnMotherboard1) {
-            productDetails = "ASUS ROG MAXIMUSS XII...$549.99";
-            //addToCart(productDetails);
-        }else if(e.getSource() == btnMotherboard2) {
-            productDetails = "ASUS ROG STRIX B650...$299.99";
-            //addToCart(productDetails);
-        }else if(e.getSource() == btnMotherboard3) {
-            productDetails = "GIGABYTE B650E AORUS...$249.99";
-            //addToCart(productDetails);
-        }else if(e.getSource() == btnMotherboard4) {
-            productDetails = "MSI MPG z790 Carbon...$469.99";
-            //addToCart(productDetails);
-        }else if(e.getSource() == btnCase1) {
-            productDetails = "CORSAIR ICUE 500T...$399.99";
-            //addToCart(productDetails);
-        }else if(e.getSource() == btnCase2) {
-            productDetails = "COOLER MASTER TD500...$389.99";
-            //addToCart(productDetails);
-        }else if(e.getSource() == btnCase3) {
-            productDetails = "ASUS ROG STRIX HELLOS...$289.99";
-            //addToCart(productDetails);
-        }else if(e.getSource() == btnCase4) {
-            productDetails = "CORSAIR ICUE 500T (WHITE)...$399.99";
-            ///addToCart(productDetails);
-        }else if(e.getSource() == btnCooler1) {
-            productDetails = "CORSAIR ICUE LCD LIQUID COOLER...$229.99";
-            //addToCart(productDetails);
-        }else if(e.getSource() == btnCooler2) {
-            productDetails = "CORSAIR ICUE LCD LIQUID COOLER (WHITE)...$229.99";
-            //addToCart(productDetails);
-        }else if(e.getSource() == btnCooler3) {
-            productDetails = "CORSAIR H100X RGB ELITE...$199.99";
-            //addToCart(productDetails);
-        }else if(e.getSource() == btnCooler4) {
-            productDetails = "MSI MAG CORELIQUID...$159.99";
-            //addToCart(productDetails);
-        }else if(e.getSource() == btnPowerSupply1) {
-            productDetails = "CORSAIR 1500W PLATINUM...$369.99";
-            //addToCart(productDetails);
-        }else if(e.getSource() == btnPowerSupply2) {
-            productDetails = "ROG THOR 1200W PLATINUM...$329.99";
-           // addToCart(productDetails);
-        }else if(e.getSource() == btnPowerSupply3) {
-            productDetails = "ROG STRIX 1000W GOLD...$189.99";
-           // addToCart(productDetails);
-        }else if(e.getSource() == btnPowerSupply4) {
-            productDetails = "ROG STRIX 1000W GOLD AURA WHITE...$229.99";
-           // addToCart(productDetails);
-        } else if(e.getSource() == btnPCBuilder) {
-            new BuildPc();
-        } else if (e.getSource() == btnProceedToCheckout) {
-            new PurchaseConfirmed(); */
-        else if (e.getSource() == btnBack) {
+        } else if (e.getSource() == btnUser) {
+            new AccountPreview();
+        } else if (e.getSource() == btnBack) {
             frm.dispose();
             new LoginPage2();
         } else if (e.getSource() == btnCart) {
@@ -633,9 +535,14 @@ public class HomePage implements ActionListener {
         }
     }
 
+    public static void closeHomePage() {
+        frm.dispose();
+    }
+
 
 
 
 }
+
 
 

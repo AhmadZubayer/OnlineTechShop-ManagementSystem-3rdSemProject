@@ -208,7 +208,7 @@ public class AdminTableViews extends JFrame {
 
     public JScrollPane viewOrderListTable() {
         ArrayList<String[]> orderList = new ArrayList<>();
-        String query = "SELECT orderID, paymentID, C_USERNAME, orderDate, total_price FROM orderlist;";
+        String query = "SELECT orderID, paymentID, C_USERNAME, orderDate, product_list, total_price FROM orderlist;";
 
         try (Connection connection = DatabaseConfig.getConnection();
              Statement statement = connection.createStatement();
@@ -219,9 +219,10 @@ public class AdminTableViews extends JFrame {
                 String paymentID = String.valueOf(rs.getInt("paymentID"));
                 String username = rs.getString("C_USERNAME");
                 String orderDate = rs.getDate("orderDate").toString();
+                String productList = rs.getString("product_list");
                 String totalPrice = rs.getString("total_price");
 
-                orderList.add(new String[]{orderID, paymentID, username, orderDate, totalPrice});
+                orderList.add(new String[]{orderID, paymentID, username, orderDate, productList, totalPrice});
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -231,26 +232,23 @@ public class AdminTableViews extends JFrame {
         }
 
         String[][] data = orderList.toArray(new String[0][0]);
-        String[] columnNames = {"Order ID", "Payment ID", "Username", "Order Date", "Total Price"};
+        String[] columnNames = {"Order ID", "Payment ID", "Username", "Order Date", "ORDERED PRODUCTS", "Total Price"};
 
         JTable table = new JTable(new DefaultTableModel(data, columnNames));
         JScrollPane tableScrollPane = createTable(data, columnNames);
 
 
-        table.addKeyListener(new java.awt.event.KeyAdapter() {
+        /*table.addKeyListener(new java.awt.event.KeyAdapter() {
             @Override
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
                     int row = table.getSelectedRow();
                     if (row != -1) {
                         int orderID = Integer.parseInt(table.getValueAt(row, 0).toString());
-
-                        // 🔹 Open the popup with the selected Order ID
-                        //new OrderDetailsFrame(orderID);
                     }
                 }
             }
-        });
+        });*/
 
         return tableScrollPane;
     }
@@ -285,6 +283,36 @@ public class AdminTableViews extends JFrame {
         String[] columnNames = {"Product ID", "Product Name", "Quantity"};
         return createTable(data, columnNames);
     }
+
+    public JScrollPane viewSupplierTable() {
+        ArrayList<String[]> supplierList = new ArrayList<>();
+        String query = "SELECT * FROM supplier;";
+
+        try (Connection connection = DatabaseConfig.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet rs = statement.executeQuery(query)) {
+
+            while (rs.next()) {
+                String supplierId = String.valueOf(rs.getInt("supplierid"));
+                String supplierName = rs.getString("suppliername");
+                String supplierEmail = rs.getString("supplieremail");
+                String supplierBrand = rs.getString("supplierbrand");
+                String productId = rs.getString("productId");
+
+                supplierList.add(new String[]{supplierId, supplierName, supplierEmail, supplierBrand, productId});
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error loading supplier data: " + e.getMessage(),
+                    "Database Error", JOptionPane.ERROR_MESSAGE);
+            return new JScrollPane(new JTable());
+        }
+
+        String[][] data = supplierList.toArray(new String[0][0]);
+        String[] columnNames = {"Supplier ID", "Supplier Name", "Supplier Email", "Supplier Brand", "Product ID"};
+        return createTable(data, columnNames);
+    }
+
 
 
 }
